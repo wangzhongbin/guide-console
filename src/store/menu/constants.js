@@ -1,0 +1,8 @@
+export const ADD_VIEW = 'ADD_VIEW'
+export const DEL_VIEW = 'DEL_VIEW'
+export const DEL_OTHERS_VIEWS = 'DEL_OTHERS_VIEWS'
+export const DEL_ALL_VIEWS = 'DEL_ALL_VIEWS'
+export const SET_MENUS = 'SET_MENUS'
+export const OPEN_ALL_MENU = 'OPEN_ALL_MENU'
+export const SET_ROUTES = 'SET_ROUTES'
+export const EMPTY_MENUS = 'EMPTY_MENUS'

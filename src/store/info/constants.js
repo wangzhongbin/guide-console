@@ -1,0 +1,2 @@
+export const SET_MERCHANTS = 'SET_MERCHANTS'
+export const EMPTY_MERCHANTS = 'EMPTY_MERCHANTS'

@@ -1,0 +1,59 @@
+.border-bottom,
+.border-top,
+.border-left,
+.border-right,
+.border-left-top,
+.border-right-bottom,
+.border-box {
+  position: relative;
+}
+
+.border-bottom:after,
+.border-top:after,
+.border-left:after,
+.border-right:after,
+.border-left-top:after,
+.border-right-bottom:after,
+.border-box:after {
+  position            : absolute;
+  box-sizing          : border-box;
+  transform-origin    : center;
+  content             : " ";
+  pointer-events      : none;
+  top                 : -50%;
+  right               : -50%;
+  bottom              : -50%;
+  left                : -50%;
+  border              : 0 solid #ebedf0;
+  // border           : 0 solid rgba(0, 0, 0, 0.1);
+  -webkit-transform   : scale(.5);
+  transform           : scale(.5);
+}
+
+.border-bottom:after {
+  border-bottom-width: 1px;
+}
+
+.border-top:after {
+  border-top-width: 1px;
+}
+
+.border-left:after {
+  border-left-width: 1px;
+}
+
+.border-right:after {
+  border-right-width: 1px;
+}
+
+.border-left-top:after {
+  border-width: 1px 0 0 1px;
+}
+
+.border-right-bottom:after {
+  border-width: 0 1px 1px 0;
+}
+
+.border-box:after {
+  border-width: 1px;
+}
