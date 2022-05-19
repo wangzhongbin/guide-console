@@ -14,9 +14,14 @@ export const captcha = () => get('/captcha')
 export const login = (data) => post('/auth/oauth/token', data)
 
 /**
- * 查询登录信息
+ * 查询登录账号信息
  */
-export const loadCurrentInfo = () => get(basePath + '/current/info')
+export const loadCurrentAccount = () => get('/manage/user/getInfo')
+
+/**
+ * 查询当前账号菜单
+ */
+export const loadCurrentMenus = () => get('/manage/menu')
 
 /**
  * 信息查询

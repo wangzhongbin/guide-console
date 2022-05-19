@@ -4,13 +4,15 @@ import mutations from './mutations'
 import { SET_ACCOUNT } from './constants'
 
 const state = {
-  accountId: '',
-  accountName: '',
-  loginName: '',
+  userId: '',
   deptId: '',
-  deptName: '',
-  companyName: '',
-  companyCityName: ''
+  tenantId: '',
+  projectId: '',
+  userName: '',
+  nickName: '',
+  userType: '',
+  email: '',
+  phonenumber: ''
 }
 
 const actions = {

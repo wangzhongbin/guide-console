@@ -1,6 +1,8 @@
 import router from '.'
 
-import { loadCurrentInfo } from '@/api/sys/account'
+import { loadCurrentAccount, loadCurrentMenus } from '@/api/sys/account'
+
+import { menuData } from '@/data/menus'
 
 import store from '@/store'
 
@@ -9,18 +11,19 @@ import { getToken } from '@/cookie'
 const whiteList = ['/login']
 
 router.beforeEach((to, from, next) => {
+  store.dispatch('menu/generateRoutes', menuData).then(res => {
+    console.log(res)
+  })
   const token = getToken()
   if (token) {
     if (to.path === '/login') {
       next({ path: '/' })
     } else {
       if (store.state.menu.routes.length === 0) {
-        loadCurrentInfo().then(res => {
-          const promiseMenu = store.dispatch('menu/generateRoutes', res.menus)
-          const promiseAccount = store.dispatch('account/saveAccount', res.account)
-          const promiseDict = store.dispatch('dict/setDict', res.dict)
-          const promiseMerchant = store.dispatch('info/setMerchants', res.merchants)
-          Promise.all([promiseMenu, promiseAccount, promiseDict, promiseMerchant]).then(res => {
+        Promise.all([loadCurrentAccount(), loadCurrentMenus()]).then(res => {
+          const promiseAccount = store.dispatch('account/saveAccount', res[0].user)
+          const promiseMenu = store.dispatch('menu/generateRoutes', res[1])
+          Promise.all([promiseMenu, promiseAccount]).then(res => {
             router.addRoutes(res[0])
             next({ path: to.path })
           })

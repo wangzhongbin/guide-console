@@ -17,7 +17,7 @@ const state = {
 const actions = {
   generateRoutes ({ commit }, menus) {
     return new Promise(resolve => {
-      const routes = assembleRouter(menus)
+      const routes = menus.map(e => assembleRouter(e))
       const route = {
         path: '',
         component: Home,
@@ -32,24 +32,22 @@ const actions = {
   }
 }
 
-const assembleRouter = (menus) => {
-  const routes = menus.filter(e => e.path && e.component && e.code)
-  return routes.map(e => {
-    const parent = menus.find(m => m.id === e.parentId)
-    return {
-      path: e.path,
-      name: e.code,
-      component: loadView(e.component),
-      meta: {
-        id: e.id,
-        title: e.title,
-        icon: e.icon,
-        parentId: parent ? parent.id : '',
-        parentTitle: parent ? parent.title : '',
-        parentIcon: parent ? parent.icon : ''
-      }
+const assembleRouter = (menu) => {
+  const router = {
+    path: menu.path,
+    name: menu.code,
+    component: loadView(menu.component),
+    meta: {
+      id: menu.id,
+      title: menu.name,
+      icon: menu.icon,
+      parentId: menu.parentId
     }
-  })
+  }
+  if (menu.children && menu.children.length > 0) {
+    router.children = menu.children.map(e => assembleRouter(e))
+  }
+  return router
 }
 
 const loadView = (view) => { // 路由懒加载

@@ -6,8 +6,9 @@ export const getToken = () => {
   return Cookies.get(TokenKey)
 }
 
-export const setToken = (token) => {
-  return Cookies.set(TokenKey, token)
+export const setToken = (token, expiresTime) => {
+  const expires = new Date(new Date() * 1 + expiresTime * 1000)
+  return Cookies.set(TokenKey, token, { expires })
 }
 
 export const removeToken = () => {
