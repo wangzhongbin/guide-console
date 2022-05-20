@@ -2,8 +2,6 @@ import router from '.'
 
 import { loadCurrentAccount, loadCurrentMenus } from '@/api/sys/account'
 
-import { menuData } from '@/data/menus'
-
 import store from '@/store'
 
 import { getToken } from '@/cookie'
@@ -11,9 +9,9 @@ import { getToken } from '@/cookie'
 const whiteList = ['/login']
 
 router.beforeEach((to, from, next) => {
-  store.dispatch('menu/generateRoutes', menuData).then(res => {
-    console.log(res)
-  })
+  // store.dispatch('menu/generateRoutes', menuData).then(res => {
+  //   console.log(res)
+  // })
   const token = getToken()
   if (token) {
     if (to.path === '/login') {

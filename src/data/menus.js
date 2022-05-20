@@ -17,7 +17,7 @@ export const menuData = [
         authority: null,
         redirect: null,
         keepAlive: '0',
-        code: null,
+        code: 'user',
         type: 'C',
         label: '用户管理',
         permission: 'system:user:list'

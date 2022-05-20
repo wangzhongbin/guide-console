@@ -24,7 +24,7 @@ const actions = {
         children: routes
       }
       commit(SET_ROUTES, route)
-      menus.unshift({ id: 1, title: '首页', icon: 'md-home', code: 'HomeIndex', path: '/home/index' })
+      // menus.unshift({ id: 1, title: '首页', icon: 'md-home', code: 'HomeIndex', path: '/home/index' })
       commit(SET_MENUS, menus)
       commit(OPEN_ALL_MENU, menus)
       resolve([route])
