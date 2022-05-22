@@ -1,4 +1,4 @@
-import { ADD_VIEW, DEL_VIEW, DEL_OTHERS_VIEWS, DEL_ALL_VIEWS, SET_MENUS, OPEN_ALL_MENU, SET_ROUTES, EMPTY_MENUS } from './constants'
+import { ADD_VIEW, DEL_VIEW, DEL_OTHERS_VIEWS, DEL_ALL_VIEWS, SET_MENUS, SET_TOP_MENUS, SET_CURRENT_TOP_MENU, OPEN_ALL_MENU, SET_ROUTES, EMPTY_MENUS } from './constants'
 
 export default {
   [ADD_VIEW] (state, view) {
@@ -29,6 +29,12 @@ export default {
   },
   [SET_MENUS] (state, menus) {
     state.menus = menus
+  },
+  [SET_TOP_MENUS] (state, menus) {
+    state.topMenus = menus
+  },
+  [SET_CURRENT_TOP_MENU] (state, menuId) {
+    state.currentTopMenu = menuId
   },
   [EMPTY_MENUS] (state, menus) {
     state.routes = []

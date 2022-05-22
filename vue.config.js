@@ -47,7 +47,7 @@ module.exports = {
     // 如果有单独的后端开发服务器 API，并且希望在同域名下发送 API 请求
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:8100/', // 对应自己的接口
+        target: 'http://101.133.164.81/', // 对应自己的接口
         changeOrigin: true,
         ws: true,
         pathRewrite: {

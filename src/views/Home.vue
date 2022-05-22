@@ -1,10 +1,12 @@
 <template>
-  <div class="home-box">
-    <Menu />
-    <div style="flex:1;">
-      <Header />
-      <Main />
-      <!-- <Footer /> -->
+  <div>
+    <Header />
+    <div class="inline-box">
+      <Menu />
+      <div style="flex:1;">
+        <Main />
+        <!-- <Footer /> -->
+      </div>
     </div>
   </div>
 </template>

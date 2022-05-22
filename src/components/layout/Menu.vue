@@ -1,20 +1,15 @@
 <template>
   <div class="menu">
-    <div class="logo-box inline-box">
-      <img :src="logo" class="item-box logo-image" />
-      <!-- <Icon type="logo-buffer" class="item-box" /> -->
-      <div class="item-box">后台管理系统</div>
-    </div>
     <div class="menu-box">
       <ul class="menu-group" v-for="menu in visitedMenus" :key="menu.id">
         <div v-if="menu.items && menu.items.length > 0">
-          <li class="menu-tip">{{menu.title}}</li>
+          <li class="menu-tip">{{menu.label}}</li>
           <ul v-if="menu.items">
             <li>
               <router-link class="menu-item" v-for="item in menu.items" :to="item.path" :key="item.id" :class="currentMenu === item.id ? 'menu-item-active' : ''">
                 <div class="inline-box">
                   <Icon class="item-box" :type="item.icon" />
-                  <span class="item-box">{{item.title}}</span>
+                  <span class="item-box">{{item.label}}</span>
                 </div>
               </router-link>
             </li>
@@ -24,7 +19,7 @@
           <router-link class="menu-item" :to="menu.path" :class="currentMenu === menu.id ? 'menu-item-active' : ''">
             <div class="inline-box">
               <Icon class="item-box" :type="menu.icon" />
-              <span class="item-box">{{menu.title}}</span>
+              <span class="item-box">{{menu.label}}</span>
             </div>
           </router-link>
         </div>
@@ -35,21 +30,35 @@
 
 <script>
 
-import logo from '@/assets/images/logo.png'
-
 export default {
   data () {
     return {
-      logo
+      // visitedMenus: []
     }
   },
   computed: {
     visitedMenus: (me) => {
       const menus = me.$store.state.menu.menus
-      return menus.filter(e => !e.parentId).map(e => { e.items = menus.filter(m => m.parentId === e.id); return e })
+      console.log(menus)
+      console.log(me.currentTopMenu)
+      const topMenu = menus.find(e => e.id === me.currentTopMenu)
+      console.log(topMenu)
+      return topMenu && topMenu.items.length > 0 ? topMenu.items : []
     },
+    currentTopMenu: (me) => me.$store.state.menu.currentTopMenu,
+    menus: (me) => me.$store.state.menu.menus,
     currentMenu: (me) => me.$store.state.menu.currentMenu,
     openMenus: (me) => me.$store.state.menu.openMenus
+  },
+  watch: {
+    // currentTopMenu (val) {
+    //   if (val > 0) {
+    //     const topMenu = this.menus.find(e => e.id === val)
+    //     const visitedMenus = topMenu && topMenu.items.length > 0 ? topMenu.items : []
+    //     this.visitedMenus = visitedMenus
+    //     console.log(visitedMenus)
+    //   }
+    // }
   },
   methods: {
     openMenu (id) {
@@ -67,17 +76,6 @@ export default {
 .menu {
   height: 100vh;
   box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
-}
-.logo-box {
-  height: 60px;
-  background-color: #fff;
-  border-bottom: 1px solid #ebedf0;
-  font-size: 15px;
-  padding: 8px;
-  .logo-image {
-    width: 16px;
-    height: 16px;
-  }
 }
 .menu-box {
   height: calc(100vh - 60px);

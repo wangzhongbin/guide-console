@@ -3,6 +3,18 @@ export const menuData = [
     id: 1,
     parentId: 0,
     sort: 1,
+    icon: 'system',
+    name: '系统管理',
+    spread: false,
+    path: 'system',
+    component: null,
+    authority: null,
+    redirect: null,
+    keepAlive: '0',
+    code: null,
+    type: 'M',
+    label: '系统管理',
+    permission: '',
     children: [
       {
         id: 100,
@@ -203,19 +215,7 @@ export const menuData = [
         label: '日志管理',
         permission: ''
       }
-    ],
-    icon: 'system',
-    name: '系统管理',
-    spread: false,
-    path: 'system',
-    component: null,
-    authority: null,
-    redirect: null,
-    keepAlive: '0',
-    code: null,
-    type: 'M',
-    label: '系统管理',
-    permission: ''
+    ]
   },
   {
     id: 2,
