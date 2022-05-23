@@ -9,9 +9,6 @@ import { getToken } from '@/cookie'
 const whiteList = ['/login']
 
 router.beforeEach((to, from, next) => {
-  // store.dispatch('menu/generateRoutes', menuData).then(res => {
-  //   console.log(res)
-  // })
   const token = getToken()
   if (token) {
     if (to.path === '/login') {
@@ -23,6 +20,7 @@ router.beforeEach((to, from, next) => {
           const promiseMenu = store.dispatch('menu/generateRoutes', res[1])
           Promise.all([promiseMenu, promiseAccount]).then(res => {
             router.addRoutes(res[0])
+            console.log(res[0])
             next({ path: to.path })
           })
         })

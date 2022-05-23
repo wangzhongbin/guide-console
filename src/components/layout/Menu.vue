@@ -8,7 +8,8 @@
             <li>
               <router-link class="menu-item" v-for="item in menu.items" :to="item.path" :key="item.id" :class="currentMenu === item.id ? 'menu-item-active' : ''">
                 <div class="inline-box">
-                  <Icon class="item-box" :type="item.icon" />
+                  <!-- <Icon class="item-box" :type="item.icon || 'md-cube'" /> -->
+                  <Icon class="item-box" type="md-cube" />
                   <span class="item-box">{{item.label}}</span>
                 </div>
               </router-link>
@@ -18,7 +19,8 @@
         <div v-else-if="menu.path">
           <router-link class="menu-item" :to="menu.path" :class="currentMenu === menu.id ? 'menu-item-active' : ''">
             <div class="inline-box">
-              <Icon class="item-box" :type="menu.icon" />
+              <!-- <Icon class="item-box" :type="menu.icon" /> -->
+              <Icon class="item-box" type="md-cube" />
               <span class="item-box">{{menu.label}}</span>
             </div>
           </router-link>
@@ -32,43 +34,19 @@
 
 export default {
   data () {
-    return {
-      // visitedMenus: []
-    }
+    return {}
   },
   computed: {
     visitedMenus: (me) => {
       const menus = me.$store.state.menu.menus
-      console.log(menus)
-      console.log(me.currentTopMenu)
       const topMenu = menus.find(e => e.id === me.currentTopMenu)
-      console.log(topMenu)
       return topMenu && topMenu.items.length > 0 ? topMenu.items : []
     },
     currentTopMenu: (me) => me.$store.state.menu.currentTopMenu,
     menus: (me) => me.$store.state.menu.menus,
-    currentMenu: (me) => me.$store.state.menu.currentMenu,
-    openMenus: (me) => me.$store.state.menu.openMenus
-  },
-  watch: {
-    // currentTopMenu (val) {
-    //   if (val > 0) {
-    //     const topMenu = this.menus.find(e => e.id === val)
-    //     const visitedMenus = topMenu && topMenu.items.length > 0 ? topMenu.items : []
-    //     this.visitedMenus = visitedMenus
-    //     console.log(visitedMenus)
-    //   }
-    // }
+    currentMenu: (me) => me.$store.state.menu.currentMenu
   },
   methods: {
-    openMenu (id) {
-      const index = this.openMenus.findIndex(m => m === id)
-      if (index >= 0) {
-        this.openMenus.splice(index, 1)
-      } else {
-        this.openMenus.push(id)
-      }
-    }
   }
 }
 </script>
@@ -79,6 +57,7 @@ export default {
 }
 .menu-box {
   height: calc(100vh - 60px);
+  padding: 8px 0;
   overflow-y: auto;
   background-color: #fff;
   width: 220px;

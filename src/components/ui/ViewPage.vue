@@ -30,7 +30,7 @@ import { loadPage, commonDelete } from '@/api/common'
 
 export default {
   props: {
-    group: String,
+    url: String,
     queryForms: Array,
     columns: Array,
     actions: {
@@ -70,13 +70,13 @@ export default {
     },
     loadData () {
       const data = {
-        current: this.paging.current,
-        size: this.paging.size
+        pageNum: this.paging.current,
+        pageSize: this.paging.size
       }
       Object.assign(data, this.queryData)
-      loadPage(data, this.group).then(res => {
+      loadPage(data, this.url).then(res => {
         this.paging.total = res.total
-        this.list = res.list
+        this.list = res
       })
     },
     add () {

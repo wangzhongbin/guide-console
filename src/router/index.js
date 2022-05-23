@@ -17,7 +17,7 @@ const routes = [{
     path: 'index',
     component: (resolve) => require(['@/views/Index'], resolve),
     name: 'HomeIndex',
-    meta: { id: 1, title: '首页', icon: 'dashboard' }
+    meta: { id: -1, title: '首页', icon: 'dashboard' }
   }]
 }, {
   path: '/login',

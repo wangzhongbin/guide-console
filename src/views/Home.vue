@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header />
-    <div class="inline-box">
+    <div style="display: flex;">
       <Menu />
       <div style="flex:1;">
         <Main />

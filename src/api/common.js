@@ -6,9 +6,8 @@ const basePath = '/common'
 /**
  * 列表查询
  */
-export const loadPage = (data, group) => {
-  data.group = group
-  return post(basePath + '/page', data)
+export const loadPage = (data, url) => {
+  return post(url, data)
 }
 
 /**

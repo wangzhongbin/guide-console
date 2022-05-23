@@ -1,40 +1,51 @@
 
 import Home from '@/views/Home.vue'
 
-import { SET_MENUS, SET_TOP_MENUS, OPEN_ALL_MENU, SET_ROUTES } from './constants'
+import { SET_MENUS, SET_TOP_MENUS, SET_ALL_MENUS, SET_ROUTES } from './constants'
 
 import mutations from './mutations'
 
 const state = {
   routes: [],
   topMenus: [],
+  allMenus: [],
   menus: [],
   currentView: {},
   tagViews: [],
   currentMenu: 0,
-  currentTopMenu: 0,
-  openMenus: []
+  currentTopMenu: 0
 }
 
 const actions = {
   generateRoutes ({ commit }, data) {
-    const topMenus = data.filter(e => e.parentId === 0).map(e => assembleTopMenus(e))
-    const menus = data.map(e => assembleMenus(e))
-    commit(SET_TOP_MENUS, topMenus)
     return new Promise(resolve => {
-      const routes = menus.map(e => assembleRouter(e))
+      const menus = data.map(e => assembleMenus(e))
+      const topMenus = data.filter(e => e.parentId === 0).map(e => assembleTopMenus(e))
+      const allMenus = data.reduce((arr, e) => arr.concat(getAllMenus(e)), [])
+      const routes = allMenus.filter(e => e.path && e.component && e.code).map(e => assembleRouter(e))
       const route = {
         path: '',
         component: Home,
         children: routes
       }
+      commit(SET_MENUS, menus)
+      commit(SET_TOP_MENUS, topMenus)
+      commit(SET_ALL_MENUS, allMenus)
       commit(SET_ROUTES, route)
       // menus.unshift({ id: 1, title: '首页', icon: 'md-home', code: 'HomeIndex', path: '/home/index' })
-      commit(SET_MENUS, menus)
-      commit(OPEN_ALL_MENU, menus)
       resolve([route])
     })
   }
+}
+
+const getAllMenus = (menu) => {
+  const arr = []
+  arr.push(menu)
+  if (menu.children && menu.children.length > 0) {
+    const children = menu.children.reduce((a, e) => a.concat(getAllMenus(e)), [])
+    arr.push(...children)
+  }
+  return arr
 }
 
 const assembleRouter = (menu) => {
@@ -49,9 +60,6 @@ const assembleRouter = (menu) => {
       icon: menu.icon,
       parentId: menu.parentId
     }
-  }
-  if (menu.children && menu.children.length > 0) {
-    router.children = menu.children.map(e => assembleRouter(e))
   }
   return router
 }
