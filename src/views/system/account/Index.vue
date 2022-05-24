@@ -1,40 +1,45 @@
 <template>
   <div>
     <ViewPage ref="view-page" :url="url" :buttons="buttons" :query-forms="queryForms" :columns="columns" :actions="actions" />
-    <EditModal width="550" :title="editData.id ? '修改用户' : '新增用户'" :forms="editForms" :edit-data="editData" @ok="ok" v-model="showEdit" />
+    <!-- <EditModal width="550" :title="editData.id ? '修改用户' : '新增用户'" :forms="editForms" :edit-data="editData" @ok="ok" v-model="showEdit" /> -->
     <AccountView v-model="showView" :data="viewData" :roles="roles" :menus="menus" />
-    <EditModal width="800" :title="'正在为 ' + currentAccount.name + ' 账号配置角色'" @ok="saveAccountRole" v-model="showRole">
+    <!-- <EditModal :forms="editForms" :title="'正在为 ' + currentAccount.name + ' 账号配置角色'" @ok="saveAccountRole" v-model="showRole">
       <AccountRole ref="account-role" :account-id="currentAccount.id" />
-    </EditModal>
+    </EditModal> -->
+    <AccountEdit v-model="showEdit" :account-id="accountId" @success="loadData" />
   </div>
 </template>
 <script>
 
-import DeptTreeTitle from './DeptTreeTitle'
+// import DeptTreeTitle from './DeptTreeTitle'
 
 import AccountView from './View'
 
-import AccountRole from './AccountRole'
+import AccountEdit from './Edit'
 
-import { accountAdd, accountUpdate, accountView, updateAccountRole, resetPassword } from '@/api/sys/account'
+// import AccountRole from './AccountRole'
+
+// import { accountAdd, accountUpdate, accountView, updateAccountRole, resetPassword } from '@/api/sys/account'
+import { accountView, resetPassword } from '@/api/sys/account'
 
 export default {
-  components: { AccountView, AccountRole },
+  // components: { AccountView, AccountRole },
+  components: { AccountView, AccountEdit },
   data () {
     const actions = [
-      { type: 'success', name: '角色配置', click: (params) => this.editRole(params), checkDisabled: (params) => params.row.id === 1 },
-      { button: 'update', click: (params) => { this.update(params) }, checkDisabled: (params) => params.row.id === 1 },
+      // { type: 'success', name: '角色配置', click: (params) => this.editRole(params), checkDisabled: (params) => params.row.id === 1 },
+      { button: 'update', click: (params) => { this.update(params) } },
       { type: 'primary', poptip: true, name: '重置密码', click: (params) => this.reset(params), checkDisabled: (params) => params.row.id === 1 },
       { button: 'remove', fun: 'remove', checkDisabled: (params) => params.row.id === 1 },
       { button: 'view', click: (params) => this.view(params) }]
     const columns = [
+      { title: '用户名', key: 'userName' },
       { title: '姓名', key: 'name' },
       { title: '登录名', key: 'loginName' },
       { title: '租户名称', key: 'tenantName' },
-      { title: '帐号', key: 'userName' },
-      { title: '姓名', type: 'nickName' },
-      { title: '手机号码', type: 'phonenumber' },
-      { title: '邮箱', type: 'email' },
+      { title: '姓名', key: 'nickName' },
+      { title: '手机号码', key: 'phonenumber' },
+      { title: '邮箱', key: 'email' },
       { title: '账号类型', width: 100, render: (h, params) => this.$ColumnDictText(h, params.row.userType, this.userTtypeOptions) },
       { title: '帐号状态', width: 100, render: (h, params) => this.$ColumnDictText(h, params.row.status, this.statusOptions) }]
 
@@ -43,14 +48,14 @@ export default {
       showEdit: false,
       showView: false,
       showRole: false,
-      editData: {},
+      accountId: 0,
       viewData: {},
       currentAccount: {},
       roles: [],
       menus: [],
-      queryForms: [{ title: '帐号', key: 'userName' }, { title: '手机号码', type: 'phonenumber' }],
-      editForms: [],
-      buttons: [{ type: 'primary', fun: () => { this.editData = { deptId: '' }; this.showEdit = true }, icon: 'md-add', name: '新增员工' }],
+      queryForms: [{ title: '用户名', key: 'userName' }, { title: '手机号码', type: 'phonenumber' }],
+      // editForms: [],
+      buttons: [{ type: 'primary', fun: () => { this.accountId = 0; this.showEdit = true }, icon: 'md-add', name: '新增用户' }],
       actions,
       columns,
       userTtypeOptions: [
@@ -65,61 +70,49 @@ export default {
     }
   },
   created () {
-    this.editForms.push({ title: '员工姓名', key: 'name', required: true })
-    this.editForms.push({ title: '登录名', key: 'loginName', required: true })
+    // this.editForms.push({ title: '帐号', key: 'userName', required: true, span: 2 })
+    // this.editForms.push({ title: '手机号码', key: 'phonenumber', required: true, span: 2 })
+    // this.editForms.push({ title: '姓名', key: 'nickName', required: true, span: 2 })
+    // this.editForms.push({ title: '密码', key: 'password', required: true, span: 2 })
+    // this.editForms.push({ title: '密码确认', key: 'password', required: true, span: 2 })
+    // this.editForms.push({ title: '电子邮件', key: 'email', span: 2 })
   },
   methods: {
-    assembleTreeNode (e) {
-      const node = {
-        id: e.id,
-        title: e.name,
-        type: e.type,
-        render: (h, { root, node, data }) => h(DeptTreeTitle, { props: { node: data } })
-      }
-      if (e.type === 1) {
-        node.loading = false
-        node.children = []
-      }
-      return node
+    loadData () {
+      this.$refs['view-page'].loadData()
     },
-    ok (fromData, callback, closeLoading) {
-      if (fromData.id) {
-        accountUpdate(fromData).then(res => {
-          callback()
-          this.$Message.success('修改成功')
-          this.$refs['view-page'].loadData()
-        }).catch(() => { closeLoading() })
-      } else {
-        accountAdd(fromData).then(res => {
-          callback()
-          this.$Message.success('新增成功')
-          this.$refs['view-page'].loadData()
-        }).catch(() => { closeLoading() })
-      }
-    },
-    saveAccountRole (callback, closeLoading) {
-      const accountRoleIds = this.$refs['account-role'].accountRoleIds
-      const ids = accountRoleIds.join(',')
-      updateAccountRole({ id: this.currentAccount.id, roleIds: ids.toString() }).then(res => {
-        callback()
-        this.$Message.success('配置成功')
-        this.loadData()
-      }).catch(() => { closeLoading() })
-    },
+    // ok (fromData, callback, closeLoading) {
+    //   if (fromData.id) {
+    //     accountUpdate(fromData).then(res => {
+    //       callback()
+    //       this.$Message.success('修改成功')
+    //       this.$refs['view-page'].loadData()
+    //     }).catch(() => { closeLoading() })
+    //   } else {
+    //     accountAdd(fromData).then(res => {
+    //       callback()
+    //       this.$Message.success('新增成功')
+    //       this.$refs['view-page'].loadData()
+    //     }).catch(() => { closeLoading() })
+    //   }
+    // },
+    // saveAccountRole (callback, closeLoading) {
+    //   const accountRoleIds = this.$refs['account-role'].accountRoleIds
+    //   const ids = accountRoleIds.join(',')
+    //   updateAccountRole({ id: this.currentAccount.id, roleIds: ids.toString() }).then(res => {
+    //     callback()
+    //     this.$Message.success('配置成功')
+    //     this.loadData()
+    //   }).catch(() => { closeLoading() })
+    // },
     update (params) {
-      this.editData = {
-        id: params.row.id,
-        name: params.row.name,
-        loginName: params.row.loginName,
-        deptName: params.row.deptName,
-        deptId: params.row.deptId
-      }
+      this.accountId = params.row.userId
       this.showEdit = true
     },
-    editRole (params) {
-      this.currentAccount = { id: params.row.id, name: params.row.name }
-      this.showRole = true
-    },
+    // editRole (params) {
+    //   this.currentAccount = { id: params.row.id, name: params.row.name }
+    //   this.showRole = true
+    // },
     reset (params) {
       resetPassword({ id: params.row.id }).then(() => {
         this.$Message.success('密码重置成功')

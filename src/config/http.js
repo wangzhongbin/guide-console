@@ -3,19 +3,18 @@
  */
 import axios from 'axios'
 
-import qs from 'qs'
+// import qs from 'qs'
 
 import { Message, LoadingBar } from 'view-design'
 
 import { getToken, removeToken } from '@/cookie'
 
-const baseURL = process.env.NODE_ENV === 'production'
-  ? '/api' : '/api'
+const baseURL = process.env.NODE_ENV === 'production' ? '/api' : '/api'
 
 axios.defaults.baseURL = baseURL
 axios.defaults.withCredentials = true
 axios.defaults.crossDomain = true
-// axios.defaults.headers.post['Content-Type'] = 'application/json'
+axios.defaults.headers.post['Content-Type'] = 'application/json'
 
 LoadingBar.config({ color: '#f6ca9d', height: 3 })
 
@@ -33,7 +32,7 @@ axios.interceptors.request.use(config => {
   }
   const token = getToken()
   if (token) {
-    config.headers.token = token
+    config.headers.Authorization = 'Bearer ' + token
   }
   return config
 }, err => {
@@ -49,10 +48,7 @@ axios.interceptors.response.use(
     }
     if (response.status === 200) {
       const data = response.data
-      if (data && response.config.url === '/house/lease/report/export') {
-        return data
-      }
-      if (data && data.code === 1) {
+      if (data && data.code === 200) {
         return data.data
       } else {
         if (data.msg) {
@@ -85,7 +81,7 @@ axios.interceptors.response.use(
   })
 
 export const get = (uri, params) => axios.get(uri, { params })
-export const post = (uri, params) => axios.post(uri, qs.stringify(params))
+export const post = (uri, params) => axios.post(uri, params)
 export const download = (uri, params, method, filename) => {
   return new Promise((resolve, reject) => {
     axios({ method, url: uri, responseType: 'blob', params }).then((res) => {

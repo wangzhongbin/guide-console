@@ -36,18 +36,20 @@ export default {
   data () {
     return {
       uuid: '',
-      userName: '',
-      password: '',
+      userName: 'admin',
+      password: 'admin123',
       code: '',
       codeImgae: '',
       logo
     }
   },
   created () {
+    this.refreshCode()
   },
   methods: {
     refreshCode () {
-      captcha().then(({ uuid, img }) => {
+      captcha().then(res => {
+        const { uuid, img } = res
         this.codeImgae = 'data:image/png;base64,' + img
         this.uuid = uuid
       })

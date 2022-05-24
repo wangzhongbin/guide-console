@@ -10,26 +10,26 @@ const basePath = '/sys/account'
 /**
   * 图片验证码
   */
-export const captcha = () => get('/captcha')
+export const captcha = () => get('/captcha/')
 
 /**
    * 登录
    */
-// export const login = (data) => post('/auth/oauth/token', data)
-export const login = (data) => {
-  return new Promise((resolve, reject) => {
-    if (data.password) {
-      const data = {
-        access_token: 'tonkentest123',
-        multiTenant: false,
-        expires_in: 43200
-      }
-      resolve(data)
-    } else {
-      reject(new Error('登录失败'))
-    }
-  })
-}
+export const login = (data) => post('/auth/login', data)
+// export const login = (data) => {
+//   return new Promise((resolve, reject) => {
+//     if (data.password) {
+//       const data = {
+//         access_token: 'tonkentest123',
+//         multiTenant: false,
+//         expires_in: 43200
+//       }
+//       resolve(data)
+//     } else {
+//       reject(new Error('登录失败'))
+//     }
+//   })
+// }
 
 /**
  * 查询登录账号信息
@@ -52,19 +52,34 @@ export const loadCurrentMenus = () => {
 }
 
 /**
- * 信息查询
+ * 用户详情查询
  */
-export const accountView = (id) => get(basePath + '/view', { id })
+// export const accountView = (id) => get('/manage/user/' + id)
+export const accountView = (id) => {
+  return new Promise((resolve, reject) => {
+    resolve(accountData)
+  })
+}
 
 /**
   * 新增
   */
-export const accountAdd = (data) => post(basePath + '/add', data)
+// export const accountAdd = (data) => post('/manage/user/add', data)
+export const accountAdd = (data) => {
+  return new Promise((resolve, reject) => {
+    resolve(data)
+  })
+}
 
 /**
   * 修改
   */
-export const accountUpdate = (data) => post(basePath + '/update', data)
+// export const accountUpdate = (data) => post('/manage/user/edit', data)
+export const accountUpdate = (data) => {
+  return new Promise((resolve, reject) => {
+    resolve(data)
+  })
+}
 
 /**
   * 修改密码

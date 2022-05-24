@@ -74,16 +74,17 @@ export default {
         pageSize: this.paging.size
       }
       Object.assign(data, this.queryData)
-      loadPage(data, this.url).then(res => {
+      loadPage(this.url, data).then(res => {
+        console.log(res)
         this.paging.total = res.total
-        this.list = res
+        this.list = res.list
       })
     },
     add () {
       this.$emit('on-add')
     },
     remove (params) {
-      commonDelete({ id: params.row.id }, this.group).then(() => {
+      commonDelete(this.url + '/' + { id: params.row.id }).then(() => {
         this.$Message.success('删除成功')
         this.loadData()
       })
