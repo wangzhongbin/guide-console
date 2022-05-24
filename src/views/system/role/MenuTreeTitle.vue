@@ -1,6 +1,6 @@
 <template>
   <div class="inline-box">
-    <Icon :type="node.type === 1 ? 'md-cube' : 'md-desktop'" class="item-box" :color="node.type === 1 ? '#1890ff' : '#ed4014'" />
+    <Icon :type="node.icon" class="item-box" />
     <div class="item-box">{{node.title}}</div>
   </div>
 </template>

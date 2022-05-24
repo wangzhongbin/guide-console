@@ -30,6 +30,7 @@ import { loadPage, commonDelete } from '@/api/common'
 
 export default {
   props: {
+    delUrl: String,
     url: String,
     queryForms: Array,
     columns: Array,
@@ -84,7 +85,7 @@ export default {
       this.$emit('on-add')
     },
     remove (params) {
-      commonDelete(this.url + '/' + { id: params.row.id }).then(() => {
+      commonDelete(this.delUrl + '/' + { id: params.row.id }).then(() => {
         this.$Message.success('删除成功')
         this.loadData()
       })

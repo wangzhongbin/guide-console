@@ -89,7 +89,7 @@ export const changePassword = (data) => post(basePath + '/password', data)
 /**
   * 重置密码
   */
-export const resetPassword = (data) => post(basePath + '/reset', data)
+export const resetPassword = (data) => post('/manage/user/resetPwd', data)
 
 /**
   * 配置角色

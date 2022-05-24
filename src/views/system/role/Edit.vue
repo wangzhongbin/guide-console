@@ -1,16 +1,16 @@
 <template>
-  <EditModal :title="data.id ? '修改用户' : '新增用户'" :forms="forms" :edit-data="data" @close="close" @ok="ok" :show="show">
+  <EditModal :title="data.id ? '修改角色' : '新增角色'" :forms="forms" :edit-data="data" @close="close" @ok="ok" :show="show">
     <div class="group-box border-top">
-      <div class="box ">角色选择</div>
-      <CheckboxGroup class="box" v-model="accountRoleIds">
-        <Checkbox border v-for="item in roles" :key="item.id" :label="item.roleId">{{item.roleName}}</Checkbox>
-      </CheckboxGroup>
+      <div class="box ">菜单选择</div>
+      <Tree ref="menu-tree" :data="menuTree" show-checkbox multiple />
     </div>
   </EditModal>
 </template>
 <script>
 
 import { accountAdd, accountUpdate, accountView } from '@/api/sys/account'
+
+import MenuTreeTitle from './MenuTreeTitle'
 
 export default {
   model: {
@@ -49,6 +49,21 @@ export default {
     this.forms.push({ title: '电子邮件', key: 'email', span: 2 })
   },
   methods: {
+    assembleTree (nodes, menus, roleMenuIds) {
+      return nodes.map(e => {
+        e.expand = true
+        e.checked = roleMenuIds.some(id => e.id === id)
+        e.render = (h, { root, node, data }) => h(MenuTreeTitle, { props: { node: data } })
+        const children = menus.filter(m => m.parentId === e.id)
+        if (children && children.length > 0) {
+          e.children = this.assembleTree(children, menus, roleMenuIds)
+        }
+        return e
+      })
+    },
+    getRoleMenus () {
+      return this.$refs['menu-tree'].getCheckedAndIndeterminateNodes()
+    },
     close () {
       this.$emit('change', false)
     },
