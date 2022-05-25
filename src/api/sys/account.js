@@ -3,7 +3,7 @@ import { post, get } from '@/config/http'
 
 import { menuData } from '@/data/menus'
 
-import { accountData } from '@/data/account'
+// import { accountData } from '@/data/account'
 
 const basePath = '/sys/account'
 
@@ -34,12 +34,12 @@ export const login = (data) => post('/auth/login', data)
 /**
  * 查询登录账号信息
  */
-// export const loadCurrentAccount = () => get('/manage/user/getInfo')
-export const loadCurrentAccount = () => {
-  return new Promise((resolve, reject) => {
-    resolve(accountData)
-  })
-}
+export const loadCurrentAccount = () => get('/manage/user/getInfo')
+// export const loadCurrentAccount = () => {
+//   return new Promise((resolve, reject) => {
+//     resolve(accountData)
+//   })
+// }
 
 /**
  * 查询当前账号菜单
@@ -54,32 +54,17 @@ export const loadCurrentMenus = () => {
 /**
  * 用户详情查询
  */
-// export const accountView = (id) => get('/manage/user/' + id)
-export const accountView = (id) => {
-  return new Promise((resolve, reject) => {
-    resolve(accountData)
-  })
-}
+export const accountView = (id) => get('/manage/user/' + id)
 
 /**
   * 新增
   */
-// export const accountAdd = (data) => post('/manage/user/add', data)
-export const accountAdd = (data) => {
-  return new Promise((resolve, reject) => {
-    resolve(data)
-  })
-}
+export const accountAdd = (data) => post('/manage/user/add', data)
 
 /**
   * 修改
   */
-// export const accountUpdate = (data) => post('/manage/user/edit', data)
-export const accountUpdate = (data) => {
-  return new Promise((resolve, reject) => {
-    resolve(data)
-  })
-}
+export const accountUpdate = (data) => post('/manage/user/edit', data)
 
 /**
   * 修改密码

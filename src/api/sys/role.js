@@ -1,24 +1,24 @@
 
 import { post, get } from '@/config/http'
 
-import { roleData } from '@/data/account'
+// import { roleData } from '@/data/account'
 
 const basePath = '/sys/role'
 
 /**
  * 全部角色查询
  */
-// export const loadRoles = () => get('/manage/optionSelect')
-export const loadRoles = () => {
-  return new Promise((resolve, reject) => {
-    resolve(roleData)
-  })
-}
+export const loadRoles = () => get('/manage/role/optionSelect')
+// export const loadRoles = () => {
+//   return new Promise((resolve, reject) => {
+//     resolve(roleData)
+//   })
+// }
 
 /**
  * 查询
  */
-export const roleView = (id) => get(basePath + '/view', { id })
+export const roleView = (id) => get('/manage/role/' + id)
 
 /**
  * 修改

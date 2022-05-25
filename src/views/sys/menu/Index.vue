@@ -31,32 +31,25 @@ export default {
     const columns = [
       {
         title: '菜单名称',
-        key: 'title',
-        width: '300',
+        key: 'label',
         tree: true,
         align: 'left',
         render: (h, params) => h(ColumnName, { props: { row: params.row } })
-      },
-      { title: '等级', key: 'level', width: '80' },
-      { title: '路由名称', key: 'code' },
-      { title: '路由地址', key: 'path' },
-      { title: '页面地址', key: 'component' }]
+      }]
     this.columns = this.$TableColumns(columns)
     this.loadData()
   },
   methods: {
     loadData () {
       loadMenus().then(res => {
-        const list = res.list
-        this.list = this.assembleTree(list.filter(e => !e.parentId), list)
+        this.list = this.assembleTree(res.data)
       })
     },
-    assembleTree (nodes, menus) {
+    assembleTree (nodes) {
       return nodes.map(e => {
-        const children = menus.filter(m => m.parentId === e.id)
-        if (children && children.length > 0) {
+        if (e.children && e.children.length > 0) {
           e._showChildren = true
-          e.children = this.assembleTree(children, menus)
+          e.children = this.assembleTree(e.children)
         }
         return e
       })

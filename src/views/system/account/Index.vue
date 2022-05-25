@@ -3,7 +3,7 @@
     <ViewPage ref="view-page" :url="url" :del-url="delUrl" :buttons="buttons" :query-forms="queryForms" :columns="columns" :actions="actions" />
     <EditModal width="550" title="密码重置" :forms="resetForms" :edit-data="resetData" @ok="ok" v-model="showReset" />
     <AccountView v-model="showView" :data="viewData" :roles="roles" />
-    <AccountEdit v-model="showEdit" :account-id="accountId" @success="loadData" />
+    <AccountEdit v-model="showEdit" :account-id="accountId" :roles="roles" @success="loadData" />
   </div>
 </template>
 <script>
@@ -26,7 +26,6 @@ export default {
       { button: 'view', click: (params) => this.view(params) }]
     const columns = [
       { title: '用户名', key: 'userName' },
-      { title: '姓名', key: 'name' },
       { title: '登录名', key: 'loginName' },
       { title: '租户名称', key: 'tenantName' },
       { title: '姓名', key: 'nickName' },
@@ -65,7 +64,7 @@ export default {
     }
   },
   created () {
-    loadRoles().then(res => { this.roles = res })
+    loadRoles().then(res => { this.roles = res.data })
   },
   methods: {
     loadData () {
@@ -86,11 +85,13 @@ export default {
       this.showReset = true
     },
     view (params) {
-      const { id, name, loginName, deptName } = params.row
-      accountView(id).then(res => {
-        this.viewData = { name, loginName, deptName }
-        this.roles = res.roles
-        this.menus = res.menus
+      const { userId } = params.row
+      accountView(userId).then(res => {
+        const user = res.data.user
+        const roleIds = res.data.roleIds
+        const roles = this.roles.filter(e => roleIds.includes(e.roleId))
+        user.roles = roles
+        this.viewData = user
         this.showView = true
       })
     }

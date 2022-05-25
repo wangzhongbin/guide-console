@@ -49,7 +49,7 @@ export default {
   methods: {
     refreshCode () {
       captcha().then(res => {
-        const { uuid, img } = res
+        const { uuid, img } = res.data
         this.codeImgae = 'data:image/png;base64,' + img
         this.uuid = uuid
       })
@@ -66,9 +66,9 @@ export default {
       }
       login({ uuid, code, userName, password }).then(res => {
         this.$Message.success('登录成功')
-        setToken(res.access_token, res.expires_in)
+        setToken(res.data.access_token, res.data.expires_in)
         this.$router.push({ path: '/' })
-      })
+      }).catch(() => { this.refreshCode() })
     }
   }
 }

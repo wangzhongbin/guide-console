@@ -49,7 +49,13 @@ axios.interceptors.response.use(
     if (response.status === 200) {
       const data = response.data
       if (data && data.code === 200) {
-        return data.data
+        return data
+      } else if (data && data.code === 999) {
+        Message.error('登录信息过期，请重新登录！')
+        removeToken()
+        setTimeout(() => {
+          location.reload() // 为了重新实例化vue-router对象 避免bug
+        }, 500)
       } else {
         if (data.msg) {
           Message.error(data.msg)
@@ -67,16 +73,8 @@ axios.interceptors.response.use(
       loading = null
     }
     if (error && error.response) {
-      if (error.response.status === 401) {
-        Message.error('登录信息过期，请重新登录！')
-        removeToken()
-        setTimeout(() => {
-          location.reload() // 为了重新实例化vue-router对象 避免bug
-        }, 500)
-      } else {
-        Message.error('错误代码：' + error.response.status)
-        return Promise.reject(error)
-      }
+      Message.error('错误代码：' + error.response.status)
+      return Promise.reject(error)
     }
   })
 
