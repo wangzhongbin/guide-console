@@ -10,6 +10,8 @@
 
 import { roleView, roleUpdate, roleAdd } from '@/api/sys/role'
 
+import { loadMenus } from '@/api/sys/menu'
+
 import MenuTreeTitle from './MenuTreeTitle'
 
 export default {
@@ -25,19 +27,19 @@ export default {
     return {
       data: {},
       menuTree: [],
-      forms: [],
-      accountRoleIds: []
+      forms: []
     }
   },
   watch: {
     roleId (val) {
       this.data = {}
-      this.accountRoleIds = []
       if (val) {
-        roleView(val).then(res => {
-          console.log(res)
-          // this.accountRoleIds = res.roleIds
-          // this.data = res.user
+        Promise.all([loadMenus(), roleView(val)]).then(res => {
+          const menus = res[0].data
+          const role = res[1].data
+          this.data = role
+          const menuTree = this.assembleTree(menus, role.menuIds)
+          this.menuTree = menuTree
         })
       }
     }
@@ -46,14 +48,14 @@ export default {
     this.forms.push({ title: '角色名称', key: 'roleName', required: true, span: 1 })
   },
   methods: {
-    assembleTree (nodes, menus, roleMenuIds) {
+    assembleTree (nodes, roleMenuIds) {
       return nodes.map(e => {
         e.expand = true
         e.checked = roleMenuIds.some(id => e.id === id)
         e.render = (h, { root, node, data }) => h(MenuTreeTitle, { props: { node: data } })
-        const children = menus.filter(m => m.parentId === e.id)
+        const children = e.children
         if (children && children.length > 0) {
-          e.children = this.assembleTree(children, menus, roleMenuIds)
+          e.children = this.assembleTree(children, roleMenuIds)
         }
         return e
       })
@@ -66,8 +68,9 @@ export default {
     },
     ok (fromData, callback, closeLoading) {
       const data = Object.assign({}, fromData)
+      const roleMenus = this.getRoleMenus()
+      data.menuIds = roleMenus.map(e => e.id)
       console.log(data)
-      data.roleIds = this.accountRoleIds
       if (data.userId) {
         roleUpdate(data).then(res => {
           callback()
