@@ -8,36 +8,22 @@ export const menuData = [{
     id: 100,
     parentId: 1,
     sort: 1,
-    children: null,
     icon: 'user',
     name: '用户管理',
-    spread: false,
     path: '/sys/account',
     component: 'sys/account/Index',
-    authority: null,
-    redirect: null,
-    keepAlive: '0',
     code: 'sysUser',
-    type: 'C',
-    label: '用户管理',
-    permission: 'sys:user:list'
+    label: '用户管理'
   }, {
     id: 101,
     parentId: 1,
     sort: 2,
-    children: null,
     icon: 'peoples',
     name: '角色管理',
-    spread: false,
     path: '/sys/role',
     component: 'sys/role/Index',
-    authority: null,
-    redirect: null,
-    keepAlive: '0',
     code: 'sysRole',
-    type: 'C',
-    label: '角色管理',
-    permission: 'sys:role:list'
+    label: '角色管理'
   }, {
     id: 102,
     parentId: 1,
@@ -45,16 +31,36 @@ export const menuData = [{
     children: null,
     icon: 'tree-table',
     name: '菜单管理',
-    spread: false,
     path: '/sys/menu',
     component: 'sys/menu/Index',
-    authority: null,
-    redirect: null,
-    keepAlive: '0',
     code: 'sysMenu',
-    type: 'C',
-    label: '菜单管理',
-    permission: 'sys:menu:list'
-  }
-  ]
+    label: '菜单管理'
+  }]
+}, {
+  id: 2,
+  parentId: 0,
+  sort: 2,
+  icon: 'trade',
+  name: '业务管理',
+  children: [{
+    id: 200,
+    parentId: 2,
+    sort: 1,
+    icon: 'user',
+    name: '租户管理',
+    path: '/trade/tenant',
+    component: 'trade/tenant/Index',
+    code: 'tradeTenant',
+    label: '租户管理'
+  }, {
+    id: 201,
+    parentId: 2,
+    sort: 2,
+    icon: 'user',
+    name: '项目管理',
+    path: '/trade/project',
+    component: 'trade/project/Index',
+    code: 'tradeProject',
+    label: '项目管理'
+  }]
 }]

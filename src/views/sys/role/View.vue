@@ -6,14 +6,14 @@
         <div class="item-box">角色信息</div>
       </div>
       <div class="group-box">
-        <ViewItem title="角色名称" :value="data.name" />
+        <ViewItem title="角色名称" :value="data.roleName" />
       </div>
       <div class="box inline-box">
         <div class="text-line item-box" />
         <div class="item-box">菜单信息</div>
       </div>
       <div class="box">
-        <ViewMenuTable :menus="menus" />
+        <ViewMenuTable :menu-ids="data.menuIds" />
       </div>
     </div>
   </ViewDrawer>
@@ -30,8 +30,8 @@ export default {
   },
   props: {
     show: Boolean,
-    data: Object,
-    menus: Array
+    data: Object
+    // menus: Array
   },
   methods: {
     close () {

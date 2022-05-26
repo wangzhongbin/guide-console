@@ -43,6 +43,6 @@ export default {
 }
 .edit-drawer-body {
   height: calc(100vh - 150px);
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 </style>

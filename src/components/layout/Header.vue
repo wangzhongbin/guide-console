@@ -18,7 +18,7 @@
       <div class="inline-box top-bar">
         <Avatar class="item-box avatar-primary" size="small" icon="md-person" />
         <div class="item-box inline-box">
-          <div class="gap-box">{{accountName}}</div>
+          <div class="gap-box">{{account.nickName}}</div>
           <Icon type="md-arrow-dropdown" class="gap-box" size="20" />
         </div>
       </div>
@@ -29,12 +29,12 @@
             <div class="gap-box">我的信息</div>
           </div>
         </DropdownItem>
-        <DropdownItem name="password">
+        <!-- <DropdownItem name="password">
           <div class="box inline-box">
             <Icon type="md-key" class="gap-box" />
             <div class="gap-box">修改密码</div>
           </div>
-        </DropdownItem>
+        </DropdownItem> -->
         <DropdownItem name="logout">
           <div class="box inline-box logout-btn">
             <Icon type="md-power" class="gap-box" />
@@ -49,23 +49,19 @@
     <ViewDrawer title="我的信息" @close="showInfo=false" :value="showInfo" width="480">
       <div class="box cell-box">
         <div class="text-info">登录名</div>
-        <div class="text-title-small">{{loginName}}</div>
+        <div class="text-title-small">{{account.userName}}</div>
       </div>
       <div class="box cell-box">
-        <div class="text-info">员工姓名</div>
-        <div class="text-title-small">{{accountName}}</div>
+        <div class="text-info">姓名</div>
+        <div class="text-title-small">{{account.nickName}}</div>
       </div>
       <div class="box cell-box">
-        <div class="text-info">所在部门</div>
-        <div class="text-title-small">{{deptName}}</div>
+        <div class="text-info">手机号码</div>
+        <div class="text-title-small">{{account.phonenumber}}</div>
       </div>
-      <div class="box cell-box" v-if="companyName">
-        <div class="text-info">所在公司</div>
-        <div class="text-title-small">{{companyName}}</div>
-      </div>
-      <div class="box cell-box" v-if="companyCityName">
-        <div class="text-info">所在市公司</div>
-        <div class="text-title-small">{{companyCityName}}</div>
+      <div class="box cell-box">
+        <div class="text-info">邮箱</div>
+        <div class="text-title-small">{{account.email}}</div>
       </div>
     </ViewDrawer>
 
@@ -107,11 +103,7 @@ export default {
   computed: {
     topMenus: (me) => me.$store.state.menu.topMenus,
     currentTopMenu: (me) => me.$store.state.menu.currentTopMenu,
-    accountName: (me) => me.$store.state.account.accountName,
-    loginName: (me) => me.$store.state.account.loginName,
-    deptName: (me) => me.$store.state.account.deptName,
-    companyName: (me) => me.$store.state.account.companyName,
-    companyCityName: (me) => me.$store.state.account.companyCityName
+    account: (me) => me.$store.state.account
   },
   methods: {
     ...mapMutations('menu', [EMPTY_MENUS, SET_CURRENT_TOP_MENU]),

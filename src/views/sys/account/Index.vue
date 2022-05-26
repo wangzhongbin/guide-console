@@ -14,7 +14,7 @@ import AccountEdit from './Edit'
 
 import { loadRoles } from '@/api/sys/role'
 
-import { accountView, resetPassword } from '@/api/sys/account'
+import { accountView, accountRemove, resetPassword } from '@/api/sys/account'
 
 export default {
   components: { AccountView, AccountEdit },
@@ -22,7 +22,7 @@ export default {
     const actions = [
       { button: 'update', click: (params) => { this.update(params) } },
       { type: 'primary', name: '重置密码', click: (params) => this.reset(params) },
-      { button: 'remove', fun: 'remove', checkDisabled: (params) => params.row.id === 1 },
+      { button: 'remove', click: (params) => this.remove(params) },
       { button: 'view', click: (params) => this.view(params) }]
     const columns = [
       { title: '用户名', key: 'userName' },
@@ -36,7 +36,6 @@ export default {
 
     return {
       url: '/manage/user/list',
-      delUrl: '/manage/user/remove',
       showEdit: false,
       showReset: false,
       showView: false,
@@ -93,6 +92,12 @@ export default {
         user.roles = roles
         this.viewData = user
         this.showView = true
+      })
+    },
+    remove (params) {
+      accountRemove(params.row.userId).then(() => {
+        this.$Message.success('删除成功')
+        this.loadData()
       })
     }
   }

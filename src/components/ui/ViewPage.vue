@@ -83,7 +83,7 @@ export default {
       this.$emit('on-add')
     },
     remove (params) {
-      commonDelete(this.delUrl + '/' + { id: params.row.id }).then(() => {
+      commonDelete(this.delUrl + '/' + params.row.id).then(() => {
         this.$Message.success('删除成功')
         this.loadData()
       })

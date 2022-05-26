@@ -31,10 +31,20 @@ export default {
     }
   },
   watch: {
+    show (val) {
+      if (val && !this.roleId) {
+        loadMenus().then(res => {
+          const menuTree = this.assembleTree(res.data, [])
+          this.menuTree = menuTree
+        })
+      }
+    },
     roleId (val) {
       this.data = {}
+      this.menuTree = []
       if (val) {
         Promise.all([loadMenus(), roleView(val)]).then(res => {
+          console.log(res)
           const menus = res[0].data
           const role = res[1].data
           this.data = role
@@ -48,10 +58,10 @@ export default {
     this.forms.push({ title: '角色名称', key: 'roleName', required: true, span: 1 })
   },
   methods: {
-    assembleTree (nodes, roleMenuIds) {
+    assembleTree (nodes, roleMenuIds = []) {
       return nodes.map(e => {
         e.expand = true
-        e.checked = roleMenuIds.some(id => e.id === id)
+        e.checked = roleMenuIds.includes(e.id)
         e.render = (h, { root, node, data }) => h(MenuTreeTitle, { props: { node: data } })
         const children = e.children
         if (children && children.length > 0) {
@@ -67,18 +77,22 @@ export default {
       this.$emit('change', false)
     },
     ok (fromData, callback, closeLoading) {
-      const data = Object.assign({}, fromData)
       const roleMenus = this.getRoleMenus()
-      data.menuIds = roleMenus.map(e => e.id)
+      const data = {
+        tenantId: fromData.tenantId || '',
+        roleName: fromData.roleName,
+        roleId: fromData.roleId,
+        menuIds: roleMenus.map(e => e.id)
+      }
       console.log(data)
-      if (data.userId) {
-        roleUpdate(data).then(res => {
+      if (data.roleId) {
+        roleUpdate(data).then(() => {
           callback()
           this.$Message.success('修改成功')
           this.$emit('success')
         }).catch(() => { closeLoading() })
       } else {
-        roleAdd(data).then(res => {
+        roleAdd(data).then(() => {
           callback()
           this.$Message.success('新增成功')
           this.$emit('success')
