@@ -22,6 +22,7 @@ import EditFormItem from '@/components/ui/EditFormItem'
 import EditFormDivider from '@/components/ui/EditFormDivider'
 import ViewPage from '@/components/ui/ViewPage'
 import SelectTree from '@/components/ui/SelectTree'
+import PlaceSelect from '@/components/ui/PlaceSelect'
 import ViewItem from '@/components/ui/ViewItem'
 
 import * as echarts from 'echarts'
@@ -38,6 +39,7 @@ Vue.component('EditFormItem', EditFormItem)
 Vue.component('EditFormDivider', EditFormDivider)
 Vue.component('ViewPage', ViewPage)
 Vue.component('SelectTree', SelectTree)
+Vue.component('PlaceSelect', PlaceSelect)
 Vue.component('ViewItem', ViewItem)
 
 Vue.config.productionTip = false

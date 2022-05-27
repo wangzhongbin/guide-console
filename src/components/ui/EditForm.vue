@@ -44,6 +44,9 @@
           <div v-else-if="item.type === 'image'">
             <MediaShow :src="editData[item.key]" width="100" height="100" />
           </div>
+          <div v-else-if="item.type === 'place'">
+            <PlaceSelect v-model="editData[item.key]" />
+          </div>
           <div v-else>
             <Input v-model="editData[item.key]" :disabled="item.disabled" :placeholder="item.title | placeholderText(item.type)" :clearable="true" />
           </div>
