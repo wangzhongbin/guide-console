@@ -14,7 +14,6 @@ export default {
   data () {
     const actions = [
       { button: 'update', click: (params) => { this.update(params) } },
-      { type: 'primary', name: '重置密码', click: (params) => this.reset(params) },
       { button: 'remove', name: '注销', click: (params) => this.remove(params) }
       // { button: 'view', click: (params) => this.view(params) }
     ]
@@ -22,7 +21,6 @@ export default {
       { title: '租户名称', key: 'tenantName' },
       { title: '联系人', key: 'contacts' },
       { title: '手机号码', key: 'phoneNo' },
-      { title: '状态', key: 'status' },
       { title: '省份', key: 'provinceName' },
       { title: '城市', key: 'cityName' },
       { title: '地址', key: 'tenantAddress' },
@@ -80,7 +78,10 @@ export default {
     },
     update (params) {
       tenantView(params.row.tenantId).then(res => {
-        this.editData = res.data
+        const tenant = res.data
+        const placeCode = tenant.provinceCode + ',' + tenant.cityCode
+        tenant.placeCode = placeCode
+        this.editData = tenant
         this.showEdit = true
       })
     },
