@@ -7,6 +7,11 @@ import { post, get } from '@/config/http'
 export const tenantView = (id) => get('/manage/tenant/' + id)
 
 /**
+ * 选择列表查询
+ */
+export const loadTenants = () => get('/manage/select/tenants')
+
+/**
   * 新增
   */
 export const tenantAdd = (data) => post('/manage/tenant/add', data)

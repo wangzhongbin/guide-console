@@ -6,8 +6,6 @@
 </template>
 <script>
 
-import { loadProvinces } from '@/api/common'
-
 import { tenantView, tenantAdd, tenantUpdate, tenantRemove } from '@/api/trade/tenant'
 
 export default {
@@ -40,19 +38,14 @@ export default {
     }
   },
   created () {
-    loadProvinces().then(res => {
-      const provinces = res.data.map(e => {
-        return { value: e.code, label: e.name }
-      })
-      this.queryForms.push({ title: '租户名称', key: 'tenantName' })
-      this.queryForms.push({ title: '手机号码', key: 'phoneNo' })
-      this.queryForms.push({ title: '省份', key: 'provinceCode', type: 'select', options: provinces })
-      this.editForms.push({ title: '租户名称', key: 'tenantName', required: true, span: 2 })
-      this.editForms.push({ title: '手机号码', key: 'phoneNo', required: true, span: 2 })
-      this.editForms.push({ title: '所在地', key: 'placeCode', type: 'place', required: true, span: 2 })
-      this.editForms.push({ title: '联系人姓名', key: 'contacts', span: 2 })
-      this.editForms.push({ title: '地址', key: 'tenantAddress', span: 1 })
-    })
+    this.queryForms.push({ title: '租户名称', key: 'tenantName' })
+    this.queryForms.push({ title: '手机号码', key: 'phoneNo' })
+    this.queryForms.push({ title: '省份', key: 'placeCode', type: 'place', level: 1 })
+    this.editForms.push({ title: '租户名称', key: 'tenantName', required: true, span: 2 })
+    this.editForms.push({ title: '手机号码', key: 'phoneNo', required: true, span: 2 })
+    this.editForms.push({ title: '所在地市', key: 'placeCode', type: 'place', level: 2, required: true, span: 2 })
+    this.editForms.push({ title: '联系人姓名', key: 'contacts', required: true, span: 2 })
+    this.editForms.push({ title: '地址', key: 'tenantAddress', required: true, span: 1 })
   },
   methods: {
     loadData () {

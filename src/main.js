@@ -48,7 +48,7 @@ Vue.prototype.$TableColumns = getColumn
 Vue.prototype.$FormatTime = FormatTime
 Vue.prototype.$ShowImage = (uri) => {
   if (uri) {
-    const domain = 'https://oss.iqqqqq.com/'
+    const domain = 'https://oss.test.langyuyun.com/'
     return domain + uri
   } else {
     return ''
@@ -142,7 +142,7 @@ Vue.use(ViewUI)
 
 Vue.filter('showImage', (uri) => {
   if (uri) {
-    const domain = 'https://oss.iqqqqq.com/'
+    const domain = 'https://oss.test.langyuyun.com/'
     return domain + uri
   } else {
     return ''

@@ -3,12 +3,12 @@
     <div v-if="multiple">
       <Button loading v-if="loading" class="box">正在上传中...</Button>
       <Upload class="box" v-else :max-size="1024 * 2" :accept="accept" :format="format" :on-format-error="handleFormatError" :show-upload-list="false" :action="uploadUrl" :headers="uploadHeaders" :data="uploadData" :on-progress="uploadProgress" :on-success="uploadSuccess" :on-exceeded-size="handleMaxSize">
-        <Button icon="md-cloud-upload">选择图片（可上传多张）</Button>
+        <Button icon="md-cloud-upload">{{ type | uploadText(multiple)}}</Button>
       </Upload>
       <div class="box" v-if="values && values.length > 0">
         <div class="item-box inline-box" v-for="(item, index) in values" :key="index">
-          <MediaShow :src="item" class="box" />
-          <Poptip class="box" transfer confirm title="确认删除该投图片?" @on-ok="del(index)">
+          <MediaShow :src="item" :type="type" class="box" />
+          <Poptip class="box" transfer confirm title="确认删除?" @on-ok="del(index)">
             <Icon type="md-close-circle" size="20" />
           </Poptip>
         </div>
@@ -17,11 +17,11 @@
     <div v-else>
       <Button loading v-if="loading" class="box">正在上传中...</Button>
       <Upload class="box" v-else :max-size="1024 * 2" :accept="accept" :format="format" :on-format-error="handleFormatError" :show-upload-list="false" :action="uploadUrl" :headers="uploadHeaders" :data="uploadData" :on-progress="uploadProgress" :on-success="uploadSuccess" :on-exceeded-size="handleMaxSize">
-        <Button icon="md-cloud-upload">选择图片</Button>
+        <Button icon="md-cloud-upload">{{ type | uploadText}}</Button>
       </Upload>
       <div class="box inline-box" v-show="value">
-        <MediaShow :src="value" class="box" />
-        <Poptip class="box" transfer confirm title="确认删除该投图片?" @on-ok="del()">
+        <MediaShow :src="value" :type="type" class="box" />
+        <Poptip class="box" transfer confirm title="确认删除?" @on-ok="del()">
           <Icon type="md-close-circle" size="20" />
         </Poptip>
       </div>
@@ -44,6 +44,11 @@ export default {
     }
   },
   props: {
+    /** 1-图片 2-音频 3-视频 */
+    type: {
+      type: Number,
+      default: () => (1)
+    },
     multiple: Boolean,
     value: String
   },
@@ -57,13 +62,15 @@ export default {
       }
     },
     format () {
-      return ['jpg', 'jpeg', 'gif', 'png']
+      // return ['jpg', 'jpeg', 'gif', 'png']
+      return []
     },
     accept () {
-      return 'jpg,jpeg,gif,png'
+      // return 'jpg,jpeg,gif,png'
+      return ''
     },
     uploadHeaders () {
-      return { token: getToken() }
+      return { Authorization: 'Bearer ' + getToken() }
     },
     uploadData () {
       return { fileKey: 'file' }
@@ -93,18 +100,34 @@ export default {
     },
     uploadSuccess (res) {
       this.loading = false
-      if (res.code === 1) {
+      if (res.code === 200) {
         this.$Message.success('上传成功')
         if (this.multiple && this.value) {
           const values = this.value.split(',')
-          values.push(res.data.uri)
+          values.push(res.data.fileName)
           this.$emit('success', values.join(','))
         } else {
-          this.$emit('success', res.data.uri)
+          this.$emit('success', res.data.fileName)
         }
       } else {
         this.$Message.error('上传失败')
       }
+    }
+  },
+  filters: {
+    uploadText (type, multiple) {
+      let text = ''
+      if (type === 1) {
+        text = '选择图片'
+      } else if (type === 2) {
+        text = '选择音频'
+      } else if (type === 3) {
+        text = '选择视频'
+      }
+      if (multiple) {
+        text = text + '（可上传多个）'
+      }
+      return text
     }
   }
 }

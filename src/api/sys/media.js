@@ -1,2 +1,2 @@
 
-export const uploadApi = () => '/api/sys/media/upload'
+export const uploadApi = () => '/api/resource/upload/file'

@@ -4,7 +4,7 @@ import { loadCurrentAccount, loadCurrentMenus } from '@/api/sys/account'
 
 import store from '@/store'
 
-import { getToken } from '@/cookie'
+import { getToken, getMultiTenant } from '@/cookie'
 
 const whiteList = ['/login']
 
@@ -16,7 +16,9 @@ router.beforeEach((to, from, next) => {
     } else {
       if (store.state.menu.routes.length === 0) {
         Promise.all([loadCurrentAccount(), loadCurrentMenus()]).then(res => {
-          const promiseAccount = store.dispatch('account/saveAccount', res[0].data.user)
+          const user = res[0].data.user
+          user.multiTenant = getMultiTenant()
+          const promiseAccount = store.dispatch('account/saveAccount', user)
           const promiseMenu = store.dispatch('menu/generateRoutes', res[1])
           Promise.all([promiseMenu, promiseAccount]).then(res => {
             router.addRoutes(res[0])

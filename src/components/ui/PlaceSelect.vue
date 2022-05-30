@@ -3,8 +3,7 @@
 </template>
 <script>
 
-// import { loadProvinces, loadCitys, loadCountys } from '@/api/common'
-import { loadProvinces, loadCitys } from '@/api/common'
+import { loadProvinces, loadCitys, loadCountys } from '@/api/common'
 
 export default {
   name: 'PlaceSelect',
@@ -18,6 +17,7 @@ export default {
     }
   },
   props: {
+    level: Number,
     value: String
   },
   computed: {
@@ -32,7 +32,11 @@ export default {
   created () {
     loadProvinces().then(res => {
       this.data = res.data.map(e => {
-        return { code: e.code, value: e.code, label: e.name, level: 1, children: [], loading: false }
+        if (this.level === 1) {
+          return { code: e.code, value: e.code, label: e.name, level: 1 }
+        } else {
+          return { code: e.code, value: e.code, label: e.name, level: 1, children: [], loading: false }
+        }
       })
     })
   },
@@ -42,7 +46,11 @@ export default {
       if (item.level === 1) {
         loadCitys({ provinceCode: item.code }).then(res => {
           item.children = res.data.map(e => {
-            return { code: e.code, value: e.code, label: e.name, level: 2 }
+            if (this.level === 2) {
+              return { code: e.code, value: e.code, label: e.name, level: 2 }
+            } else {
+              return { code: e.code, value: e.code, label: e.name, level: 2, children: [], loading: false }
+            }
           })
           item.loading = false
           callback()
@@ -51,18 +59,18 @@ export default {
           callback()
         })
       }
-      // if (item.level === 2) {
-      //   loadCountys({ cityCode: item.code }).then(res => {
-      //     item.children = res.data.map(e => {
-      //       return { code: e.code, value: e.code, label: e.name }
-      //     })
-      //     item.loading = false
-      //     callback()
-      //   }).catch(() => {
-      //     item.loading = false
-      //     callback()
-      //   })
-      // }
+      if (item.level === 2) {
+        loadCountys({ cityCode: item.code }).then(res => {
+          item.children = res.data.map(e => {
+            return { code: e.code, value: e.code, label: e.name }
+          })
+          item.loading = false
+          callback()
+        }).catch(() => {
+          item.loading = false
+          callback()
+        })
+      }
     },
     change (values) {
       this.$emit('change', values.join(','))

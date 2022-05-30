@@ -33,7 +33,7 @@
             <Input v-model="editData[item.key]" type="number" :placeholder="item.title | placeholderText(item.type)" />
           </div>
           <div v-else-if="item.type === 'file'">
-            <MediaUpload v-model="editData[item.key]" :multiple="item.multiple" />
+            <MediaUpload v-model="editData[item.key]" :multiple="item.multiple" :type="item.fileType" />
           </div>
           <div v-else-if="item.type === 'password'">
             <Input v-model="editData[item.key]" type="password" :disabled="item.disabled" :placeholder="item.title | placeholderText(item.type)" :clearable="true" />
@@ -45,7 +45,7 @@
             <MediaShow :src="editData[item.key]" width="100" height="100" />
           </div>
           <div v-else-if="item.type === 'place'">
-            <PlaceSelect v-model="editData[item.key]" />
+            <PlaceSelect v-model="editData[item.key]" :level="item.level" />
           </div>
           <div v-else>
             <Input v-model="editData[item.key]" :disabled="item.disabled" :placeholder="item.title | placeholderText(item.type)" :clearable="true" />

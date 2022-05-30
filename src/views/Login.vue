@@ -66,7 +66,7 @@ export default {
       }
       login({ uuid, code, userName, password }).then(res => {
         this.$Message.success('登录成功')
-        setToken(res.data.access_token, res.data.expires_in)
+        setToken(res.data.access_token, res.multiTenant, res.data.expires_in)
         this.$router.push({ path: '/' })
       }).catch(() => { this.refreshCode() })
     }

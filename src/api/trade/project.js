@@ -7,6 +7,11 @@ import { post, get } from '@/config/http'
 export const projectView = (id) => get('/manage/project/' + id)
 
 /**
+ * 选择列表查询
+ */
+export const loadProjects = () => get('/manage/select/projects')
+
+/**
   * 新增
   */
 export const projectAdd = (data) => post('/manage/project/add', data)

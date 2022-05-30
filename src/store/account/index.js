@@ -4,6 +4,7 @@ import mutations from './mutations'
 import { SET_ACCOUNT } from './constants'
 
 const state = {
+  multiTenant: false,
   userId: '',
   deptId: '',
   tenantId: '',

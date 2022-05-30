@@ -1,8 +1,13 @@
 <template>
   <div>
     <div class="inline-box">
-      <div class="image-box" v-for="(item, index) in images" :key="index" :style="{width: width ? width + 'px' : '60px', height: height ? height + 'px' : '60px'}">
-        <img @click="previewImage(item)" :src="item | showUrl" :width="width" :height="height" />
+      <div v-if="type === 1">
+        <div class="image-box" v-for="(item, index) in medias" :key="index" :style="{width: width ? width + 'px' : '60px', height: height ? height + 'px' : '60px'}">
+          <img @click="previewImage(item)" :src="item | showUrl" :width="width" :height="height" />
+        </div>
+      </div>
+      <div v-else-if="type === 2">
+        <audio class="audio-box" :src="src | showUrl" controls />
       </div>
     </div>
     <Modal v-model="show" width="1000" :footer-hide="true">
@@ -16,6 +21,10 @@
 
 export default {
   props: {
+    type: {
+      type: Number,
+      default: () => (1)
+    },
     src: String,
     width: [String, Number],
     height: [String, Number]
@@ -28,15 +37,15 @@ export default {
     }
   },
   computed: {
-    images: (me) => {
+    medias: (me) => {
       if (me.src) {
-        let images = []
+        let medias = []
         if (me.src.indexOf(',') === -1) {
-          images = [me.src]
+          medias = [me.src]
         } else {
-          images = me.src.split(',')
+          medias = me.src.split(',')
         }
-        return images
+        return medias
       } else {
         return []
       }
@@ -50,7 +59,7 @@ export default {
   },
   filters: {
     showUrl (src) {
-      if (src) return 'https://oss.iqqqqq.com/' + src
+      if (src) return 'https://oss.test.langyuyun.com/' + src
       else return ''
     }
   }
@@ -70,5 +79,9 @@ img {
 .big-image {
   padding: 16px;
   width: 960px;
+}
+.audio-box {
+  width: 360px;
+  height: 40px;
 }
 </style>

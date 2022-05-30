@@ -1,10 +1,12 @@
 <template>
   <div>
     <ViewPage ref="view-page" :url="url" :buttons="buttons" :query-forms="queryForms" :columns="columns" :actions="actions" />
-    <ProjectEdit v-model="showEdit" :project-id="roleId" @success="loadData" :map-type-options="mapTypeOptions" :language-options="languageOptions" />
+    <ProjectEdit v-model="showEdit" :project-id="projectId" @success="loadData" :tenant-options="tenantOptions" :type-options="typeOptions" :map-type-options="mapTypeOptions" :language-options="languageOptions" />
   </div>
 </template>
 <script>
+
+import { loadTenants } from '@/api/trade/tenant'
 
 import MediaShow from '@/components/ui/MediaShow'
 
@@ -16,6 +18,9 @@ import { projectView, projectRemove, changeStatus } from '@/api/trade/project'
 
 export default {
   components: { ProjectEdit },
+  computed: {
+    multiTenant: (me) => me.$store.state.account.multiTenant
+  },
   data () {
     const actions = [
       { button: 'update', click: (params) => { this.update(params) } },
@@ -38,22 +43,27 @@ export default {
       // showView: false,
       // viewData: {},
       queryForms: [],
-      buttons: [{ type: 'primary', fun: () => { this.projectId = 0; this.showEdit = true }, icon: 'md-add', name: '新增租户' }],
+      buttons: [{ type: 'primary', fun: () => { this.projectId = 0; this.showEdit = true }, icon: 'md-add', name: '新增项目' }],
       actions,
       columns,
-      mapTypeOptions: [{ value: 0, label: '手绘图' }, { value: 1, label: '图片' }, { value: 1, label: '3D' }],
+      tenantOptions: [],
+      mapTypeOptions: [{ value: 0, label: '手绘图' }, { value: 1, label: '图片' }, { value: 2, label: '3D' }],
       typeOptions: [{ value: 0, label: '景区' }, { value: 1, label: '商场' }],
       languageOptions: [{ value: 1, label: '中文' }, { value: 2, label: '英文' }, { value: 3, label: '俄文' }, { value: 4, label: '日文' }, { value: 5, label: '韩文' }]
     }
   },
   created () {
-    // loadProvinces().then(res => {
-    //   const provinces = res.data.map(e => {
-    //     return { value: e.code, label: e.name }
-    //   })
-    //   this.queryForms.push({ title: '省份', key: 'provinceCode', type: 'select', options: provinces })
-    // })
-    this.queryForms.push({ title: '项目名称', key: 'projectName' })
+    loadTenants().then(res => {
+      const tenants = res.data && res.data.length > 0 ? res.data.map(e => {
+        return { value: e.tenantId, label: e.tenantName }
+      }) : []
+      this.queryForms.push({ title: '项目名称', key: 'projectName' })
+      this.queryForms.push({ title: '租户', key: 'tenantId', type: 'select', options: tenants })
+      if (this.multiTenant) {
+        this.queryForms.push({ title: '租户', key: 'tenantId', type: 'select', options: tenants })
+      }
+      this.tenantOptions = tenants
+    })
   },
   methods: {
     loadData () {

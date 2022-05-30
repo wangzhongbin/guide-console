@@ -62,5 +62,45 @@ export const menuData = [{
     component: 'trade/project/Index',
     code: 'tradeProject',
     label: '项目管理'
+  }, {
+    id: 202,
+    parentId: 2,
+    sort: 3,
+    icon: 'user',
+    name: '点位管理',
+    path: '/trade/point',
+    component: 'trade/point/Index',
+    code: 'tradePoint',
+    label: '点位管理'
+  }, {
+    id: 203,
+    parentId: 2,
+    sort: 4,
+    icon: 'user',
+    name: '线路管理',
+    path: '/trade/line',
+    component: 'trade/line/Index',
+    code: 'tradeLine',
+    label: '线路管理'
+  }, {
+    id: 204,
+    parentId: 2,
+    sort: 5,
+    icon: 'user',
+    name: '分类管理',
+    path: '/trade/classify',
+    component: 'trade/classify/Index',
+    code: 'tradeClassify',
+    label: '分类管理'
+  }, {
+    id: 205,
+    parentId: 2,
+    sort: 6,
+    icon: 'user',
+    name: '标签管理',
+    path: '/trade/label',
+    component: 'trade/label/Index',
+    code: 'tradeLabel',
+    label: '标签管理'
   }]
 }]
