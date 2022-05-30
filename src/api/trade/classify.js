@@ -7,6 +7,11 @@ import { post, get } from '@/config/http'
 export const classifyView = (id) => get('/manage/classify/' + id)
 
 /**
+ * 选择列表查询
+ */
+export const loadClassifys = () => get('/manage/select/classifys')
+
+/**
   * 新增
   */
 export const classifyAdd = (data) => post('/manage/classify/add', data)

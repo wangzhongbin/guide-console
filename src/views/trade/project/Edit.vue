@@ -33,6 +33,7 @@ export default {
       this.data = {}
       if (val) {
         projectView(val).then(res => {
+          this.data = res.data
         })
       }
     }
