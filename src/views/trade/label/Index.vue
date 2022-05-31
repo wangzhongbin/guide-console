@@ -17,7 +17,7 @@ export default {
       { button: 'remove', click: (params) => this.remove(params) }]
     const columns = [
       { title: '标签名称', key: 'labelName' },
-      { title: '语言', width: 100, render: (h, params) => this.$ColumnDictText(h, params.row.language, this.languageOptions) }]
+      { title: '语言', width: 100, key: 'language' }]
     return {
       url: '/manage/label/list',
       showEdit: false,
@@ -26,19 +26,18 @@ export default {
       queryForms: [],
       buttons: [{ type: 'primary', fun: () => { this.editData = {}; this.showEdit = true }, icon: 'md-add', name: '新增标签' }],
       actions,
-      columns,
-      languageOptions: [{ value: 1, label: '中文' }, { value: 2, label: '英文' }, { value: 3, label: '俄文' }, { value: 4, label: '日文' }, { value: 5, label: '韩文' }]
+      columns
     }
   },
   created () {
     loadProjects().then(res => {
       const projects = res.data && res.data.length > 0 ? res.data.map(e => { return { value: e.projectId + '', label: e.projectName } }) : []
       this.queryForms.push({ title: '项目', key: 'projectId', type: 'select', options: projects })
-      this.queryForms.push({ title: '语言', key: 'language', type: 'select', options: this.languageOptions })
+      this.queryForms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions })
 
       this.editForms.push({ title: '项目', key: 'projectId', type: 'select', options: projects })
       this.editForms.push({ title: '标签名称', key: 'labelName', required: true })
-      this.editForms.push({ title: '语言', type: 'select', key: 'language', required: true, options: this.languageOptions })
+      this.editForms.push({ title: '语言', type: 'select', key: 'language', required: true, options: this.$LanguageOptions })
     })
   },
   methods: {

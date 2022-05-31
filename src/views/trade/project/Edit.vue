@@ -16,8 +16,7 @@ export default {
     projectId: Number,
     tenantOptions: Array,
     typeOptions: Array,
-    mapTypeOptions: Array,
-    languageOptions: Array
+    mapTypeOptions: Array
   },
   computed: {
     multiTenant: (me) => me.$store.state.account.multiTenant
@@ -43,17 +42,17 @@ export default {
       this.forms.push({ title: '租户', key: 'tenantId', type: 'select', options: this.tenantOptions, required: true, span: 1 })
     }
     this.forms.push({ title: '项目名称', key: 'projectName', required: true, span: 2 })
-    this.forms.push({ title: '行业类型', key: 'projectType', type: 'select', options: this.typeOptions, required: true, span: 2 })
+    this.forms.push({ title: '行业类型', key: 'projectType', type: 'radio', options: this.typeOptions, required: true, span: 2 })
     this.forms.push({ title: '所在地', key: 'placeCode', type: 'place', level: 3, required: true, span: 2 })
-    this.forms.push({ title: '行业类型', key: 'mapShowType', type: 'select', options: this.mapTypeOptions, required: true, span: 2 })
+    this.forms.push({ title: '行业类型', key: 'mapShowType', type: 'radio', options: this.mapTypeOptions, required: true, span: 2 })
     this.forms.push({ title: '运营时间', key: 'openingHours', required: true, span: 2 })
     this.forms.push({ title: '热线电话', key: 'hotline', required: true, span: 2 })
-    this.forms.push({ title: '语言', key: 'language', type: 'select', options: this.languageOptions, required: true, span: 2 })
+    this.forms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions, required: true, span: 2 })
     this.forms.push({ title: '地址', key: 'address', required: true, span: 2 })
     this.forms.push({ title: '项目logo', key: 'projectLogo', type: 'file', fileType: 1, span: 1, required: true })
     this.forms.push({ title: '语音介绍', key: 'voiceExplain', type: 'file', fileType: 2, span: 1, required: true })
-    this.forms.push({ title: '详情描述', key: 'details', required: true, span: 1 })
     this.forms.push({ title: '地图地址', key: 'mapUrl', required: true, span: 1 })
+    this.forms.push({ title: '详情描述', key: 'details', type: 'textarea', required: true, span: 1 })
     this.forms.push({ line: true, title: '安卓端地图参数设置', show: () => true })
     this.forms.push({ title: '默认层级', key: 'androidDefaultRank', type: 'int', required: true, span: 3 })
     this.forms.push({ title: '最大层级', key: 'androidMaxRank', type: 'int', required: true, span: 3 })

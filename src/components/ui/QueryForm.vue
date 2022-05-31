@@ -21,8 +21,14 @@
       <div class="item-content item-content_tree" v-else-if="item.type === 'tree' && item.options && item.options.length > 0">
         <SelectTree v-model="queryData[item.key]" :load-data="item.loadData" :options="item.options" :placeholder="item.title | placeholderText(item.type)" />
       </div>
-      <div class="item-content item-content_tree" v-else-if="item.type === 'place'">
-        <PlaceSelect v-model="queryData[item.key]" :level="item.level" />
+      <div class="item-content" v-else-if="item.type === 'place'">
+        <SelectPlace v-model="queryData[item.key]" :level="item.level" />
+      </div>
+      <div class="item-content" v-else-if="item.type === 'classify'">
+        <SelectClassify v-model="queryData[item.key]" :project-id="queryData.projectId" :language="queryData.language" />
+      </div>
+      <div class="item-content" v-else-if="item.type === 'label'">
+        <SelectLabel v-model="queryData[item.key]" :project-id="queryData.projectId" :language="queryData.language" />
       </div>
       <div class="item-content" v-else>
         <Input v-model="queryData[item.key]" :placeholder="item.title | placeholderText(item.type)" :clearable="true" />

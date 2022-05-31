@@ -1,10 +1,7 @@
-import { SET_MERCHANTS, EMPTY_MERCHANTS } from './constants'
+import { SET_DOMAIN } from './constants'
 
 export default {
-  [SET_MERCHANTS] (state, merchants) {
-    state.merchants = merchants
-  },
-  [EMPTY_MERCHANTS] (state, merchants) {
-    state.merchants = []
+  [SET_DOMAIN] (state, data) {
+    state.ossDomain = data
   }
 }

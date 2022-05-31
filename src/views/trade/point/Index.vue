@@ -1,8 +1,7 @@
 <template>
   <div>
     <ViewPage ref="view-page" :url="url" :buttons="buttons" :query-forms="queryForms" :columns="columns" :actions="actions" />
-    <EditModal :title="editData.id ? '修改分类' : '新增分类'" :forms="editForms" :edit-data="editData" @ok="ok" v-model="showEdit" />
-    <PointEdit v-model="showEdit" :point-id="pointId" @success="loadData" :project-options="projectOptions" :classify-options="classifyOptions" :language-options="languageOptions" />
+    <PointEdit v-model="showEdit" :point-id="pointId" :language="language" @success="loadData" :project-options="projectOptions" />
   </div>
 </template>
 <script>
@@ -10,8 +9,6 @@
 import MediaShow from '@/components/ui/MediaShow'
 
 import { loadProjects } from '@/api/trade/project'
-
-import { loadClassifys } from '@/api/trade/classify'
 
 import { pointRemove } from '@/api/trade/point'
 
@@ -31,30 +28,27 @@ export default {
       { title: '楼层', key: 'targetFloor' },
       { title: '点位显示层级', key: 'displayRank' },
       { title: '点位图标', width: 100, render: (h, params) => h(MediaShow, { props: { src: params.row.targetIcon } }) },
-      { title: '语言', width: 100, render: (h, params) => this.$ColumnDictText(h, params.row.language, this.languageOptions) }]
+      { title: '语言', width: 100, key: 'languagesName' }]
     return {
-      url: '/manage/point/list',
+      url: '/manage/projectTarget/list',
       showEdit: false,
       pointId: 0,
+      language: 0,
       queryForms: [],
-      buttons: [{ type: 'primary', fun: () => { this.pointId = 0; this.showEdit = true }, icon: 'md-add', name: '新增点位' }],
+      buttons: [{ type: 'primary', fun: () => { this.pointId = 0; this.language = 0; this.showEdit = true }, icon: 'md-add', name: '新增点位' }],
       actions,
       columns,
-      projectOptions: [],
-      classifyOptions: [],
-      languageOptions: [{ value: 1, label: '中文' }, { value: 2, label: '英文' }, { value: 3, label: '俄文' }, { value: 4, label: '日文' }, { value: 5, label: '韩文' }]
+      projectOptions: []
     }
   },
   created () {
-    Promise.all([loadProjects(), loadClassifys()]).then(res => {
-      const projects = res[0].data && res[0].data.length > 0 ? res[0].data.map(e => { return { value: e.projectId + '', label: e.projectName } }) : []
-      const classifys = res[1].data && res[1].data.length > 0 ? res[1].data.map(e => { return { value: e.classifyId + '', label: e.classifyName } }) : []
+    loadProjects().then(res => {
+      const projects = res.data && res.data.length > 0 ? res.data.map(e => { return { value: e.projectId + '', label: e.projectName } }) : []
       this.projectOptions = projects
-      this.classifyOptions = classifys
-      this.queryForms.push({ title: '项目', key: 'projectId', type: 'select', options: projects })
-      this.queryForms.push({ title: '分类', key: 'classifyId', type: 'select', options: classifys })
       this.queryForms.push({ title: '点位名称', key: 'targetName' })
-      this.queryForms.push({ title: '语言', key: 'language', type: 'select', options: this.languageOptions })
+      this.queryForms.push({ title: '项目', key: 'projectId', type: 'select', options: projects })
+      this.queryForms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions })
+      this.queryForms.push({ title: '分类', key: 'classifyId', type: 'classify' })
     })
   },
   methods: {
@@ -63,6 +57,7 @@ export default {
     },
     update (params) {
       this.pointId = params.row.id
+      this.language = params.row.language
       this.showEdit = true
     },
     remove (params) {

@@ -1,37 +1,13 @@
 <template>
   <EditModal :title="data.id ? '修改项目' : '新增项目'" :forms="forms" :edit-data="data" @close="close" @ok="ok" :show="show">
-    <div class="group-box" v-show="items.length > 0">
-      <div class="box" v-for="(item, index) in items" :key="index">
-        <div class="box inline-box">
-          <Poptip transfer confirm title="确认删除?" @on-ok="delItem(index)">
-            <Button type="error">删除</Button>
-          </Poptip>
-          <div class="text-title-small text-center" style="width:80px">素材{{index + 1}}</div>
-          <RadioGroup transfer v-model="item.resourceType">
-            <Radio border :label="1">图片</Radio>
-            <Radio border :label="2">语音</Radio>
-            <Radio border :label="3">视频</Radio>
-          </RadioGroup>
-        </div>
-        <div class="box" v-show="item.resourceType" style="padding-left: 140px;">
-          <MediaUploadPoint :type="item.resourceType" v-model="items[index]" />
-        </div>
-        <Divider />
-      </div>
-    </div>
-    <div class="group-box">
-      <Button type="success" @click="addItem">新增素材</Button>
-    </div>
+
   </EditModal>
 </template>
 <script>
 
 import { pointView, pointAdd, pointUpdate } from '@/api/trade/point'
 
-import MediaUploadPoint from './MediaUploadPoint'
-
 export default {
-  components: { MediaUploadPoint },
   model: {
     prop: 'show',
     event: 'change'

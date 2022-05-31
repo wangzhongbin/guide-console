@@ -9,7 +9,7 @@ import { Message, LoadingBar } from 'view-design'
 
 import { getToken, removeToken } from '@/cookie'
 
-const baseURL = process.env.NODE_ENV === 'production' ? '/api' : '/api'
+const baseURL = process.env.NODE_ENV === 'production' ? '/' : '/api'
 
 axios.defaults.baseURL = baseURL
 axios.defaults.withCredentials = true

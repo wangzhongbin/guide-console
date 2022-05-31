@@ -7,6 +7,11 @@ import { post, get } from '@/config/http'
 export const labelView = (id) => get('/manage/label/' + id)
 
 /**
+ * 选择列表查询
+ */
+export const loadLabels = (data) => get('/manage/select/label', data)
+
+/**
   * 新增
   */
 export const labelAdd = (data) => post('/manage/label/add', data)

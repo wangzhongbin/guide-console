@@ -1,15 +1,15 @@
 
-import { SET_MERCHANTS } from './constants'
+import { SET_DOMAIN } from './constants'
 
 import mutations from './mutations'
 
 const state = {
-  merchants: []
+  ossDomain: []
 }
 
 const actions = {
-  setMerchants ({ commit }, merchants) {
-    commit(SET_MERCHANTS, merchants)
+  setDomain ({ commit }, data) {
+    commit(SET_DOMAIN, data)
   }
 }
 

@@ -17,10 +17,12 @@ router.beforeEach((to, from, next) => {
       if (store.state.menu.routes.length === 0) {
         Promise.all([loadCurrentAccount(), loadCurrentMenus()]).then(res => {
           const user = res[0].data.user
+          const ossDomain = res[0].data.ossDomain
           user.multiTenant = getMultiTenant()
           const promiseAccount = store.dispatch('account/saveAccount', user)
           const promiseMenu = store.dispatch('menu/generateRoutes', res[1])
-          Promise.all([promiseMenu, promiseAccount]).then(res => {
+          const promiseDomain = store.dispatch('info/setDomain', ossDomain)
+          Promise.all([promiseMenu, promiseAccount, promiseDomain]).then(res => {
             router.addRoutes(res[0])
             next({ path: to.path })
           })

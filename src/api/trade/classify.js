@@ -9,7 +9,7 @@ export const classifyView = (id) => get('/manage/classify/' + id)
 /**
  * 选择列表查询
  */
-export const loadClassifys = () => get('/manage/select/classifys')
+export const loadClassifys = (data) => get('/manage/select/classify', data)
 
 /**
   * 新增

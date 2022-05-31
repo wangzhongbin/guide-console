@@ -3,16 +3,16 @@
     <div class="inline-box">
       <div v-if="type === 1">
         <div class="image-box" v-for="(item, index) in medias" :key="index" :style="{width: width ? width + 'px' : '60px', height: height ? height + 'px' : '60px'}">
-          <img @click="previewImage(item)" :src="item | showUrl" :width="width" :height="height" />
+          <img @click="previewImage(item)" :src="item | showUrl(ossDomain)" :width="width" :height="height" />
         </div>
       </div>
       <div v-else-if="type === 2">
-        <audio class="audio-box" :src="src | showUrl" controls />
+        <audio v-show="src" class="audio-box" :src="src | showUrl(ossDomain)" controls />
       </div>
     </div>
     <Modal v-model="show" width="1000" :footer-hide="true">
       <div class="big-image">
-        <img :src="bigImage | showUrl" object-fit="scale-down">
+        <img :src="bigImage | showUrl(ossDomain)" object-fit="scale-down">
       </div>
     </Modal>
   </div>
@@ -37,6 +37,7 @@ export default {
     }
   },
   computed: {
+    ossDomain: (me) => me.$store.state.info.ossDomain,
     medias: (me) => {
       if (me.src) {
         let medias = []
@@ -58,8 +59,8 @@ export default {
     }
   },
   filters: {
-    showUrl (src) {
-      if (src) return 'https://oss.test.langyuyun.com/' + src
+    showUrl (src, ossDomain) {
+      if (src) return ossDomain + '/' + src
       else return ''
     }
   }

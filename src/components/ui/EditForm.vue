@@ -45,7 +45,13 @@
             <MediaShow :src="editData[item.key]" width="100" height="100" />
           </div>
           <div v-else-if="item.type === 'place'">
-            <PlaceSelect v-model="editData[item.key]" :level="item.level" />
+            <SelectPlace v-model="editData[item.key]" :level="item.level" />
+          </div>
+          <div v-else-if="item.type === 'classify'">
+            <SelectClassify v-model="editData[item.key]" :project-id="editData.projectId" :language="editData.language" />
+          </div>
+          <div v-else-if="item.type === 'label'">
+            <SelectLabel v-model="editData[item.key]" :project-id="editData.projectId" :language="editData.language" />
           </div>
           <div v-else>
             <Input v-model="editData[item.key]" :disabled="item.disabled" :placeholder="item.title | placeholderText(item.type)" :clearable="true" />

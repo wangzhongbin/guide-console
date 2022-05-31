@@ -6,7 +6,7 @@
 import { loadProvinces, loadCitys, loadCountys } from '@/api/common'
 
 export default {
-  name: 'PlaceSelect',
+  name: 'SelectPlace',
   model: {
     prop: 'value',
     event: 'change'

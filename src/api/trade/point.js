@@ -4,7 +4,7 @@ import { post, get } from '@/config/http'
 /**
  * 详情查询
  */
-export const pointView = (id) => get('/manage/projectTarget/' + id)
+export const pointView = (data) => get('/manage/projectTarget/info', data)
 
 /**
   * 新增

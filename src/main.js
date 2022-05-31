@@ -22,7 +22,9 @@ import EditFormItem from '@/components/ui/EditFormItem'
 import EditFormDivider from '@/components/ui/EditFormDivider'
 import ViewPage from '@/components/ui/ViewPage'
 import SelectTree from '@/components/ui/SelectTree'
-import PlaceSelect from '@/components/ui/PlaceSelect'
+import SelectPlace from '@/components/ui/SelectPlace'
+import SelectClassify from '@/components/ui/SelectClassify'
+import SelectLabel from '@/components/ui/SelectLabel'
 import ViewItem from '@/components/ui/ViewItem'
 
 import * as echarts from 'echarts'
@@ -39,7 +41,9 @@ Vue.component('EditFormItem', EditFormItem)
 Vue.component('EditFormDivider', EditFormDivider)
 Vue.component('ViewPage', ViewPage)
 Vue.component('SelectTree', SelectTree)
-Vue.component('PlaceSelect', PlaceSelect)
+Vue.component('SelectPlace', SelectPlace)
+Vue.component('SelectClassify', SelectClassify)
+Vue.component('SelectLabel', SelectLabel)
 Vue.component('ViewItem', ViewItem)
 
 Vue.config.productionTip = false
@@ -94,30 +98,18 @@ Vue.prototype.$TimeText = (h, time) => {
   return FormatTime.timeText(time)
 }
 
-const orderStatusDict = [
-  { value: 11, label: '待支付' },
-  { value: 12, label: '已关闭' },
-  { value: 20, label: '待发货' },
-  { value: 21, label: '待收货' },
-  { value: 80, label: '已完成' }]
+const languageOptions = [
+  { value: 1, label: '中文' },
+  { value: 2, label: '英文' },
+  { value: 3, label: '俄文' },
+  { value: 4, label: '日文' },
+  { value: 5, label: '韩文' }]
 
-const refundStatusDict = [
-  { value: 1, label: '退款申请' },
-  { value: 2, label: '退款发起' },
-  { value: 9, label: '退款取消' },
-  { value: 8, label: '已退款' }]
+Vue.prototype.$LanguageOptions = languageOptions
 
-Vue.prototype.$OrderStatusDict = orderStatusDict
-Vue.prototype.$RefundStatusDict = refundStatusDict
-
-Vue.prototype.$ColumnOrderStatusText = (h, val) => {
-  const dict = orderStatusDict.find(e => e.value === val)
-  return h('span', dict.label)
-}
-
-Vue.prototype.$ColumnRefundStatusText = (h, val) => {
-  const dict = refundStatusDict.find(e => e.value === val)
-  return h('span', dict.label)
+Vue.prototype.$ColumnLanguageText = (h, val) => {
+  const dict = languageOptions.find(e => e.value === val)
+  return h('span', dict ? dict.label : '')
 }
 
 Vue.prototype.$ColumnDecimal = (h, val) => {
@@ -182,24 +174,6 @@ Vue.filter('decimal', (val) => {
     text = '0.00'
   }
   return text
-})
-
-Vue.filter('orderStatusText', (val) => {
-  if (val) {
-    const dict = orderStatusDict.find(e => e.value === val)
-    return dict ? dict.label : ''
-  } else {
-    return ''
-  }
-})
-
-Vue.filter('refundStatusText', (val) => {
-  if (val) {
-    const dict = refundStatusDict.find(e => e.value === val)
-    return dict ? dict.label : ''
-  } else {
-    return ''
-  }
 })
 
 new Vue({

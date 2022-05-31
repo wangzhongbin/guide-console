@@ -78,8 +78,6 @@ import { EMPTY_ACCOUNT } from '@/store/account/constants'
 
 import { EMPTY_DICT } from '@/store/dict/constants'
 
-import { EMPTY_MERCHANTS } from '@/store/info/constants'
-
 import { removeToken } from '@/cookie'
 
 import { changePassword } from '@/api/sys/account'
@@ -108,7 +106,6 @@ export default {
   methods: {
     ...mapMutations('menu', [EMPTY_MENUS, SET_CURRENT_TOP_MENU]),
     ...mapMutations('account', [EMPTY_ACCOUNT]),
-    ...mapMutations('info', [EMPTY_MERCHANTS]),
     ...mapMutations('dict', [EMPTY_DICT]),
     ok (fromData, callback, closeLoading) {
       const { oldPassword, password, confirmPassword } = fromData
@@ -130,7 +127,6 @@ export default {
         removeToken()
         this[EMPTY_MENUS]()
         this[EMPTY_ACCOUNT]()
-        this[EMPTY_MERCHANTS]()
         this[EMPTY_DICT]()
         this.$router.push({ path: '/login' })
       }
