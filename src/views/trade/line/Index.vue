@@ -1,43 +1,40 @@
 <template>
   <div>
     <ViewPage ref="view-page" :url="url" :buttons="buttons" :query-forms="queryForms" :columns="columns" :actions="actions" />
-    <PointEdit v-model="showEdit" :point-id="pointId" :language="language" @success="loadData" :project-options="projectOptions" />
+    <lineEdit v-model="showEdit" :line-id="lineId" @success="loadData" :project-options="projectOptions" :type-options="typeOptions" />
   </div>
 </template>
 <script>
 
-import MediaShow from '@/components/ui/MediaShow'
-
 import { loadProjects } from '@/api/trade/project'
 
-import { pointRemove } from '@/api/trade/point'
+import { lineRemove } from '@/api/trade/line'
 
-import PointEdit from './Edit'
+import lineEdit from './Edit'
 
 export default {
-  components: { PointEdit },
+  components: { lineEdit },
   data () {
     const actions = [
       { button: 'update', click: (params) => { this.update(params) } },
       { button: 'remove', click: (params) => this.remove(params) }]
     const columns = [
-      { title: '点位名称', key: 'targetName' },
-      { title: '简称', key: 'nickName' },
-      { title: '点位分类', key: 'targetClassify' },
-      { title: '点位标签', key: 'targetLabel' },
-      { title: '楼层', key: 'targetFloor' },
-      { title: '点位显示层级', key: 'displayRank' },
-      { title: '点位图标', width: 100, render: (h, params) => h(MediaShow, { props: { src: params.row.targetIcon } }) },
-      { title: '语言', width: 100, key: 'languagesName' }]
+      { title: '项目名称', key: 'projectName' },
+      { title: '线路名称', key: 'lineName' },
+      { title: '经过景点', key: 'linePoint' },
+      { title: '线路摘要', key: 'lineSummary' },
+      { title: '线路类型', width: 100, render: (h, params) => this.$ColumnDictText(h, params.row.lineType, this.typeOptions) },
+      { title: '语言', width: 100, key: 'lanName' },
+      { title: '线路简介', key: 'lineDesc' }]
     return {
-      url: '/manage/projectTarget/list',
+      url: '/manage/touringLine/list',
       showEdit: false,
-      pointId: 0,
-      language: 0,
+      lineId: 0,
       queryForms: [],
-      buttons: [{ type: 'primary', fun: () => { this.pointId = 0; this.language = 0; this.showEdit = true }, icon: 'md-add', name: '新增点位' }],
+      buttons: [{ type: 'primary', fun: () => { this.lineId = 0; this.showEdit = true }, icon: 'md-add', name: '新增线路' }],
       actions,
       columns,
+      typeOptions: [{ value: 0, label: '普通线路' }, { value: 1, label: '绿道' }],
       projectOptions: []
     }
   },
@@ -45,10 +42,9 @@ export default {
     loadProjects().then(res => {
       const projects = res.data && res.data.length > 0 ? res.data.map(e => { return { value: e.projectId + '', label: e.projectName } }) : []
       this.projectOptions = projects
-      this.queryForms.push({ title: '点位名称', key: 'targetName' })
       this.queryForms.push({ title: '项目', key: 'projectId', type: 'select', options: projects })
       this.queryForms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions })
-      this.queryForms.push({ title: '分类', key: 'classifyId', type: 'classify' })
+      this.queryForms.push({ title: '线路类型', key: 'lineType', type: 'select', options: this.typeOptions })
     })
   },
   methods: {
@@ -56,12 +52,11 @@ export default {
       this.$refs['view-page'].loadData()
     },
     update (params) {
-      this.pointId = params.row.id
-      this.language = params.row.language
+      this.lineId = params.row.id
       this.showEdit = true
     },
     remove (params) {
-      pointRemove(params.row.id).then(() => {
+      lineRemove(params.row.id).then(() => {
         this.$Message.success('删除成功')
         this.loadData()
       })

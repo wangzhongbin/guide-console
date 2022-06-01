@@ -1,5 +1,6 @@
 <template>
-  <EditModal :title="data.id ? '修改项目' : '新增项目'" :forms="forms" :edit-data="data" @close="close" @ok="ok" :show="show">
+  <EditModal :title="data.id ? '修改点位' : '新增点位'" :forms="forms" :edit-data="data" @close="close" @ok="ok" :show="show">
+    <MapView :positions="positions" />
     <div class="group-box" v-show="items.length > 0">
       <div class="box" v-for="(item, index) in items" :key="index">
         <div class="box inline-box">
@@ -44,12 +45,18 @@ export default {
   },
   data () {
     return {
+      positions: [],
       data: { language: 1 },
       forms: [],
       items: []
     }
   },
   watch: {
+    show (val) {
+      if (val) {
+        this.positions = [{ lng: 120.748226, lat: 30.759518 }]
+      }
+    },
     pointId (val) {
       this.data = {}
       this.items = []

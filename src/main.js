@@ -26,6 +26,7 @@ import SelectPlace from '@/components/ui/SelectPlace'
 import SelectClassify from '@/components/ui/SelectClassify'
 import SelectLabel from '@/components/ui/SelectLabel'
 import ViewItem from '@/components/ui/ViewItem'
+import MapView from '@/components/ui/MapView'
 
 import * as echarts from 'echarts'
 
@@ -45,6 +46,7 @@ Vue.component('SelectPlace', SelectPlace)
 Vue.component('SelectClassify', SelectClassify)
 Vue.component('SelectLabel', SelectLabel)
 Vue.component('ViewItem', ViewItem)
+Vue.component('MapView', MapView)
 
 Vue.config.productionTip = false
 
