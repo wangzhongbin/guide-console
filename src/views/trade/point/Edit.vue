@@ -27,12 +27,14 @@
 </template>
 <script>
 
+import MapView from '@/components/ui/MapView'
+
 import { pointView, pointAdd, pointUpdate } from '@/api/trade/point'
 
 import MediaUploadPoint from './MediaUploadPoint'
 
 export default {
-  components: { MediaUploadPoint },
+  components: { MediaUploadPoint, MapView },
   model: {
     prop: 'show',
     event: 'change'

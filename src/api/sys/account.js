@@ -25,7 +25,7 @@ export const loadCurrentAccount = () => get('/manage/user/getInfo')
 /**
  * 查询当前账号菜单
  */
-// export const loadCurrentMenus = () => get('/manage/menu')
+// export const loadCurrentMenus = () => get('/menu/getRouters')
 export const loadCurrentMenus = () => {
   return new Promise((resolve, reject) => {
     resolve(menuData)

@@ -26,9 +26,10 @@ import SelectPlace from '@/components/ui/SelectPlace'
 import SelectClassify from '@/components/ui/SelectClassify'
 import SelectLabel from '@/components/ui/SelectLabel'
 import ViewItem from '@/components/ui/ViewItem'
-import MapView from '@/components/ui/MapView'
 
 import * as echarts from 'echarts'
+
+Vue.use(ViewUI)
 
 Vue.prototype.$echarts = echarts
 
@@ -46,7 +47,7 @@ Vue.component('SelectPlace', SelectPlace)
 Vue.component('SelectClassify', SelectClassify)
 Vue.component('SelectLabel', SelectLabel)
 Vue.component('ViewItem', ViewItem)
-Vue.component('MapView', MapView)
+// Vue.component('MapView', MapView)
 
 Vue.config.productionTip = false
 
@@ -131,8 +132,6 @@ Vue.prototype.$ColumnDecimal = (h, val) => {
   }
   return h('span', text)
 }
-
-Vue.use(ViewUI)
 
 Vue.filter('showImage', (uri) => {
   if (uri) {

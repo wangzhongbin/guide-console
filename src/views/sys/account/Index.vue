@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ViewPage ref="view-page" :url="url" :del-url="delUrl" :buttons="buttons" :query-forms="queryForms" :columns="columns" :actions="actions" />
+    <ViewPage ref="view-page" :url="url" :buttons="buttons" :query-forms="queryForms" :columns="columns" :actions="actions" />
     <EditModal width="550" title="密码重置" :forms="resetForms" :edit-data="resetData" @ok="ok" v-model="showReset" />
     <AccountView v-model="showView" :data="viewData" :roles="roles" />
     <AccountEdit v-model="showEdit" :account-id="accountId" :roles="roles" @success="loadData" />
@@ -25,14 +25,13 @@ export default {
       { button: 'remove', click: (params) => this.remove(params) },
       { button: 'view', click: (params) => this.view(params) }]
     const columns = [
-      { title: '用户名', key: 'userName' },
-      { title: '登录名', key: 'loginName' },
+      { title: '登录账号', key: 'userName' },
       { title: '租户名称', key: 'tenantName' },
       { title: '姓名', key: 'nickName' },
       { title: '手机号码', key: 'phonenumber' },
       { title: '邮箱', key: 'email' },
       { title: '账号类型', width: 100, render: (h, params) => this.$ColumnDictText(h, params.row.userType, this.userTtypeOptions) },
-      { title: '帐号状态', width: 100, render: (h, params) => this.$ColumnDictText(h, params.row.status, this.statusOptions) }]
+      { title: '帐号状态', width: 100, render: (h, params) => this.$ColumnDictText(h, ~~params.row.status, this.statusOptions) }]
 
     return {
       url: '/manage/user/list',

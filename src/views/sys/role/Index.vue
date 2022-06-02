@@ -19,7 +19,7 @@ export default {
       { button: 'update', click: (params) => this.update(params) },
       { button: 'remove', click: (params) => this.remove(params) },
       { button: 'view', click: (params) => this.view(params) }]
-    const columns = [{ title: '角色名称', key: 'roleName' }]
+    const columns = [{ title: '角色名称', key: 'roleName' }, { title: '租户名称', key: 'tenantName' }]
     return {
       url: '/manage/role/list',
       showEdit: false,

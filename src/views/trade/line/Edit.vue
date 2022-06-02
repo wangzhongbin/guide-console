@@ -5,7 +5,7 @@
 </template>
 <script>
 
-import { lineView, lineEid } from '@/api/trade/line'
+import { lineView, lineEdit } from '@/api/trade/line'
 
 export default {
   model: {
@@ -56,7 +56,7 @@ export default {
     },
     ok (fromData, callback, closeLoading) {
       const data = Object.assign({}, fromData)
-      lineEid(data).then(() => {
+      lineEdit(data).then(() => {
         callback()
         this.$Message.success('修改成功')
         this.$emit('success')
