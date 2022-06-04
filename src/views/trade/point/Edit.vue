@@ -1,6 +1,5 @@
 <template>
   <EditModal :title="data.id ? '修改点位' : '新增点位'" :forms="forms" :edit-data="data" @close="close" @ok="ok" :show="show">
-    <MapView :positions="positions" />
     <div class="group-box" v-show="items.length > 0">
       <div class="box" v-for="(item, index) in items" :key="index">
         <div class="box inline-box">
@@ -27,14 +26,12 @@
 </template>
 <script>
 
-import MapView from '@/components/ui/MapView'
-
 import { pointView, pointAdd, pointUpdate } from '@/api/trade/point'
 
 import MediaUploadPoint from './MediaUploadPoint'
 
 export default {
-  components: { MediaUploadPoint, MapView },
+  components: { MediaUploadPoint },
   model: {
     prop: 'show',
     event: 'change'
@@ -75,11 +72,11 @@ export default {
       this.forms.push({ title: '简称', key: 'nickName', type: 'select', options: this.typeOptions, required: true, span: 2 })
       this.forms.push({ title: '分类', key: 'targetClassify', type: 'classify', required: true, span: 2 })
       this.forms.push({ title: '点位标签', key: 'targetLabel', type: 'label', required: true, span: 2 })
-      this.forms.push({ title: '楼层', key: 'targetFloor', type: 'int', required: true, span: 2 })
+      this.forms.push({ title: '楼层', key: 'targetFloor', type: 'int', span: 2 })
       this.forms.push({ title: '显示层级', key: 'displayRank', type: 'int', required: true, span: 2 })
       this.forms.push({ title: '点位详情', key: 'targetDesc', type: 'textarea', required: true, span: 1 })
       this.forms.push({ title: '点位图标', key: 'targetIcon', type: 'file', fileType: 1, span: 1, required: true })
-      this.forms.push({ title: '点位坐标', key: 'targetLocation', required: true, span: 2 })
+      this.forms.push({ title: '点位坐标', key: 'targetLocation', type: 'mapPoint', required: true })
     }
   },
   methods: {
@@ -95,7 +92,8 @@ export default {
     ok (fromData, callback, closeLoading) {
       const data = Object.assign({}, fromData)
       data.resources = this.items.map(e => e)
-      console.log(data)
+      // const location = JSON.parse(data.targetLocation)
+      // data.targetLocation = location[0][0] + ',' + location[0][1]
       if (data.id) {
         pointUpdate(data).then(() => {
           callback()

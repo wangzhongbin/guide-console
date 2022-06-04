@@ -18,10 +18,11 @@ export default {
       { button: 'update', click: (params) => { this.update(params) } },
       { button: 'remove', click: (params) => this.remove(params) }]
     const columns = [
+      { title: '项目名称', key: 'projectName' },
       { title: '分类名称', key: 'classifyName' },
       { title: '排序', width: 100, key: 'sortNum' },
-      { title: '分类图标', render: (h, params) => h(MediaShow, { props: { src: params.row.classifyLogoUrl } }) },
-      { title: '分类选中图标', render: (h, params) => h(MediaShow, { props: { src: params.row.selectLogoUrl } }) },
+      { title: '分类图标', render: (h, params) => h(MediaShow, { props: { src: params.row.classifyLogo } }) },
+      { title: '分类选中图标', render: (h, params) => h(MediaShow, { props: { src: params.row.selectLogo } }) },
       { title: '语言', width: 100, key: 'language' }]
     return {
       url: '/manage/classify/list',
@@ -36,7 +37,7 @@ export default {
   },
   created () {
     loadProjects().then(res => {
-      const projects = res.data && res.data.length > 0 ? res.data.map(e => { return { value: e.projectId + '', label: e.projectName } }) : []
+      const projects = res.data && res.data.length > 0 ? res.data.map(e => { return { value: e.projectId, label: e.projectName } }) : []
       this.queryForms.push({ title: '项目', key: 'projectId', type: 'select', options: projects })
       this.queryForms.push({ title: '分类名称', key: 'classifyName' })
       this.queryForms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions })

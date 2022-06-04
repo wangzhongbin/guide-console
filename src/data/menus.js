@@ -104,3 +104,107 @@ export const menuData = [{
     label: '标签管理'
   }]
 }]
+
+// export const menuData = [{
+//   menuId: 1,
+//   menuName: '系统管理',
+//   orderNum: 1,
+//   icon: 'system',
+//   menuType: 'M',
+//   children: [
+//     {
+//       menuId: 100,
+//       menuName: '用户管理',
+//       orderNum: 1,
+//       path: 'user',
+//       component: 'system/user/index',
+//       icon: 'user',
+//       menuType: 'C',
+//       children: []
+//     },
+//     {
+//       menuId: 101,
+//       menuName: '角色管理',
+//       orderNum: 2,
+//       path: 'role',
+//       component: 'system/role/index',
+//       icon: 'peoples',
+//       menuType: 'C',
+//       children: []
+//     },
+//     {
+//       menuId: 2001,
+//       menuName: '租户管理',
+//       orderNum: 1,
+//       path: '/zuhu',
+//       component: '/zuhu',
+//       icon: 'people',
+//       menuType: 'C',
+//       children: []
+//     }
+//   ]
+// },
+// {
+//   menuId: 2000,
+//   menuName: '导览业务',
+//   orderNum: 1,
+//   icon: 'clipboard',
+//   menuType: 'M',
+//   children: [
+//     {
+//       menuId: 2007,
+//       menuName: ' 导览分类管理',
+//       orderNum: 1,
+//       path: '/list',
+//       icon: 'nested',
+//       menuType: 'C',
+//       children: []
+//     },
+//     {
+//       menuId: 2013,
+//       menuName: '导览标签管理',
+//       orderNum: 2,
+//       path: '/biaoq',
+//       icon: 'guide',
+//       menuType: 'C',
+//       children: []
+//     },
+//     {
+//       menuId: 2018,
+//       menuName: '项目管理',
+//       orderNum: 3,
+//       path: '/peoject',
+//       icon: 'table',
+//       menuType: 'M',
+//       children: [
+//         {
+//           menuId: 2019,
+//           menuName: '项目列表',
+//           orderNum: 1,
+//           path: '/list',
+//           icon: 'number',
+//           menuType: 'C',
+//           children: []
+//         },
+//         {
+//           menuId: 2026,
+//           menuName: '目标点位',
+//           orderNum: 2,
+//           path: '/target',
+//           icon: 'icon',
+//           menuType: 'C',
+//           children: []
+//         }
+//       ]
+//     },
+//     {
+//       menuId: 2032,
+//       menuName: '游览线路',
+//       orderNum: 4,
+//       path: '/11111',
+//       icon: 'druid',
+//       menuType: 'C',
+//       children: []
+//     }
+//   ]
+// }]

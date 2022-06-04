@@ -19,7 +19,6 @@ export default {
       { button: 'update', click: (params) => { this.update(params) } },
       { button: 'remove', click: (params) => this.remove(params) }]
     const columns = [
-      { title: '项目名称', key: 'projectName' },
       { title: '线路名称', key: 'lineName' },
       { title: '经过景点', key: 'linePoint' },
       { title: '线路摘要', key: 'lineSummary' },

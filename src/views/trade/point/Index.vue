@@ -45,10 +45,10 @@ export default {
     loadProjects().then(res => {
       const projects = res.data && res.data.length > 0 ? res.data.map(e => { return { value: e.projectId + '', label: e.projectName } }) : []
       this.projectOptions = projects
-      this.queryForms.push({ title: '点位名称', key: 'targetName' })
       this.queryForms.push({ title: '项目', key: 'projectId', type: 'select', options: projects })
+      this.queryForms.push({ title: '点位名称', key: 'targetName' })
       this.queryForms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions })
-      this.queryForms.push({ title: '分类', key: 'classifyId', type: 'classify' })
+      // this.queryForms.push({ title: '分类', key: 'classifyId', type: 'classify' })
     })
   },
   methods: {

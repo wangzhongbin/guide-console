@@ -3,7 +3,7 @@
     <Form ref="form" :model="editData" :label-width="100" label-position="left" inline class="edit-form-box">
       <div v-for="(item, index) in sortForms" :key="index">
         <EditFormItem v-if="item.key" :label="item.title" :prop="item.key" :type="item.type" :show="item.show" :edit-data="editData" :rule="item.rule" :required="item.required" :span="item.span">
-          <div v-if="item.type === 'select' && item.options && item.options.length > 0">
+          <div v-if="item.type === 'select'">
             <Select transfer clearable v-model="editData[item.key]" :placeholder="item.title | placeholderText(item.type)">
               <Option v-for="opt in item.options" :key="'s' + opt.value" :value="opt.value">{{opt.label}}</Option>
             </Select>
@@ -52,6 +52,9 @@
           </div>
           <div v-else-if="item.type === 'label'">
             <SelectLabel v-model="editData[item.key]" :project-id="editData.projectId" :language="editData.language" />
+          </div>
+          <div v-else-if="item.type === 'mapPoint'">
+            <MapView v-model="editData[item.key]" :is-line="item.isLine" />
           </div>
           <div v-else>
             <Input v-model="editData[item.key]" :disabled="item.disabled" :placeholder="item.title | placeholderText(item.type)" :clearable="true" />

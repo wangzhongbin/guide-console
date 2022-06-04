@@ -13,7 +13,7 @@
           <Radio v-for="opt in item.options" :key="'r' + opt.value" :label="opt.value">{{opt.label}}</Radio>
         </RadioGroup>
       </div>
-      <div class="item-content" v-else-if="item.type === 'select' && item.options && item.options.length > 0">
+      <div class="item-content" v-else-if="item.type === 'select'">
         <Select :clearable="true" v-model="queryData[item.key]" :placeholder="item.title | placeholderText(item.type)">
           <Option v-for="opt in item.options" :key="'s' + opt.value" :value="opt.value">{{opt.label}}</Option>
         </Select>

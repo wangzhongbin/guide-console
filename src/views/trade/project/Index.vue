@@ -5,15 +5,10 @@
   </div>
 </template>
 <script>
-
 import { loadTenants } from '@/api/trade/tenant'
-
 import MediaShow from '@/components/ui/MediaShow'
-
 import ProjectEdit from './Edit'
-
 import { projectView, changeStatus } from '@/api/trade/project'
-
 export default {
   components: { ProjectEdit },
   computed: {
@@ -26,11 +21,10 @@ export default {
     const columns = [
       { title: '项目名称', key: 'projectName' },
       { title: 'logo', width: 100, render: (h, params) => h(MediaShow, { props: { src: params.row.projectLogo } }) },
-      { title: '手机号码', key: 'phoneNo' },
       { title: '省份', key: 'provinceName' },
       { title: '城市', key: 'cityName' },
       { title: '地址', key: 'areaName' },
-      { title: '地址', key: 'projectType' },
+      { title: '状态', width: 100, render: (h, params) => this.$ColumnDictText(h, params.row.status, this.statusOptions) },
       { title: '行业类型', width: 100, render: (h, params) => this.$ColumnDictText(h, params.row.projectType, this.typeOptions) },
       { title: '地图类型', width: 100, render: (h, params) => this.$ColumnDictText(h, params.row.mapShowType, this.mapTypeOptions) }]
     return {
@@ -45,7 +39,8 @@ export default {
       columns,
       tenantOptions: [],
       mapTypeOptions: [{ value: 0, label: '手绘图' }, { value: 1, label: '图片' }, { value: 2, label: '3D' }],
-      typeOptions: [{ value: 0, label: '景区' }, { value: 1, label: '商场' }]
+      typeOptions: [{ value: 0, label: '景区' }, { value: 1, label: '商场' }],
+      statusOptions: [{ value: 0, label: '未发布' }, { value: 1, label: '已发布' }]
     }
   },
   created () {
@@ -53,6 +48,7 @@ export default {
       const tenants = res.data && res.data.length > 0 ? res.data.map(e => {
         return { value: e.tenantId, label: e.tenantName }
       }) : []
+      console.log(tenants)
       this.queryForms.push({ title: '项目名称', key: 'projectName' })
       this.queryForms.push({ title: '租户', key: 'tenantId', type: 'select', options: tenants })
       if (this.multiTenant) {

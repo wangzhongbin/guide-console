@@ -16,6 +16,7 @@ export default {
       { button: 'update', click: (params) => { this.update(params) } },
       { button: 'remove', click: (params) => this.remove(params) }]
     const columns = [
+      { title: '项目名称', key: 'projectName' },
       { title: '标签名称', key: 'labelName' },
       { title: '语言', width: 100, key: 'language' }]
     return {
