@@ -69,7 +69,7 @@ export default {
       this.forms.push({ title: '项目', key: 'projectId', type: 'select', options: val, required: true, span: 2 })
       this.forms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions, required: true, span: 2 })
       this.forms.push({ title: '点位名称', key: 'targetName', required: true, span: 2 })
-      this.forms.push({ title: '简称', key: 'nickName', type: 'select', options: this.typeOptions, required: true, span: 2 })
+      this.forms.push({ title: '简称', key: 'nickName', required: true, span: 2 })
       this.forms.push({ title: '分类', key: 'targetClassify', type: 'classify', required: true, span: 2 })
       this.forms.push({ title: '点位标签', key: 'targetLabel', type: 'label', required: true, span: 2 })
       this.forms.push({ title: '楼层', key: 'targetFloor', type: 'int', span: 2 })
