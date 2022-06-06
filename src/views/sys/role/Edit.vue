@@ -44,7 +44,6 @@ export default {
       this.menuTree = []
       if (val) {
         Promise.all([loadMenus(), roleView(val)]).then(res => {
-          console.log(res)
           const menus = res[0].data
           const role = res[1].data
           this.data = role
@@ -84,7 +83,6 @@ export default {
         roleId: fromData.roleId,
         menuIds: roleMenus.map(e => e.id)
       }
-      console.log(data)
       if (data.roleId) {
         roleUpdate(data).then(() => {
           callback()

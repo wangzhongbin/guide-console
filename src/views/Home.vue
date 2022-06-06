@@ -5,7 +5,6 @@
       <Menu />
       <div style="flex:1;">
         <Main />
-        <!-- <Footer /> -->
       </div>
     </div>
   </div>

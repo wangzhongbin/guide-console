@@ -1,4 +1,4 @@
-# shop-console
+# guide-console
 
 ## Project setup
 ```

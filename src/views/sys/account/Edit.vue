@@ -54,7 +54,6 @@ export default {
     },
     ok (fromData, callback, closeLoading) {
       const data = Object.assign({}, fromData)
-      console.log(data)
       data.roleIds = this.accountRoleIds
       if (data.userId) {
         accountUpdate(data).then(res => {

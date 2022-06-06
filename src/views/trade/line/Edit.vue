@@ -41,7 +41,7 @@ export default {
       this.forms.push({ title: '线路概要', key: 'lineSummary', required: true, span: 2 })
       this.forms.push({ title: '排序', key: 'lineSort', type: 'int', required: true, span: 2 })
       this.forms.push({ title: '线路简介', key: 'lineDesc', type: 'textarea', required: true, span: 1 })
-      this.forms.push({ title: '线路路径', key: 'linePath', type: 'mapPoint', isLine: true, required: true })
+      this.forms.push({ title: '线路路径', key: 'linePath', type: 'map', isLine: true, mapId: 'lineMap', required: true })
     }
   },
   methods: {

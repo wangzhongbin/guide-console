@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="inline-box" style="width: 830px;align-items: flex-start;">
-      <div class="map-box box" id="container"></div>
+      <div class="map-box box" :id="mapId"></div>
       <div class="box">
         <div class="inline-box" v-for="(item, index) in positions" :key="index">
           <div class="item-box">{{item}}</div>
@@ -27,6 +27,7 @@ export default {
     event: 'change'
   },
   props: {
+    mapId: String,
     value: String,
     isLine: {
       type: Boolean,
@@ -44,24 +45,20 @@ export default {
         })
         this.map.add(markers)
         if (this.isLine && val.length > 1) {
-          console.log(val)
-          const polyline = {
-            // path: val,
+          const polyline = new this.$AMap.Polyline({
             path: val,
             isOutline: true,
-            outlineColor: '#ffeeff',
+            outlineColor: '#1A985E',
             borderWeight: 3,
-            strokeColor: '#3366FF',
-            strokeOpacity: 1,
+            strokeColor: '#00C96D',
+            strokeOpacity: 2,
             strokeWeight: 6,
-            // 折线样式还支持 'dashed'
             strokeStyle: 'solid',
-            // strokeStyle是dashed时有效
-            strokeDasharray: [10, 5],
             lineJoin: 'round',
             lineCap: 'round',
-            zIndex: 50
-          }
+            showDir: true,
+            zIndex: 1
+          })
           this.map.add(polyline)
         }
       }
@@ -78,15 +75,8 @@ export default {
     }
   },
   mounted () {
-    const map = new this.$AMap.Map('container', { zoom: 15, zooms: [6, 18] })
-    // const polyline = {
-    //   // path: val,
-    //   path: [new this.$AMap.LngLat(120.154477, 30.288941), new this.$AMap.LngLat(120.158726, 30.288534)],
-    //   borderWeight: 2, // 线条宽度，默认为 1
-    //   strokeColor: 'red', // 线条颜色
-    //   lineJoin: 'round' // 折线拐点连接处样式
-    // }
-    // map.add(polyline)
+    console.log(this.mapId)
+    const map = new this.$AMap.Map(this.mapId, { zoom: 15, zooms: [6, 18] })
     map.on('click', this.clickMap)
     this.map = map
   },

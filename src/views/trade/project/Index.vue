@@ -48,7 +48,6 @@ export default {
       const tenants = res.data && res.data.length > 0 ? res.data.map(e => {
         return { value: e.tenantId, label: e.tenantName }
       }) : []
-      console.log(tenants)
       this.queryForms.push({ title: '项目名称', key: 'projectName' })
       this.queryForms.push({ title: '租户', key: 'tenantId', type: 'select', options: tenants })
       if (this.multiTenant) {

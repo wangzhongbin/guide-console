@@ -76,7 +76,7 @@ export default {
       this.forms.push({ title: '显示层级', key: 'displayRank', type: 'int', required: true, span: 2 })
       this.forms.push({ title: '点位详情', key: 'targetDesc', type: 'textarea', required: true, span: 1 })
       this.forms.push({ title: '点位图标', key: 'targetIcon', type: 'file', fileType: 1, span: 1, required: true })
-      this.forms.push({ title: '点位坐标', key: 'targetLocation', type: 'mapPoint', required: true })
+      this.forms.push({ title: '点位坐标', key: 'targetLocation', type: 'map', mapId: 'pointMap', required: true })
     }
   },
   methods: {

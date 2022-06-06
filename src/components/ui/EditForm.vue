@@ -53,8 +53,8 @@
           <div v-else-if="item.type === 'label'">
             <SelectLabel v-model="editData[item.key]" :project-id="editData.projectId" :language="editData.language" />
           </div>
-          <div v-else-if="item.type === 'mapPoint'">
-            <MapView v-model="editData[item.key]" :is-line="item.isLine" />
+          <div v-else-if="item.type === 'map'">
+            <MapView v-model="editData[item.key]" :is-line="item.isLine" :map-id="item.mapId" />
           </div>
           <div v-else>
             <Input v-model="editData[item.key]" :disabled="item.disabled" :placeholder="item.title | placeholderText(item.type)" :clearable="true" />

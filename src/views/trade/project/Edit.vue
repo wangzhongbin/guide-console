@@ -46,7 +46,7 @@ export default {
     this.forms.push({ title: '项目名称', key: 'projectName', required: true, span: 2 })
     this.forms.push({ title: '行业类型', key: 'projectType', type: 'radio', options: this.typeOptions, required: true, span: 2 })
     this.forms.push({ title: '所在地', key: 'placeCode', type: 'place', level: 3, required: true, span: 2 })
-    this.forms.push({ title: '行业类型', key: 'mapShowType', type: 'radio', options: this.mapTypeOptions, required: true, span: 2 })
+    this.forms.push({ title: '地图类型', key: 'mapShowType', type: 'radio', options: this.mapTypeOptions, required: true, span: 2 })
     this.forms.push({ title: '运营时间', key: 'openingHours', required: true, span: 2 })
     this.forms.push({ title: '热线电话', key: 'hotline', required: true, span: 2 })
     this.forms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions, required: true, span: 2 })
@@ -66,8 +66,8 @@ export default {
     this.forms.push({ line: true, title: '地图范围坐标', show: () => true })
     this.forms.push({ title: '左上角', key: 'topLeftCorner', required: true, span: 2 })
     this.forms.push({ title: '右下角', key: 'lowerRightCorner', required: true, span: 2 })
-    // this.forms.push({ title: '左上角', key: 'topLeftCorner', type: 'mapPoint', required: true })
-    // this.forms.push({ title: '右下角', key: 'lowerRightCorner', type: 'mapPoint', required: true })
+    // this.forms.push({ title: '左上角', key: 'topLeftCorner', type: 'map', required: true })
+    // this.forms.push({ title: '右下角', key: 'lowerRightCorner', type: 'map', required: true })
   },
   methods: {
     close () {
