@@ -39,7 +39,7 @@ export default {
       this.map.clearMap()
       if (val && val.length > 0) {
         const markers = val.map(e => {
-          const icon = new this.$AMap.Icon({ size: new this.$AMap.Size(40, 40), image: 'https://oss.iqqqqq.com/map_icon.png' })
+          const icon = new this.$AMap.Icon({ size: new this.$AMap.Size(40, 40), image: 'https://oss.iqqqqq.com/map_icon.png', title: '123' })
           const marker = new this.$AMap.Marker({ position: [e[0], e[1]], offset: new this.$AMap.Pixel(-20, -40), icon: icon })
           return marker
         })
@@ -66,7 +66,6 @@ export default {
   },
   computed: {
     positions () {
-      console.log(this.value)
       if (this.value) {
         const positions = JSON.parse(this.value)
         return typeof positions === 'object' ? positions : []

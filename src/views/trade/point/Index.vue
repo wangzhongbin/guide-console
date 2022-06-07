@@ -24,7 +24,7 @@ export default {
       { title: '点位名称', key: 'targetName' },
       { title: '简称', key: 'nickName' },
       { title: '点位分类', key: 'targetClassify' },
-      { title: '点位标签', key: 'targetLabel' },
+      { title: '点位标签', key: 'labelName' },
       { title: '楼层', key: 'targetFloor' },
       { title: '点位显示层级', key: 'displayRank' },
       { title: '操作类型', render: (h, params) => this.$ColumnDictText(h, params.row.action, this.actionOptions) },

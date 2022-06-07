@@ -64,12 +64,12 @@ export default {
     this.forms.push({ title: '最大层级', key: 'appletMaxRank', type: 'int', required: true, span: 3 })
     this.forms.push({ title: '最小层级', key: 'appletMinRank', type: 'int', required: true, span: 3 })
     this.forms.push({ line: true, title: '地图范围坐标', show: () => true })
-    this.forms.push({ title: '左上角', key: 'topLeftCorner', required: true, span: 2 })
-    this.forms.push({ title: '右下角', key: 'lowerRightCorner', required: true, span: 2 })
+    // this.forms.push({ title: '左上角', key: 'topLeftCorner', required: true, span: 2 })
+    // this.forms.push({ title: '右下角', key: 'lowerRightCorner', required: true, span: 2 })
     // [ 120.092826, 30.242924 ]
     // [ 120.107783, 30.232539 ]
-    // this.forms.push({ title: '左上角', key: 'topLeftCorner', mapId: 'topLeftCornerMap', type: 'map', required: true, span: 1 })
-    // this.forms.push({ title: '右下角', key: 'lowerRightCorner', mapId: 'lowerRightCorner', type: 'map', required: true, span: 1 })
+    this.forms.push({ title: '左上角', key: 'topLeftCorner', mapId: 'topLeftCornerMap', type: 'map', required: true, span: 1 })
+    setTimeout(() => this.forms.push({ title: '右下角', key: 'lowerRightCorner', mapId: 'lowerRightCorner', type: 'map', required: true, span: 1 }), 1000)
   },
   methods: {
     close () {
