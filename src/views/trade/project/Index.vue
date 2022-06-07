@@ -17,7 +17,7 @@ export default {
   data () {
     const actions = [
       { button: 'update', click: (params) => { this.update(params) } },
-      { type: 'update', name: '修改状态', click: (params) => this.change(params) }]
+      { button: 'remove', name: '修改状态', click: (params) => this.change(params) }]
     const columns = [
       { title: '项目名称', key: 'projectName' },
       { title: 'logo', width: 100, render: (h, params) => h(MediaShow, { props: { src: params.row.projectLogo } }) },

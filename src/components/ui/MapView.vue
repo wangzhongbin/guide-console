@@ -66,6 +66,7 @@ export default {
   },
   computed: {
     positions () {
+      console.log(this.value)
       if (this.value) {
         const positions = JSON.parse(this.value)
         return typeof positions === 'object' ? positions : []

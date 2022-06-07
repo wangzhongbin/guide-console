@@ -40,7 +40,8 @@ export default {
     show: Boolean,
     pointId: Number,
     language: Number,
-    projectOptions: Array
+    projectOptions: Array,
+    actionOptions: Array
   },
   data () {
     return {
@@ -72,6 +73,7 @@ export default {
       this.forms.push({ title: '简称', key: 'nickName', required: true, span: 2 })
       this.forms.push({ title: '分类', key: 'targetClassify', type: 'classify', required: true, span: 2 })
       this.forms.push({ title: '点位标签', key: 'targetLabel', type: 'label', required: true, span: 2 })
+      this.forms.push({ title: '操作类型', key: 'action', type: 'select', options: this.actionOptions, required: true, span: 2 })
       this.forms.push({ title: '楼层', key: 'targetFloor', type: 'int', span: 2 })
       this.forms.push({ title: '显示层级', key: 'displayRank', type: 'int', required: true, span: 2 })
       this.forms.push({ title: '点位详情', key: 'targetDesc', type: 'textarea', required: true, span: 1 })

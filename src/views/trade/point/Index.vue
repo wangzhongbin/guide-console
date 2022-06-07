@@ -1,7 +1,7 @@
 <template>
   <div>
     <ViewPage ref="view-page" :url="url" :buttons="buttons" :query-forms="queryForms" :columns="columns" :actions="actions" />
-    <PointEdit v-model="showEdit" :point-id="pointId" :language="language" @success="loadData" :project-options="projectOptions" />
+    <PointEdit v-model="showEdit" :point-id="pointId" :language="language" @success="loadData" :project-options="projectOptions" :action-options="actionOptions" />
   </div>
 </template>
 <script>
@@ -27,6 +27,7 @@ export default {
       { title: '点位标签', key: 'targetLabel' },
       { title: '楼层', key: 'targetFloor' },
       { title: '点位显示层级', key: 'displayRank' },
+      { title: '操作类型', render: (h, params) => this.$ColumnDictText(h, params.row.action, this.actionOptions) },
       { title: '点位图标', width: 100, render: (h, params) => h(MediaShow, { props: { src: params.row.targetIcon } }) },
       { title: '语言', width: 100, key: 'languagesName' }]
     return {
@@ -38,7 +39,8 @@ export default {
       buttons: [{ type: 'primary', fun: () => { this.pointId = 0; this.language = 0; this.showEdit = true }, icon: 'md-add', name: '新增点位' }],
       actions,
       columns,
-      projectOptions: []
+      projectOptions: [],
+      actionOptions: [{ value: 1, label: '查详情' }, { value: 2, label: '无操作' }]
     }
   },
   created () {
@@ -48,6 +50,7 @@ export default {
       this.queryForms.push({ title: '项目', key: 'projectId', type: 'select', options: projects })
       this.queryForms.push({ title: '点位名称', key: 'targetName' })
       this.queryForms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions })
+      this.queryForms.push({ title: '操作类型', key: 'action', type: 'select', options: this.actionOptions })
       // this.queryForms.push({ title: '分类', key: 'classifyId', type: 'classify' })
     })
   },

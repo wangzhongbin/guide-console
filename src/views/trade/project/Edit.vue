@@ -47,14 +47,14 @@ export default {
     this.forms.push({ title: '行业类型', key: 'projectType', type: 'radio', options: this.typeOptions, required: true, span: 2 })
     this.forms.push({ title: '所在地', key: 'placeCode', type: 'place', level: 3, required: true, span: 2 })
     this.forms.push({ title: '地图类型', key: 'mapShowType', type: 'radio', options: this.mapTypeOptions, required: true, span: 2 })
-    this.forms.push({ title: '运营时间', key: 'openingHours', required: true, span: 2 })
-    this.forms.push({ title: '热线电话', key: 'hotline', required: true, span: 2 })
+    this.forms.push({ title: '运营时间', key: 'openingHours', span: 2 })
+    this.forms.push({ title: '热线电话', key: 'hotline', span: 2 })
     this.forms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions, required: true, span: 2 })
     this.forms.push({ title: '地址', key: 'address', required: true, span: 2 })
     this.forms.push({ title: '项目logo', key: 'projectLogo', type: 'file', fileType: 1, span: 1, required: true })
     this.forms.push({ title: '语音介绍', key: 'voiceExplain', type: 'file', fileType: 2, span: 1 })
-    this.forms.push({ title: '地图地址', key: 'mapUrl', required: true, span: 1 })
-    this.forms.push({ title: '详情描述', key: 'details', type: 'textarea', required: true, span: 1 })
+    this.forms.push({ title: '地图地址', key: 'mapUrl', span: 1 })
+    this.forms.push({ title: '详情描述', key: 'details', type: 'textarea', span: 1 })
     this.forms.push({ line: true, title: '安卓端地图参数设置', show: () => true })
     this.forms.push({ title: '默认层级', key: 'androidDefaultRank', type: 'int', required: true, span: 3 })
     this.forms.push({ title: '最大层级', key: 'androidMaxRank', type: 'int', required: true, span: 3 })
@@ -66,8 +66,10 @@ export default {
     this.forms.push({ line: true, title: '地图范围坐标', show: () => true })
     this.forms.push({ title: '左上角', key: 'topLeftCorner', required: true, span: 2 })
     this.forms.push({ title: '右下角', key: 'lowerRightCorner', required: true, span: 2 })
-    // this.forms.push({ title: '左上角', key: 'topLeftCorner', type: 'map', required: true })
-    // this.forms.push({ title: '右下角', key: 'lowerRightCorner', type: 'map', required: true })
+    // [ 120.092826, 30.242924 ]
+    // [ 120.107783, 30.232539 ]
+    // this.forms.push({ title: '左上角', key: 'topLeftCorner', mapId: 'topLeftCornerMap', type: 'map', required: true, span: 1 })
+    // this.forms.push({ title: '右下角', key: 'lowerRightCorner', mapId: 'lowerRightCorner', type: 'map', required: true, span: 1 })
   },
   methods: {
     close () {

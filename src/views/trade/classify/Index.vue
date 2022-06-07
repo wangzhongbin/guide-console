@@ -20,6 +20,7 @@ export default {
     const columns = [
       { title: '项目名称', key: 'projectName' },
       { title: '分类名称', key: 'classifyName' },
+      { title: '分类类型', render: (h, params) => this.$ColumnDictText(h, params.row.classifyType, this.typeOptions) },
       { title: '排序', width: 100, key: 'sortNum' },
       { title: '分类图标', render: (h, params) => h(MediaShow, { props: { src: params.row.classifyLogo } }) },
       { title: '分类选中图标', render: (h, params) => h(MediaShow, { props: { src: params.row.selectLogo } }) },
@@ -32,7 +33,8 @@ export default {
       queryForms: [],
       buttons: [{ type: 'primary', fun: () => { this.editData = {}; this.showEdit = true }, icon: 'md-add', name: '新增分类' }],
       actions,
-      columns
+      columns,
+      typeOptions: [{ value: 1, label: '点位' }, { value: 2, label: '线路' }]
     }
   },
   created () {
@@ -40,12 +42,14 @@ export default {
       const projects = res.data && res.data.length > 0 ? res.data.map(e => { return { value: e.projectId, label: e.projectName } }) : []
       this.queryForms.push({ title: '项目', key: 'projectId', type: 'select', options: projects })
       this.queryForms.push({ title: '分类名称', key: 'classifyName' })
+      this.queryForms.push({ title: '分类类型', key: 'classifyType', type: 'select', options: this.typeOptions })
       this.queryForms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions })
 
       this.editForms.push({ title: '项目', key: 'projectId', type: 'select', options: projects, span: 2 })
-      this.editForms.push({ title: '分类名称', key: 'classifyName', required: true, span: 2 })
-      this.editForms.push({ title: '排序', type: 'number', key: 'sortNum', required: true, span: 2 })
       this.editForms.push({ title: '语言', type: 'select', key: 'language', required: true, span: 2, options: this.$LanguageOptions })
+      this.editForms.push({ title: '分类名称', key: 'classifyName', required: true, span: 2 })
+      this.editForms.push({ title: '分类类型', key: 'classifyType', type: 'select', required: true, options: this.typeOptions, span: 2 })
+      this.editForms.push({ title: '排序', type: 'int', key: 'sortNum', required: true, span: 2 })
       this.editForms.push({ title: '分类图标', key: 'classifyLogo', type: 'file', fileType: 1, span: 2, required: true })
       this.editForms.push({ title: '选中图标', key: 'selectLogo', type: 'file', fileType: 1, span: 2, required: true })
     })
