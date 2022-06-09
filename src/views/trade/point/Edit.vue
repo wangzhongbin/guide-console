@@ -94,8 +94,8 @@ export default {
     ok (fromData, callback, closeLoading) {
       const data = Object.assign({}, fromData)
       data.resources = this.items.map(e => e)
-      // const location = JSON.parse(data.targetLocation)
-      // data.targetLocation = location[0][0] + ',' + location[0][1]
+      const location = JSON.parse(data.targetLocation)
+      data.targetLocation = JSON.stringify(location[0])
       if (data.id) {
         pointUpdate(data).then(() => {
           callback()

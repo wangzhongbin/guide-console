@@ -81,6 +81,10 @@ export default {
       data.provinceCode = codes[0]
       data.cityCode = codes[1]
       data.areaCode = codes[2]
+      const topLeftCorner = JSON.parse(data.topLeftCorner)
+      data.topLeftCorner = JSON.stringify(topLeftCorner[0])
+      const lowerRightCorner = JSON.parse(data.lowerRightCorner)
+      data.lowerRightCorner = JSON.stringify(lowerRightCorner[0])
       if (data.roleId) {
         projectUpdate(data).then(() => {
           callback()
