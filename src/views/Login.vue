@@ -36,8 +36,8 @@ export default {
   data () {
     return {
       uuid: '',
-      userName: 'admin',
-      password: 'admin123',
+      userName: '',
+      password: '',
       code: '',
       codeImgae: '',
       logo
