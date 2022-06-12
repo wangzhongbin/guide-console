@@ -9,7 +9,7 @@ import { Message, LoadingBar } from 'view-design'
 
 import { getToken, removeToken } from '@/cookie'
 
-const baseURL = process.env.NODE_ENV === 'production' ? '/' : '/api'
+const baseURL = process.env.NODE_ENV === 'production' ? '/api' : '/api'
 
 axios.defaults.baseURL = baseURL
 axios.defaults.withCredentials = true
@@ -80,16 +80,3 @@ axios.interceptors.response.use(
 
 export const get = (uri, params) => axios.get(uri, { params })
 export const post = (uri, params) => axios.post(uri, params)
-export const download = (uri, params, method, filename) => {
-  return new Promise((resolve, reject) => {
-    axios({ method, url: uri, responseType: 'blob', params }).then((res) => {
-      const aLink = document.createElement('a')
-      const blob = new Blob([res], { type: 'application/vnd.ms-excel' })
-      aLink.href = URL.createObjectURL(blob)
-      aLink.download = filename
-      document.body.appendChild(aLink)
-      aLink.click()
-      resolve(filename)
-    }).catch(res => reject(res))
-  })
-}
