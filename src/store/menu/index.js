@@ -22,8 +22,9 @@ const actions = {
     return new Promise(resolve => {
       const menus = data.map(e => assembleMenus(e))
       const topMenus = data.filter(e => e.menuType === 'M').map(e => assembleTopMenus(e))
-      const allMenus = data.reduce((arr, e) => arr.concat(getAllMenus(e)), [])
-      const routes = allMenus.filter(e => e.path && e.component && e.code).map(e => assembleRouter(e))
+      const allMenus = data.reduce((arr, e) => arr.concat(getAllMenus(e, 0)), [])
+      console.log(allMenus)
+      const routes = allMenus.filter(e => e.path && e.component).map(e => assembleRouter(e))
       const route = {
         path: '',
         component: Home,
@@ -39,21 +40,22 @@ const actions = {
   }
 }
 
-const getAllMenus = (menu) => {
+const getAllMenus = (menu, pid) => {
   const arr = []
+  menu.parentId = pid
   arr.push(menu)
   if (menu.children && menu.children.length > 0) {
-    const children = menu.children.reduce((a, e) => a.concat(getAllMenus(e)), [])
+    const children = menu.children.reduce((a, e) => a.concat(getAllMenus(e, menu.menuId)), [])
     arr.push(...children)
   }
   return arr
 }
 
 const assembleRouter = (menu) => {
+  const code = menu.path.replaceAll('/', '') + 'Index'
   const router = {
     path: menu.path,
-    name: menu.code,
-    title: menu.name,
+    name: code,
     component: loadView(menu.component),
     meta: {
       id: menu.menuId,
@@ -69,7 +71,6 @@ const assembleMenus = (data) => {
   const menu = {
     id: data.menuId,
     label: data.menuName,
-    code: data.menuId,
     icon: data.icon,
     path: data.path,
     items: data.children ? data.children.map(e => assembleMenus(e)) : []

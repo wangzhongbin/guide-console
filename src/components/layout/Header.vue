@@ -80,7 +80,7 @@ import { EMPTY_DICT } from '@/store/dict/constants'
 
 import { removeToken } from '@/cookie'
 
-import { changePassword } from '@/api/sys/account'
+// import { changePassword } from '@/api/sys/account'
 
 import logo from '@/assets/images/logo.png'
 
@@ -108,16 +108,16 @@ export default {
     ...mapMutations('account', [EMPTY_ACCOUNT]),
     ...mapMutations('dict', [EMPTY_DICT]),
     ok (fromData, callback, closeLoading) {
-      const { oldPassword, password, confirmPassword } = fromData
-      if (confirmPassword !== password) {
-        this.$Message.error('两次新密码输入不一致！')
-        closeLoading()
-      } else {
-        changePassword({ oldPassword, password }).then(() => {
-          callback()
-          this.$Message.success('修改成功')
-        }).catch(() => { closeLoading() })
-      }
+      // const { oldPassword, password, confirmPassword } = fromData
+      // if (confirmPassword !== password) {
+      //   this.$Message.error('两次新密码输入不一致！')
+      //   closeLoading()
+      // } else {
+      // changePassword({ oldPassword, password }).then(() => {
+      //   callback()
+      //   this.$Message.success('修改成功')
+      // }).catch(() => { closeLoading() })
+      // }
     },
     clickTopMenu (id) {
       this[SET_CURRENT_TOP_MENU](id)

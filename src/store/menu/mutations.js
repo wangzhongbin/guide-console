@@ -11,15 +11,15 @@ export default {
     state.currentView = { id: view.meta.id, name: view.name, path: view.path, title: view.meta.title, icon: view.meta.icon, parentTitle: view.meta.parentTitle, parentIcon: view.meta.parentIcon }
     state.currentMenu = view.meta.id
     if (view.meta.id === -1) {
-      state.currentTopMenu = state.topMenus[0].id
+      state.currentTopMenu = state.topMenus[0].menuId
     } else {
       let pid = view.meta.parentId
       let parentMenu = {}
       do {
-        parentMenu = state.allMenus.find(e => e.id === pid)
+        parentMenu = state.allMenus.find(e => e.menuId === pid)
         pid = parentMenu.parentId
       } while (pid !== 0)
-      state.currentTopMenu = parentMenu.id
+      state.currentTopMenu = parentMenu.menuId
     }
   },
   [SET_ROUTES] (state, routes) {
