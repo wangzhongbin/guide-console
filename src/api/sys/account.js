@@ -1,11 +1,11 @@
 
 import { post, get } from '@/config/http'
 
-import { menuData } from '@/data/menus'
+// import { menuData } from '@/data/menus'
 
 // import { accountData } from '@/data/account'
 
-const basePath = '/sys/account'
+// const basePath = '/sys/account'
 
 /**
   * 图片验证码
@@ -25,12 +25,12 @@ export const loadCurrentAccount = () => get('/manage/user/getInfo')
 /**
  * 查询当前账号菜单
  */
-// export const loadCurrentMenus = () => get('/menu/getRouters')
-export const loadCurrentMenus = () => {
-  return new Promise((resolve, reject) => {
-    resolve(menuData)
-  })
-}
+export const loadCurrentMenus = () => get('/manage/menu/getRouters')
+// export const loadCurrentMenus = () => {
+//   return new Promise((resolve, reject) => {
+//     resolve(menuData)
+//   })
+// }
 
 /**
  * 用户详情查询
@@ -55,7 +55,7 @@ export const accountRemove = (id) => get('/manage/user/remove/' + id)
 /**
   * 修改密码
   */
-export const changePassword = (data) => post(basePath + '/password', data)
+// export const changePassword = (data) => post(basePath + '/password', data)
 
 /**
   * 重置密码

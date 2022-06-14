@@ -18,9 +18,10 @@ const state = {
 
 const actions = {
   generateRoutes ({ commit }, data) {
+    console.log(data)
     return new Promise(resolve => {
       const menus = data.map(e => assembleMenus(e))
-      const topMenus = data.filter(e => e.parentId === 0).map(e => assembleTopMenus(e))
+      const topMenus = data.filter(e => e.menuType === 'M').map(e => assembleTopMenus(e))
       const allMenus = data.reduce((arr, e) => arr.concat(getAllMenus(e)), [])
       const routes = allMenus.filter(e => e.path && e.component && e.code).map(e => assembleRouter(e))
       const route = {
@@ -55,8 +56,8 @@ const assembleRouter = (menu) => {
     title: menu.name,
     component: loadView(menu.component),
     meta: {
-      id: menu.id,
-      title: menu.name,
+      id: menu.menuId,
+      title: menu.menuName,
       icon: menu.icon,
       parentId: menu.parentId
     }
@@ -66,9 +67,9 @@ const assembleRouter = (menu) => {
 
 const assembleMenus = (data) => {
   const menu = {
-    id: data.id,
-    label: data.name,
-    code: data.code,
+    id: data.menuId,
+    label: data.menuName,
+    code: data.menuId,
     icon: data.icon,
     path: data.path,
     items: data.children ? data.children.map(e => assembleMenus(e)) : []
@@ -78,8 +79,8 @@ const assembleMenus = (data) => {
 
 const assembleTopMenus = (data) => {
   const menu = {
-    id: data.id,
-    name: data.name
+    id: data.menuId,
+    name: data.menuName
   }
   return menu
 }

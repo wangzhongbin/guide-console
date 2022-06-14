@@ -48,9 +48,9 @@ export const menuData = [{
     sort: 1,
     icon: 'user',
     name: '租户管理',
-    path: '/trade/tenant',
-    component: 'trade/tenant/Index',
-    code: 'tradeTenant',
+    path: '/sys/tenant',
+    component: 'sys/tenant/Index',
+    code: 'sysTenant',
     label: '租户管理'
   }, {
     id: 201,

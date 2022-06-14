@@ -28,10 +28,11 @@ router.beforeEach((to, from, next) => {
             const ossDomain = res[0].data.ossDomain
             user.multiTenant = getMultiTenant()
             const promiseAccount = store.dispatch('account/saveAccount', user)
-            const promiseMenu = store.dispatch('menu/generateRoutes', res[1])
+            const promiseMenu = store.dispatch('menu/generateRoutes', res[1].data)
             const promiseDomain = store.dispatch('info/setDomain', ossDomain)
             Promise.all([promiseMenu, promiseAccount, promiseDomain]).then(res => {
               router.addRoutes(res[0])
+              console.log(res[0])
               next({ path: to.path })
             })
           })
