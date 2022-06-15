@@ -23,9 +23,8 @@ export default {
     const columns = [
       { title: '点位名称', key: 'targetName' },
       { title: '简称', key: 'nickName' },
-      { title: '点位分类', key: 'targetClassify' },
+      { title: '点位分类', key: 'classifysName' },
       { title: '点位标签', key: 'labelName' },
-      { title: '楼层', key: 'targetFloor' },
       { title: '点位显示层级', key: 'displayRank' },
       { title: '操作类型', render: (h, params) => this.$ColumnDictText(h, params.row.action, this.actionOptions) },
       { title: '点位图标', width: 100, render: (h, params) => h(MediaShow, { props: { src: params.row.targetIcon } }) },
@@ -45,17 +44,17 @@ export default {
   },
   created () {
     loadProjects().then(res => {
-      const projects = res.data && res.data.length > 0 ? res.data.map(e => { return { value: e.projectId + '', label: e.projectName } }) : []
+      const projects = res.data && res.data.length > 0 ? res.data.map(e => { return { value: e.projectId, label: e.projectName } }) : []
       this.projectOptions = projects
       this.queryForms.push({ title: '项目', key: 'projectId', type: 'select', options: projects })
       this.queryForms.push({ title: '点位名称', key: 'targetName' })
       this.queryForms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions })
       this.queryForms.push({ title: '操作类型', key: 'action', type: 'select', options: this.actionOptions })
-      // this.queryForms.push({ title: '分类', key: 'classifyId', type: 'classify' })
     })
   },
   methods: {
     loadData () {
+      this.pointId = 0
       this.$refs['view-page'].loadData()
     },
     update (params) {

@@ -14,7 +14,8 @@
           </RadioGroup>
         </div>
         <div class="box" v-show="item.resourceType" style="padding-left: 140px;">
-          <MediaUploadPoint :type="item.resourceType" v-model="items[index]" />
+          <!-- <MediaUploadPoint :type="item.resourceType" v-model="items[index]" /> -->
+          <MediaUpload v-model="items[index]" :multiple="item.resourceType === 1" :type="item.resourceType" />
         </div>
         <Divider />
       </div>
@@ -28,10 +29,10 @@
 
 import { pointView, pointAdd, pointUpdate } from '@/api/trade/point'
 
-import MediaUploadPoint from './MediaUploadPoint'
+// import MediaUploadPoint from './MediaUploadPoint'
 
 export default {
-  components: { MediaUploadPoint },
+  // components: { MediaUploadPoint },
   model: {
     prop: 'show',
     event: 'change'
@@ -52,27 +53,24 @@ export default {
     }
   },
   watch: {
-    show (val) {
-      if (val) {
-        this.positions = [{ lng: 120.748226, lat: 30.759518 }]
-      }
-    },
     pointId (val) {
       this.data = {}
       this.items = []
       if (val) {
         pointView({ targetId: val, language: this.language }).then(res => {
           this.data = res.data
+          console.log(res.data)
+          this.items = res.data.resources
         })
       }
     },
     projectOptions (val) {
       this.forms.push({ title: '项目', key: 'projectId', type: 'select', options: val, required: true, span: 2 })
       this.forms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions, required: true, span: 2 })
+      this.forms.push({ title: '分类', key: 'targetClassify', type: 'classify', required: true, span: 1 })
+      this.forms.push({ title: '点位标签', key: 'targetLabel', type: 'label', span: 1 })
       this.forms.push({ title: '点位名称', key: 'targetName', required: true, span: 2 })
       this.forms.push({ title: '简称', key: 'nickName', required: true, span: 2 })
-      this.forms.push({ title: '分类', key: 'targetClassify', type: 'classify', required: true, span: 2 })
-      this.forms.push({ title: '点位标签', key: 'targetLabel', type: 'label', required: true, span: 2 })
       this.forms.push({ title: '操作类型', key: 'action', type: 'select', options: this.actionOptions, required: true, span: 2 })
       this.forms.push({ title: '楼层', key: 'targetFloor', type: 'int', span: 2 })
       this.forms.push({ title: '显示层级', key: 'displayRank', type: 'int', required: true, span: 2 })

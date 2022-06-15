@@ -35,6 +35,7 @@ export default {
   created () { },
   methods: {
     loadData () {
+      this.roleId = 0
       this.$refs['view-page'].loadData()
     },
     update (params) {

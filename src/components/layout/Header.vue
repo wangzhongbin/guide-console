@@ -10,7 +10,8 @@
     </div>
     <div class="header-menu">
       <div class="menu-box inline-box" :class="currentTopMenu === item.id ? 'menu-active' : ''" v-for="item in topMenus" :key="item.id" @click="clickTopMenu(item.id)">
-        <Icon class="item-box" type="ios-paper" />
+        <Icon class="item-box" :type="item.icon" />
+        <!-- <Icon class="item-box" type="ios-paper" /> -->
         <div class="item-box">{{item.name}}</div>
       </div>
     </div>

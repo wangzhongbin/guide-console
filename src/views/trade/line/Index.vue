@@ -20,7 +20,7 @@ export default {
       { button: 'remove', click: (params) => this.remove(params) }]
     const columns = [
       { title: '线路名称', key: 'lineName' },
-      { title: '经过景点', key: 'linePoint' },
+      { title: '经过景点', key: 'linePointName' },
       { title: '线路摘要', key: 'lineSummary' },
       { title: '线路类型', width: 100, render: (h, params) => this.$ColumnDictText(h, params.row.lineType, this.typeOptions) },
       { title: '语言', width: 100, key: 'lanName' },

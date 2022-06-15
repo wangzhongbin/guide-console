@@ -8,8 +8,8 @@
             <li>
               <router-link class="menu-item" v-for="item in menu.items" :to="item.path" :key="item.id" :class="currentMenu === item.id ? 'menu-item-active' : ''">
                 <div class="inline-box">
-                  <!-- <Icon class="item-box" :type="item.icon || 'md-cube'" /> -->
-                  <Icon class="item-box" type="md-cube" />
+                  <Icon class="item-box" :type="item.icon" />
+                  <!-- <Icon class="item-box" type="md-cube" /> -->
                   <span class="item-box">{{item.label}}</span>
                 </div>
               </router-link>
@@ -19,8 +19,8 @@
         <div v-else-if="menu.path">
           <router-link class="menu-item" :to="menu.path" :class="currentMenu === menu.id ? 'menu-item-active' : ''">
             <div class="inline-box">
-              <!-- <Icon class="item-box" :type="menu.icon" /> -->
-              <Icon class="item-box" type="md-cube" />
+              <Icon class="item-box" :type="menu.icon" />
+              <!-- <Icon class="item-box" type="md-cube" /> -->
               <span class="item-box">{{menu.label}}</span>
             </div>
           </router-link>

@@ -4,6 +4,7 @@
     <EditModal width="550" title="密码重置" :forms="resetForms" :edit-data="resetData" @ok="ok" v-model="showReset" />
     <AccountView v-model="showView" :data="viewData" :roles="roles" />
     <AccountEdit v-model="showEdit" :account-id="accountId" :roles="roles" @success="loadData" />
+    <AccountProject v-model="showProject" :account-id="accountId" @success="loadData" />
   </div>
 </template>
 <script>
@@ -12,14 +13,17 @@ import AccountView from './View'
 
 import AccountEdit from './Edit'
 
+import AccountProject from './Project'
+
 import { loadRoles } from '@/api/sys/role'
 
 import { accountView, accountRemove, resetPassword } from '@/api/sys/account'
 
 export default {
-  components: { AccountView, AccountEdit },
+  components: { AccountView, AccountEdit, AccountProject },
   data () {
     const actions = [
+      { type: 'success', name: '项目授权', click: (params) => this.auth(params) },
       { button: 'update', click: (params) => { this.update(params) } },
       { type: 'primary', name: '重置密码', click: (params) => this.reset(params) },
       { button: 'remove', click: (params) => this.remove(params) },
@@ -37,6 +41,7 @@ export default {
       url: '/manage/user/list',
       showEdit: false,
       showReset: false,
+      showProject: false,
       showView: false,
       showRole: false,
       accountId: 0,
@@ -66,6 +71,7 @@ export default {
   },
   methods: {
     loadData () {
+      this.accountId = 0
       this.$refs['view-page'].loadData()
     },
     ok (fromData, callback, closeLoading) {
@@ -81,6 +87,10 @@ export default {
     reset (params) {
       this.resetData.userId = params.row.userId
       this.showReset = true
+    },
+    auth (params) {
+      this.accountId = params.row.userId
+      this.showProject = true
     },
     view (params) {
       const { userId } = params.row

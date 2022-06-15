@@ -1,6 +1,6 @@
 <template>
-  <Select transfer clearable multiple :value="ids" placeholder="根据项目和语言选择分类" @on-change="change">
-    <Option v-for="opt in options" :key="'s' + opt.id" :value="opt.id + ''">{{opt.classifyName}}</Option>
+  <Select transfer clearable multiple :value="value" placeholder="选择点位" @on-change="change">
+    <Option v-for="opt in options" :key="'s' + opt.id" :value="opt.id">{{opt.classifyName}}</Option>
   </Select>
 </template>
 <script>
@@ -21,16 +21,11 @@ export default {
   props: {
     projectId: [Number, String],
     language: [Number, String],
-    value: String
+    value: [Number, String]
   },
   watch: {
     projectId () { this.loadData() },
     language () { this.loadData() }
-  },
-  computed: {
-    ids (me) {
-      return me.value ? me.value.split(',') : []
-    }
   },
   methods: {
     loadData () {
@@ -44,7 +39,7 @@ export default {
       }
     },
     change (value) {
-      this.$emit('change', value.join(','))
+      this.$emit('change', value)
     }
   }
 }
