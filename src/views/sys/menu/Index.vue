@@ -14,7 +14,6 @@
     <Row>
       <Table row-key="id" :indent-size="32" border :columns="columns" :data="menus"></Table>
     </Row>
-    <MenuEdit v-model="showEdit" :menu-tree="menuTree" />
   </div>
 </template>
 <script>
@@ -23,14 +22,10 @@ import ColumnName from './ColumnName'
 
 import { loadMenus } from '@/api/sys/menu'
 
-import MenuEdit from './Edit'
-
 export default {
-  components: { MenuEdit },
   data () {
     return {
       showEdit: false,
-      menuTree: [],
       menus: [],
       columns: []
     }
@@ -50,7 +45,6 @@ export default {
     loadData () {
       loadMenus().then(res => {
         this.menus = this.assembleTableTree(res.data)
-        this.menuTree = this.assembleTree(res.data)
       })
     },
     assembleTableTree (nodes) {
@@ -59,16 +53,6 @@ export default {
         if (e.children && e.children.length > 0) {
           e.expand = true
           e._showChildren = true
-          e.children = this.assembleTree(e.children)
-        }
-        return e
-      })
-    },
-    assembleTree (nodes) {
-      return nodes.map(e => {
-        e.title = e.label
-        if (e.children && e.children.length > 0) {
-          e.expand = true
           e.children = this.assembleTree(e.children)
         }
         return e

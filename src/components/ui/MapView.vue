@@ -75,7 +75,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.mapId)
     const map = new this.$AMap.Map(this.mapId, { zoom: 15, zooms: [6, 18] })
     map.on('click', this.clickMap)
     this.map = map

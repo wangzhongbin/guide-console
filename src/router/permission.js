@@ -32,7 +32,6 @@ router.beforeEach((to, from, next) => {
             const promiseDomain = store.dispatch('info/setDomain', ossDomain)
             Promise.all([promiseMenu, promiseAccount, promiseDomain]).then(res => {
               router.addRoutes(res[0])
-              console.log(res[0])
               next({ path: to.path })
             })
           })

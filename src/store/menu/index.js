@@ -18,12 +18,10 @@ const state = {
 
 const actions = {
   generateRoutes ({ commit }, data) {
-    console.log(data)
     return new Promise(resolve => {
       const menus = data.map(e => assembleMenus(e))
       const topMenus = data.filter(e => e.menuType === 'M').map(e => assembleTopMenus(e))
       const allMenus = data.reduce((arr, e) => arr.concat(getAllMenus(e, 0)), [])
-      console.log(allMenus)
       const routes = allMenus.filter(e => e.path && e.component).map(e => assembleRouter(e))
       const route = {
         path: '',

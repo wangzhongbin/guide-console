@@ -11,7 +11,7 @@ export default {
     state.currentView = { id: view.meta.id, name: view.name, path: view.path, title: view.meta.title, icon: view.meta.icon, parentTitle: view.meta.parentTitle, parentIcon: view.meta.parentIcon }
     state.currentMenu = view.meta.id
     if (view.meta.id === -1) {
-      state.currentTopMenu = state.topMenus[0].menuId
+      state.currentTopMenu = state.topMenus[0].id
     } else {
       let pid = view.meta.parentId
       let parentMenu = {}
