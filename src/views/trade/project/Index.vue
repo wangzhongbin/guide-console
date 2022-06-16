@@ -1,7 +1,7 @@
 <template>
   <div>
     <ViewPage ref="view-page" :url="url" :buttons="buttons" :query-forms="queryForms" :columns="columns" :actions="actions" />
-    <ProjectEdit v-model="showEdit" :project-id="projectId" @success="loadData" :tenant-options="tenantOptions" :type-options="typeOptions" :map-type-options="mapTypeOptions" />
+    <ProjectEdit v-model="showEdit" :data="editData" @success="loadData" :tenant-options="tenantOptions" :type-options="typeOptions" :map-type-options="mapTypeOptions" />
   </div>
 </template>
 <script>
@@ -30,11 +30,13 @@ export default {
     return {
       url: '/manage/project/list',
       showEdit: false,
-      projectId: 0,
+      editData: {},
+      // projectId: 0,
+      // language: 0,
       // showView: false,
       // viewData: {},
       queryForms: [],
-      buttons: [{ type: 'primary', fun: () => { this.projectId = 0; this.showEdit = true }, icon: 'md-add', name: '新增项目' }],
+      buttons: [{ type: 'primary', fun: () => { this.editData = {}; this.showEdit = true }, icon: 'md-add', name: '新增项目' }],
       actions,
       columns,
       tenantOptions: [],
@@ -49,7 +51,6 @@ export default {
         return { value: e.tenantId, label: e.tenantName }
       }) : []
       this.queryForms.push({ title: '项目名称', key: 'projectName' })
-      this.queryForms.push({ title: '租户', key: 'tenantId', type: 'select', options: tenants })
       if (this.multiTenant) {
         this.queryForms.push({ title: '租户', key: 'tenantId', type: 'select', options: tenants })
       }
@@ -61,8 +62,13 @@ export default {
       this.$refs['view-page'].loadData()
     },
     update (params) {
-      this.projectId = params.row.projectId
-      this.showEdit = true
+      projectView({ projectId: params.row.projectId, language: params.row.language }).then(res => {
+        this.editData = res.data
+        this.showEdit = true
+      })
+      // this.projectId = params.row.projectId
+      // this.language = params.row.language
+      // this.showEdit = true
     },
     change (params) {
       changeStatus({ projectId: params.row.projectId }).then(() => {
@@ -71,7 +77,7 @@ export default {
       })
     },
     view (params) {
-      projectView(params.row.projectId).then(res => {
+      projectView({ projectId: params.row.projectId, language: params.row.language }).then(res => {
         this.viewData = res.data
         this.showView = true
       })

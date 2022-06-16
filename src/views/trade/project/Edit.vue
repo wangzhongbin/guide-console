@@ -13,7 +13,7 @@ export default {
   },
   props: {
     show: Boolean,
-    projectId: Number,
+    data: Object,
     tenantOptions: Array,
     typeOptions: Array,
     mapTypeOptions: Array
@@ -23,7 +23,7 @@ export default {
   },
   data () {
     return {
-      data: {},
+      // data: {},
       forms: []
     }
   },
@@ -36,7 +36,7 @@ export default {
     projectId (val) {
       this.data = {}
       if (val) {
-        projectView(val).then(res => {
+        projectView({ projectId: val, language: this.language }).then(res => {
           this.data = res.data
         })
       }
@@ -56,18 +56,14 @@ export default {
     this.forms.push({ title: '地图地址', key: 'mapUrl', span: 1 })
     this.forms.push({ title: '详情描述', key: 'details', type: 'textarea', span: 1 })
     this.forms.push({ line: true, title: '安卓端地图参数设置', show: () => true })
-    this.forms.push({ title: '默认层级', key: 'androidDefaultRank', type: 'int', required: true, span: 3 })
-    this.forms.push({ title: '最大层级', key: 'androidMaxRank', type: 'int', required: true, span: 3 })
-    this.forms.push({ title: '最小层级', key: 'androidMinRank', type: 'int', required: true, span: 3 })
+    this.forms.push({ title: '默认层级', key: 'androidDefaultRank', type: 'int', span: 3 })
+    this.forms.push({ title: '最大层级', key: 'androidMaxRank', type: 'int', span: 3 })
+    this.forms.push({ title: '最小层级', key: 'androidMinRank', type: 'int', span: 3 })
     this.forms.push({ line: true, title: '小程序端地图参数设置', show: () => true })
-    this.forms.push({ title: '默认层级', key: 'appletDefaultRank', type: 'int', required: true, span: 3 })
-    this.forms.push({ title: '最大层级', key: 'appletMaxRank', type: 'int', required: true, span: 3 })
-    this.forms.push({ title: '最小层级', key: 'appletMinRank', type: 'int', required: true, span: 3 })
+    this.forms.push({ title: '默认层级', key: 'appletDefaultRank', type: 'int', span: 3 })
+    this.forms.push({ title: '最大层级', key: 'appletMaxRank', type: 'int', span: 3 })
+    this.forms.push({ title: '最小层级', key: 'appletMinRank', type: 'int', span: 3 })
     this.forms.push({ line: true, title: '地图范围坐标', show: () => true })
-    // this.forms.push({ title: '左上角', key: 'topLeftCorner', required: true, span: 2 })
-    // this.forms.push({ title: '右下角', key: 'lowerRightCorner', required: true, span: 2 })
-    // [ 120.092826, 30.242924 ]
-    // [ 120.107783, 30.232539 ]
     this.forms.push({ title: '左上角', key: 'topLeftCorner', mapId: 'topLeftCornerMap', type: 'map', required: true, span: 1 })
     setTimeout(() => this.forms.push({ title: '右下角', key: 'lowerRightCorner', mapId: 'lowerRightCorner', type: 'map', required: true, span: 1 }), 1000)
   },

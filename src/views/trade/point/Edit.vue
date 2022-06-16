@@ -1,38 +1,11 @@
 <template>
-  <EditModal :title="data.id ? '修改点位' : '新增点位'" :forms="forms" :edit-data="data" @close="close" @ok="ok" :show="show">
-    <div class="group-box" v-show="items.length > 0">
-      <div class="box" v-for="(item, index) in items" :key="index">
-        <div class="box inline-box">
-          <Poptip transfer confirm title="确认删除?" @on-ok="delItem(index)">
-            <Button type="error">删除</Button>
-          </Poptip>
-          <div class="text-title-small text-center" style="width:80px">素材{{index + 1}}</div>
-          <RadioGroup transfer v-model="item.resourceType">
-            <Radio border :label="1">图片</Radio>
-            <Radio border :label="2">语音</Radio>
-            <Radio border :label="3">视频</Radio>
-          </RadioGroup>
-        </div>
-        <div class="box" v-show="item.resourceType" style="padding-left: 140px;">
-          <!-- <MediaUploadPoint :type="item.resourceType" v-model="items[index]" /> -->
-          <MediaUpload v-model="items[index]" :multiple="item.resourceType === 1" :type="item.resourceType" />
-        </div>
-        <Divider />
-      </div>
-    </div>
-    <div class="group-box">
-      <Button type="success" @click="addItem">新增素材</Button>
-    </div>
-  </EditModal>
+  <EditModal :title="data.id ? '修改点位' : '新增点位'" :forms="forms" :edit-data="data" @close="close" @ok="ok" :show="show" />
 </template>
 <script>
 
 import { pointView, pointAdd, pointUpdate } from '@/api/trade/point'
 
-// import MediaUploadPoint from './MediaUploadPoint'
-
 export default {
-  // components: { MediaUploadPoint },
   model: {
     prop: 'show',
     event: 'change'
@@ -48,19 +21,19 @@ export default {
     return {
       positions: [],
       data: { language: 1 },
-      forms: [],
-      items: []
+      forms: []
     }
   },
   watch: {
     pointId (val) {
       this.data = {}
-      this.items = []
       if (val) {
         pointView({ targetId: val, language: this.language }).then(res => {
-          this.data = res.data
-          console.log(res.data)
-          this.items = res.data.resources
+          const point = res.data
+          point.audio = point.audio ? point.audio.name : ''
+          point.video = point.video ? point.video.name : ''
+          point.image = point.image ? point.image.map(e => e.name).join(',') : ''
+          this.data = point
         })
       }
     },
@@ -76,6 +49,9 @@ export default {
       this.forms.push({ title: '显示层级', key: 'displayRank', type: 'int', required: true, span: 2 })
       this.forms.push({ title: '点位详情', key: 'targetDesc', type: 'textarea', required: true, span: 1 })
       this.forms.push({ title: '点位图标', key: 'targetIcon', type: 'file', fileType: 1, span: 1, required: true })
+      this.forms.push({ title: '语音', key: 'audio', type: 'file', fileType: 2, span: 1 })
+      this.forms.push({ title: '视频', key: 'video', type: 'file', fileType: 3, span: 1 })
+      this.forms.push({ title: '图片', key: 'image', type: 'file', fileType: 1, span: 1, multiple: true })
       this.forms.push({ title: '点位坐标', key: 'targetLocation', type: 'map', mapId: 'pointMap', required: true })
     }
   },
@@ -91,10 +67,11 @@ export default {
     },
     ok (fromData, callback, closeLoading) {
       const data = Object.assign({}, fromData)
-      data.resources = this.items.map(e => e)
-      const location = JSON.parse(data.targetLocation)
-      data.targetLocation = JSON.stringify(location[0])
+      data.audio = data.audio ? { name: data.audio, duration: 0 } : {}
+      data.video = data.video ? { name: data.video, duration: 0 } : {}
+      data.image = data.image ? data.image.split(',').map(e => { return { name: e, resourceCategory: 1 } }) : []
       if (data.id) {
+        data.targetId = data.id
         pointUpdate(data).then(() => {
           callback()
           this.$Message.success('修改成功')

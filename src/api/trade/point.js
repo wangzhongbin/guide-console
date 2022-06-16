@@ -14,7 +14,7 @@ export const pointAdd = (data) => post('/manage/projectTarget/add', data)
 /**
  * 修改
  */
-export const pointUpdate = (data) => post('/manage/projectTarget/modify', data)
+export const pointUpdate = (data) => post('/manage/projectTarget/edit', data)
 
 /**
  * 删除

@@ -1,0 +1,74 @@
+<template>
+  <div>
+    <ViewPage ref="view-page" :url="url" :buttons="buttons" :query-forms="queryForms" :columns="columns" :actions="actions" />
+    <EditModal :title="editData.id ? '修改参数' : '新增参数'" :forms="editForms" :edit-data="editData" @ok="ok" v-model="showEdit" width="600" />
+  </div>
+</template>
+<script>
+
+import { loadProjects } from '@/api/trade/project'
+
+import { programAdd, programUpdate, programRemove } from '@/api/sys/program'
+
+export default {
+  data () {
+    const actions = [
+      { button: 'update', click: (params) => { this.update(params) } },
+      { button: 'remove', click: (params) => this.remove(params) }]
+    const columns = [
+      { title: '项目名称', key: 'projectName' },
+      { title: 'appid', key: 'appid' }]
+    return {
+      url: '/manange/wxParams/list',
+      showEdit: false,
+      editData: {},
+      editForms: [],
+      queryForms: [],
+      buttons: [{ type: 'primary', fun: () => { this.editData = {}; this.showEdit = true }, icon: 'md-add', name: '新增参数' }],
+      actions,
+      columns
+    }
+  },
+  created () {
+    loadProjects().then(res => {
+      const projects = res.data && res.data.length > 0 ? res.data.map(e => { return { value: e.projectId, label: e.projectName } }) : []
+      this.queryForms.push({ title: '项目', key: 'projectId', type: 'select', options: projects })
+
+      this.editForms.push({ title: '项目', key: 'projectId', type: 'select', required: true, options: projects })
+      this.editForms.push({ title: 'appId', key: 'appid', required: true })
+      this.editForms.push({ title: 'appSecret', key: 'appsecret', required: true })
+    })
+  },
+  methods: {
+    loadData () {
+      this.$refs['view-page'].loadData()
+    },
+    ok (fromData, callback, closeLoading) {
+      fromData.type = 1
+      if (fromData.id) {
+        programUpdate(fromData).then(res => {
+          callback()
+          this.$Message.success('修改成功')
+          this.$refs['view-page'].loadData()
+        }).catch(() => { closeLoading() })
+      } else {
+        programAdd(fromData).then(res => {
+          callback()
+          this.$Message.success('新增成功')
+          this.$refs['view-page'].loadData()
+        }).catch(() => { closeLoading() })
+      }
+    },
+    update (params) {
+      this.editData = { projectId: params.row.projectId }
+      this.showEdit = true
+    },
+    remove (params) {
+      programRemove(params.row.id).then(() => {
+        this.$Message.success('删除成功')
+        this.loadData()
+      })
+    }
+  }
+}
+</script>
