@@ -17,16 +17,18 @@ export default {
       { button: 'remove', click: (params) => this.remove(params) }]
     const columns = [
       { title: '项目名称', key: 'projectName' },
-      { title: 'appid', key: 'appid' }]
+      { title: 'appid', key: 'appid' },
+      { title: '类型', render: (h, params) => this.$ColumnDictText(h, params.row.type, this.typeOptions) }]
     return {
-      url: '/manange/wxParams/list',
+      url: '/manage/wxParams/list',
       showEdit: false,
       editData: {},
       editForms: [],
       queryForms: [],
       buttons: [{ type: 'primary', fun: () => { this.editData = {}; this.showEdit = true }, icon: 'md-add', name: '新增参数' }],
       actions,
-      columns
+      columns,
+      typeOptions: [{ value: 1, label: '小程序' }, { value: 2, label: '公众号' }]
     }
   },
   created () {
@@ -37,6 +39,7 @@ export default {
       this.editForms.push({ title: '项目', key: 'projectId', type: 'select', required: true, options: projects })
       this.editForms.push({ title: 'appId', key: 'appid', required: true })
       this.editForms.push({ title: 'appSecret', key: 'appsecret', required: true })
+      this.editForms.push({ title: '类型', key: 'type', type: 'select', required: true, options: this.typeOptions })
     })
   },
   methods: {
@@ -44,7 +47,6 @@ export default {
       this.$refs['view-page'].loadData()
     },
     ok (fromData, callback, closeLoading) {
-      fromData.type = 1
       if (fromData.id) {
         programUpdate(fromData).then(res => {
           callback()
@@ -60,7 +62,7 @@ export default {
       }
     },
     update (params) {
-      this.editData = { projectId: params.row.projectId }
+      this.editData = params.row
       this.showEdit = true
     },
     remove (params) {

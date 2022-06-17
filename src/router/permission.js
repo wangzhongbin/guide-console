@@ -21,7 +21,17 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' })
     } else {
       if (store.state.menu.routes.length === 0) {
-        AMapLoader.load({ key: AMapKey, version: '2.0' }).then((AMap) => {
+        AMapLoader.load({
+          key: AMapKey,
+          version: '2.0',
+          AMapUI: {
+            version: '1.1',
+            plugins: ['misc/PoiPicker']
+          }
+        }).then((AMap) => {
+          // initAMapUI()
+          // eslint-disable-next-line no-undef
+          // console.log(AMapUI)
           Vue.prototype.$AMap = AMap
           Promise.all([loadCurrentAccount(), loadCurrentMenus()]).then(res => {
             const user = res[0].data.user

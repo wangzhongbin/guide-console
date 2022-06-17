@@ -18,7 +18,7 @@ export default {
     const columns = [
       { title: '项目名称', key: 'projectName' },
       { title: '标签名称', key: 'labelName' },
-      { title: '语言', width: 100, key: 'language' }]
+      { title: '语言', width: 100, render: (h, params) => this.$ColumnLanguageText(h, params.row.language) }]
     return {
       url: '/manage/label/list',
       showEdit: false,

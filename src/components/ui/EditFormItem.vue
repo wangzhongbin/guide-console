@@ -49,7 +49,7 @@ export default {
         if (required) {
           return { required, message }
         } else {
-          return {}
+          return []
         }
       }
     }

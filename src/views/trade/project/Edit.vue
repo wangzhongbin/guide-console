@@ -64,8 +64,9 @@ export default {
     this.forms.push({ title: '最大层级', key: 'appletMaxRank', type: 'int', span: 3 })
     this.forms.push({ title: '最小层级', key: 'appletMinRank', type: 'int', span: 3 })
     this.forms.push({ line: true, title: '地图范围坐标', show: () => true })
-    this.forms.push({ title: '左上角', key: 'topLeftCorner', mapId: 'topLeftCornerMap', type: 'map', required: true, span: 1 })
-    setTimeout(() => this.forms.push({ title: '右下角', key: 'lowerRightCorner', mapId: 'lowerRightCorner', type: 'map', required: true, span: 1 }), 1000)
+    this.forms.push({ title: '中心点', key: 'centerPoint', mapId: 'centerPoint', type: 'map', required: true, span: 1 })
+    setTimeout(() => this.forms.push({ title: '左上角', key: 'topLeftCorner', mapId: 'topLeftCornerMap', type: 'map', required: true, span: 1 }), 1000)
+    setTimeout(() => this.forms.push({ title: '右下角', key: 'lowerRightCorner', mapId: 'lowerRightCorner', type: 'map', required: true, span: 1 }), 2000)
   },
   methods: {
     close () {

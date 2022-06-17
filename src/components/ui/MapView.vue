@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="inline-box" style="width: 830px;align-items: flex-start;">
+    <div class="inline-box" style="width: 830px;align-items: flex-start;position: relative;">
+      <div class="picker-input">
+        <input :id="mapId + '_pickerInput'" placeholder="输入关键字选取地点" />
+      </div>
       <div class="map-box box" :id="mapId"></div>
       <div class="box">
         <div class="inline-box" v-for="(item, index) in positions" :key="index">
@@ -87,6 +90,16 @@ export default {
     const map = new this.$AMap.Map(this.mapId, { zoom: 15, zooms: [6, 18] })
     map.on('click', this.clickMap)
     this.map = map
+    const id = this.mapId + '_pickerInput'
+    // eslint-disable-next-line no-undef
+    AMapUI.loadUI(['misc/PoiPicker'], (PoiPicker) => {
+      const poiPicker = new PoiPicker({ input: id })
+      poiPicker.on('poiPicked', (poi) => {
+        const { lng, lat } = poi.item.location
+        const position = [lng, lat]
+        map.setCenter(position)
+      })
+    })
   },
   methods: {
     remove (index) {
@@ -115,5 +128,11 @@ export default {
 .map-box {
   width: 600px;
   height: 300px;
+}
+.picker-input {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  z-index: 1;
 }
 </style>

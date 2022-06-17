@@ -24,7 +24,7 @@ export default {
       { title: '排序', width: 100, key: 'sortNum' },
       { title: '分类图标', render: (h, params) => h(MediaShow, { props: { src: params.row.classifyLogo } }) },
       { title: '分类选中图标', render: (h, params) => h(MediaShow, { props: { src: params.row.selectLogo } }) },
-      { title: '语言', width: 100, key: 'language' }]
+      { title: '语言', width: 100, render: (h, params) => this.$ColumnLanguageText(h, params.row.language) }]
     return {
       url: '/manage/classify/list',
       showEdit: false,
