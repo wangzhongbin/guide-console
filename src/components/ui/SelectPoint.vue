@@ -1,14 +1,14 @@
 <template>
-  <Select transfer clearable multiple :value="value" placeholder="选择点位" @on-change="change">
-    <Option v-for="opt in options" :key="'s' + opt.id" :value="opt.id">{{opt.classifyName}}</Option>
+  <Select transfer clearable multiple :value="ids" placeholder="根据项目和语言选择点位" @on-change="change">
+    <Option v-for="opt in options" :key="'p' + opt.targetId" :value="opt.targetId + ''">{{opt.targetName}}</Option>
   </Select>
 </template>
 <script>
 
-import { loadClassifys } from '@/api/trade/classify'
+import { loadPinots } from '@/api/trade/point'
 
 export default {
-  name: 'SelectClassify',
+  name: 'SelectPoint',
   model: {
     prop: 'value',
     event: 'change'
@@ -21,17 +21,20 @@ export default {
   props: {
     projectId: [Number, String],
     language: [Number, String],
-    value: [Number, String]
+    value: String
   },
   watch: {
-    projectId () { this.loadData() },
-    language () { this.loadData() }
+    params () { this.loadData() }
+  },
+  computed: {
+    params: (me) => [me.projectId, me.language],
+    ids: (me) => me.value ? me.value.split(',') : []
   },
   methods: {
     loadData () {
       if (this.projectId && this.language) {
         this.options = []
-        loadClassifys({ projectId: this.projectId, language: this.language }).then(res => {
+        loadPinots({ projectId: this.projectId, language: this.language }).then(res => {
           this.options = res.data
         })
       } else {
@@ -39,7 +42,7 @@ export default {
       }
     },
     change (value) {
-      this.$emit('change', value)
+      this.$emit('change', value.join(','))
     }
   }
 }

@@ -4,7 +4,7 @@
 </template>
 <script>
 
-import { projectView, projectAdd, projectUpdate } from '@/api/trade/project'
+import { projectAdd, projectUpdate } from '@/api/trade/project'
 
 export default {
   model: {
@@ -31,14 +31,6 @@ export default {
     tenantOptions (val) {
       if (this.multiTenant) {
         this.forms.unshift({ title: '租户', key: 'tenantId', type: 'select', options: this.tenantOptions, required: true, span: 1 })
-      }
-    },
-    projectId (val) {
-      this.data = {}
-      if (val) {
-        projectView({ projectId: val, language: this.language }).then(res => {
-          this.data = res.data
-        })
       }
     }
   },

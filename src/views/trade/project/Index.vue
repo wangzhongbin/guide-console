@@ -63,12 +63,12 @@ export default {
     },
     update (params) {
       projectView({ projectId: params.row.projectId, language: params.row.language }).then(res => {
-        this.editData = res.data
+        const project = res.data
+        const { provinceCode, cityCode, areaCode } = project
+        project.placeCode = [provinceCode, cityCode, areaCode].join(',')
+        this.editData = project
         this.showEdit = true
       })
-      // this.projectId = params.row.projectId
-      // this.language = params.row.language
-      // this.showEdit = true
     },
     change (params) {
       changeStatus({ projectId: params.row.projectId }).then(() => {

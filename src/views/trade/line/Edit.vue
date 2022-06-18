@@ -5,7 +5,7 @@
 </template>
 <script>
 
-import { lineView, lineEdit } from '@/api/trade/line'
+import { lineEdit } from '@/api/trade/line'
 
 export default {
   model: {
@@ -14,25 +14,16 @@ export default {
   },
   props: {
     show: Boolean,
-    lineId: Number,
+    data: Object,
     typeOptions: Array,
     projectOptions: Array
   },
   data () {
     return {
-      data: {},
       forms: []
     }
   },
   watch: {
-    lineId (val) {
-      this.data = {}
-      if (val) {
-        lineView(val).then(res => {
-          this.data = res.data
-        })
-      }
-    },
     projectOptions (val) {
       this.forms.push({ title: '项目', key: 'projectId', type: 'select', options: val, required: true, span: 2 })
       this.forms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions, required: true, span: 2 })
@@ -40,6 +31,7 @@ export default {
       this.forms.push({ title: '线路类型', key: 'lineType', type: 'select', options: this.typeOptions, required: true, span: 2 })
       this.forms.push({ title: '线路概要', key: 'lineSummary', required: true, span: 2 })
       this.forms.push({ title: '排序', key: 'lineSort', type: 'int', required: true, span: 2 })
+      this.forms.push({ title: '途径景点', key: 'linePoint', type: 'point', required: true, span: 1 })
       this.forms.push({ title: '线路简介', key: 'lineDesc', type: 'textarea', required: true, span: 1 })
       this.forms.push({ title: '线路路径', key: 'linePath', type: 'map', isLine: true, mapId: 'lineMap', required: true })
     }
@@ -47,12 +39,6 @@ export default {
   methods: {
     close () {
       this.$emit('change', false)
-    },
-    addItem () {
-      this.items.push({ resourceType: 0 })
-    },
-    delItem (index) {
-      this.items.splice(index, 1)
     },
     ok (fromData, callback, closeLoading) {
       const data = Object.assign({}, fromData)

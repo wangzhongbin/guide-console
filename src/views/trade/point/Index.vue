@@ -49,7 +49,6 @@ export default {
       this.queryForms.push({ title: '项目', key: 'projectId', type: 'select', options: projects })
       this.queryForms.push({ title: '点位名称', key: 'targetName' })
       this.queryForms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions })
-      this.queryForms.push({ title: '操作类型', key: 'action', type: 'select', options: this.actionOptions })
     })
   },
   methods: {

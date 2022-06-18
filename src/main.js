@@ -25,6 +25,7 @@ import SelectTree from '@/components/ui/SelectTree'
 import SelectPlace from '@/components/ui/SelectPlace'
 import SelectClassify from '@/components/ui/SelectClassify'
 import SelectLabel from '@/components/ui/SelectLabel'
+import SelectPoint from '@/components/ui/SelectPoint'
 import ViewItem from '@/components/ui/ViewItem'
 import MapView from '@/components/ui/MapView'
 
@@ -47,6 +48,7 @@ Vue.component('SelectTree', SelectTree)
 Vue.component('SelectPlace', SelectPlace)
 Vue.component('SelectClassify', SelectClassify)
 Vue.component('SelectLabel', SelectLabel)
+Vue.component('SelectPoint', SelectPoint)
 Vue.component('ViewItem', ViewItem)
 Vue.component('MapView', MapView)
 

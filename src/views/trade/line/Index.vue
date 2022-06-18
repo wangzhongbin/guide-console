@@ -1,14 +1,14 @@
 <template>
   <div>
     <ViewPage ref="view-page" :url="url" :buttons="buttons" :query-forms="queryForms" :columns="columns" :actions="actions" />
-    <lineEdit v-model="showEdit" :line-id="lineId" @success="loadData" :project-options="projectOptions" :type-options="typeOptions" />
+    <lineEdit v-model="showEdit" :data="editData" @success="loadData" :project-options="projectOptions" :type-options="typeOptions" />
   </div>
 </template>
 <script>
 
 import { loadProjects } from '@/api/trade/project'
 
-import { lineRemove } from '@/api/trade/line'
+import { lineView, lineRemove } from '@/api/trade/line'
 
 import lineEdit from './Edit'
 
@@ -28,9 +28,9 @@ export default {
     return {
       url: '/manage/touringLine/list',
       showEdit: false,
-      lineId: 0,
+      editData: {},
       queryForms: [],
-      buttons: [{ type: 'primary', fun: () => { this.lineId = 0; this.showEdit = true }, icon: 'md-add', name: '新增线路' }],
+      buttons: [{ type: 'primary', fun: () => { this.editData = {}; this.showEdit = true }, icon: 'md-add', name: '新增线路' }],
       actions,
       columns,
       typeOptions: [{ value: 0, label: '普通线路' }, { value: 1, label: '绿道' }],
@@ -39,11 +39,10 @@ export default {
   },
   created () {
     loadProjects().then(res => {
-      const projects = res.data && res.data.length > 0 ? res.data.map(e => { return { value: e.projectId + '', label: e.projectName } }) : []
+      const projects = res.data && res.data.length > 0 ? res.data.map(e => { return { value: e.projectId, label: e.projectName } }) : []
       this.projectOptions = projects
       this.queryForms.push({ title: '项目', key: 'projectId', type: 'select', options: projects })
       this.queryForms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions })
-      this.queryForms.push({ title: '线路类型', key: 'lineType', type: 'select', options: this.typeOptions })
     })
   },
   methods: {
@@ -51,8 +50,10 @@ export default {
       this.$refs['view-page'].loadData()
     },
     update (params) {
-      this.lineId = params.row.id
-      this.showEdit = true
+      lineView(params.row.id).then(res => {
+        this.editData = res.data
+        this.showEdit = true
+      })
     },
     remove (params) {
       lineRemove(params.row.id).then(() => {

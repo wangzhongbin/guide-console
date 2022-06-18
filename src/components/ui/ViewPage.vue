@@ -62,10 +62,12 @@ export default {
   methods: {
     refresh () {
       this.queryData = {}
+      this.paging.current = 1
       this.loadData()
     },
     query (data) {
       this.queryData = { ...data }
+      this.paging.current = 1
       this.loadData()
     },
     loadData () {
