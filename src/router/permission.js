@@ -10,6 +10,8 @@ import store from '@/store'
 
 import { getToken, getMultiTenant } from '@/cookie'
 
+import { loadTenants } from '@/api/trade/tenant'
+
 const AMapKey = '14ff59bcf6861a3ba126adc6e6522ef5'
 
 const whiteList = ['/login']
@@ -29,20 +31,29 @@ router.beforeEach((to, from, next) => {
             plugins: ['misc/PoiPicker']
           }
         }).then((AMap) => {
-          // initAMapUI()
-          // eslint-disable-next-line no-undef
-          // console.log(AMapUI)
           Vue.prototype.$AMap = AMap
           Promise.all([loadCurrentAccount(), loadCurrentMenus()]).then(res => {
             const user = res[0].data.user
             const ossDomain = res[0].data.ossDomain
-            user.multiTenant = getMultiTenant()
+            const multiTenant = getMultiTenant()
+            user.multiTenant = multiTenant
             const promiseAccount = store.dispatch('account/saveAccount', user)
             const promiseMenu = store.dispatch('menu/generateRoutes', res[1].data)
             const promiseDomain = store.dispatch('info/setDomain', ossDomain)
             Promise.all([promiseMenu, promiseAccount, promiseDomain]).then(res => {
               router.addRoutes(res[0])
-              next({ path: to.path })
+              if (multiTenant) {
+                loadTenants().then(res => {
+                  const tenants = res.data && res.data.length > 0 ? res.data.map(e => {
+                    return { value: e.tenantId, label: e.tenantName }
+                  }) : []
+                  store.dispatch('account/saveTenants', tenants).then(() => {
+                    next({ path: to.path })
+                  })
+                })
+              } else {
+                next({ path: to.path })
+              }
             })
           })
         })

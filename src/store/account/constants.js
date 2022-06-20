@@ -1,2 +1,3 @@
 export const SET_ACCOUNT = 'SET_ACCOUNT'
 export const EMPTY_ACCOUNT = 'EMPTY_ACCOUNT'
+export const SET_TENANTS = 'SET_TENANTS'

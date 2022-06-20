@@ -1,4 +1,4 @@
-import { SET_ACCOUNT, EMPTY_ACCOUNT } from './constants'
+import { SET_ACCOUNT, EMPTY_ACCOUNT, SET_TENANTS } from './constants'
 
 export default {
   [SET_ACCOUNT] (state, account) {
@@ -24,5 +24,9 @@ export default {
     state.userType = ''
     state.email = ''
     state.phonenumber = ''
+    state.tenants = []
+  },
+  [SET_TENANTS] (state, tenants) {
+    state.tenants = tenants
   }
 }

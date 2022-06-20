@@ -26,6 +26,7 @@ import SelectPlace from '@/components/ui/SelectPlace'
 import SelectClassify from '@/components/ui/SelectClassify'
 import SelectLabel from '@/components/ui/SelectLabel'
 import SelectPoint from '@/components/ui/SelectPoint'
+import SelectProject from '@/components/ui/SelectProject'
 import ViewItem from '@/components/ui/ViewItem'
 import MapView from '@/components/ui/MapView'
 
@@ -49,6 +50,7 @@ Vue.component('SelectPlace', SelectPlace)
 Vue.component('SelectClassify', SelectClassify)
 Vue.component('SelectLabel', SelectLabel)
 Vue.component('SelectPoint', SelectPoint)
+Vue.component('SelectProject', SelectProject)
 Vue.component('ViewItem', ViewItem)
 Vue.component('MapView', MapView)
 

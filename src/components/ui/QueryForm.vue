@@ -24,6 +24,9 @@
       <div class="item-content" v-else-if="item.type === 'place'">
         <SelectPlace v-model="queryData[item.key]" :level="item.level" />
       </div>
+      <div class="item-content" v-else-if="item.type === 'project'">
+        <SelectProject v-model="queryData[item.key]" />
+      </div>
       <div class="item-content" v-else-if="item.type === 'classify'">
         <SelectClassify v-model="queryData[item.key]" :project-id="queryData.projectId" :language="queryData.language" />
       </div>

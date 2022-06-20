@@ -6,8 +6,6 @@
 </template>
 <script>
 
-import { loadProjects } from '@/api/trade/project'
-
 import { programAdd, programUpdate, programRemove } from '@/api/sys/program'
 
 export default {
@@ -32,15 +30,12 @@ export default {
     }
   },
   created () {
-    loadProjects().then(res => {
-      const projects = res.data && res.data.length > 0 ? res.data.map(e => { return { value: e.projectId, label: e.projectName } }) : []
-      this.queryForms.push({ title: '项目', key: 'projectId', type: 'select', options: projects })
+    this.queryForms.push({ title: '项目', key: 'projectId', type: 'project' })
 
-      this.editForms.push({ title: '项目', key: 'projectId', type: 'select', required: true, options: projects })
-      this.editForms.push({ title: 'appId', key: 'appid', required: true })
-      this.editForms.push({ title: 'appSecret', key: 'appsecret', required: true })
-      this.editForms.push({ title: '类型', key: 'type', type: 'select', required: true, options: this.typeOptions })
-    })
+    this.editForms.push({ title: '项目', key: 'projectId', type: 'project', required: true })
+    this.editForms.push({ title: 'appId', key: 'appid', required: true })
+    this.editForms.push({ title: 'appSecret', key: 'appsecret', required: true })
+    this.editForms.push({ title: '类型', key: 'type', type: 'select', required: true, options: this.typeOptions })
   },
   methods: {
     loadData () {

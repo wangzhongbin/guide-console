@@ -14,27 +14,22 @@ export default {
   props: {
     show: Boolean,
     data: Object,
-    tenantOptions: Array,
     typeOptions: Array,
     mapTypeOptions: Array
   },
   computed: {
-    multiTenant: (me) => me.$store.state.account.multiTenant
+    multiTenant: (me) => me.$store.state.account.multiTenant,
+    tenants: (me) => me.$store.state.account.tenants
   },
   data () {
     return {
-      // data: {},
       forms: []
     }
   },
-  watch: {
-    tenantOptions (val) {
-      if (this.multiTenant) {
-        this.forms.unshift({ title: '租户', key: 'tenantId', type: 'select', options: this.tenantOptions, required: true, span: 1 })
-      }
-    }
-  },
   created () {
+    if (this.multiTenant) {
+      this.forms.unshift({ title: '租户', key: 'tenantId', type: 'select', options: this.tenants, required: true, span: 1 })
+    }
     this.forms.push({ title: '项目名称', key: 'projectName', required: true, span: 2 })
     this.forms.push({ title: '行业类型', key: 'projectType', type: 'radio', options: this.typeOptions, required: true, span: 2 })
     this.forms.push({ title: '所在地', key: 'placeCode', type: 'place', level: 3, required: true, span: 2 })
@@ -56,9 +51,9 @@ export default {
     this.forms.push({ title: '最大层级', key: 'appletMaxRank', type: 'int', span: 3 })
     this.forms.push({ title: '最小层级', key: 'appletMinRank', type: 'int', span: 3 })
     this.forms.push({ line: true, title: '地图范围坐标', show: () => true })
-    this.forms.push({ title: '中心点', key: 'centerPoint', mapId: 'centerPoint', type: 'map', required: true, span: 1 })
+    this.forms.push({ title: '中心点', key: 'centerPoint', mapId: 'centerPointMap', type: 'map', required: true, span: 1 })
     setTimeout(() => this.forms.push({ title: '左上角', key: 'topLeftCorner', mapId: 'topLeftCornerMap', type: 'map', required: true, span: 1 }), 1000)
-    setTimeout(() => this.forms.push({ title: '右下角', key: 'lowerRightCorner', mapId: 'lowerRightCorner', type: 'map', required: true, span: 1 }), 2000)
+    setTimeout(() => this.forms.push({ title: '右下角', key: 'lowerRightCorner', mapId: 'lowerRightCornerMap', type: 'map', required: true, span: 1 }), 2000)
   },
   methods: {
     close () {
@@ -70,11 +65,8 @@ export default {
       data.provinceCode = codes[0]
       data.cityCode = codes[1]
       data.areaCode = codes[2]
-      const topLeftCorner = JSON.parse(data.topLeftCorner)
-      data.topLeftCorner = JSON.stringify(topLeftCorner[0])
-      const lowerRightCorner = JSON.parse(data.lowerRightCorner)
-      data.lowerRightCorner = JSON.stringify(lowerRightCorner[0])
-      if (data.roleId) {
+      delete data.placeCode
+      if (data.projectId) {
         projectUpdate(data).then(() => {
           callback()
           this.$Message.success('修改成功')

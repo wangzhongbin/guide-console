@@ -1,18 +1,22 @@
 <template>
   <div>
     <ViewPage ref="view-page" :url="url" :buttons="buttons" :query-forms="queryForms" :columns="columns" :actions="actions" />
-    <ProjectEdit v-model="showEdit" :data="editData" @success="loadData" :tenant-options="tenantOptions" :type-options="typeOptions" :map-type-options="mapTypeOptions" />
+    <ProjectEdit v-model="showEdit" :data="editData" @success="loadData" :type-options="typeOptions" :map-type-options="mapTypeOptions" />
   </div>
 </template>
 <script>
-import { loadTenants } from '@/api/trade/tenant'
+
 import MediaShow from '@/components/ui/MediaShow'
+
 import ProjectEdit from './Edit'
+
 import { projectView, changeStatus } from '@/api/trade/project'
+
 export default {
   components: { ProjectEdit },
   computed: {
-    multiTenant: (me) => me.$store.state.account.multiTenant
+    multiTenant: (me) => me.$store.state.account.multiTenant,
+    tenants: (me) => me.$store.state.account.tenants
   },
   data () {
     const actions = [
@@ -31,31 +35,20 @@ export default {
       url: '/manage/project/list',
       showEdit: false,
       editData: {},
-      // projectId: 0,
-      // language: 0,
-      // showView: false,
-      // viewData: {},
       queryForms: [],
       buttons: [{ type: 'primary', fun: () => { this.editData = {}; this.showEdit = true }, icon: 'md-add', name: '新增项目' }],
       actions,
       columns,
-      tenantOptions: [],
       mapTypeOptions: [{ value: 0, label: '手绘图' }, { value: 1, label: '图片' }, { value: 2, label: '3D' }],
       typeOptions: [{ value: 0, label: '景区' }, { value: 1, label: '商场' }],
       statusOptions: [{ value: 0, label: '未发布' }, { value: 1, label: '已发布' }]
     }
   },
   created () {
-    loadTenants().then(res => {
-      const tenants = res.data && res.data.length > 0 ? res.data.map(e => {
-        return { value: e.tenantId, label: e.tenantName }
-      }) : []
-      this.queryForms.push({ title: '项目名称', key: 'projectName' })
-      if (this.multiTenant) {
-        this.queryForms.push({ title: '租户', key: 'tenantId', type: 'select', options: tenants })
-      }
-      this.tenantOptions = tenants
-    })
+    this.queryForms.push({ title: '项目名称', key: 'projectName' })
+    if (this.multiTenant) {
+      this.queryForms.push({ title: '租户', key: 'tenantId', type: 'select', options: this.tenants })
+    }
   },
   methods: {
     loadData () {

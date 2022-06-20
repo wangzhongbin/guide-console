@@ -1,14 +1,12 @@
 <template>
   <div>
     <ViewPage ref="view-page" :url="url" :buttons="buttons" :query-forms="queryForms" :columns="columns" :actions="actions" />
-    <PointEdit v-model="showEdit" :point-id="pointId" :language="language" @success="loadData" :project-options="projectOptions" :action-options="actionOptions" />
+    <PointEdit v-model="showEdit" :point-id="pointId" :language="language" @success="loadData" :action-options="actionOptions" />
   </div>
 </template>
 <script>
 
 import MediaShow from '@/components/ui/MediaShow'
-
-import { loadProjects } from '@/api/trade/project'
 
 import { pointRemove } from '@/api/trade/point'
 
@@ -38,18 +36,13 @@ export default {
       buttons: [{ type: 'primary', fun: () => { this.pointId = 0; this.language = 0; this.showEdit = true }, icon: 'md-add', name: '新增点位' }],
       actions,
       columns,
-      projectOptions: [],
       actionOptions: [{ value: 1, label: '查详情' }, { value: 2, label: '无操作' }]
     }
   },
   created () {
-    loadProjects().then(res => {
-      const projects = res.data && res.data.length > 0 ? res.data.map(e => { return { value: e.projectId, label: e.projectName } }) : []
-      this.projectOptions = projects
-      this.queryForms.push({ title: '项目', key: 'projectId', type: 'select', options: projects })
-      this.queryForms.push({ title: '点位名称', key: 'targetName' })
-      this.queryForms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions })
-    })
+    this.queryForms.push({ title: '项目', key: 'projectId', type: 'project' })
+    this.queryForms.push({ title: '点位名称', key: 'targetName' })
+    this.queryForms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions })
   },
   methods: {
     loadData () {

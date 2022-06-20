@@ -6,8 +6,6 @@
 </template>
 <script>
 
-import { loadProjects } from '@/api/trade/project'
-
 import { labelView, labelAdd, labelUpdate, labelRemove } from '@/api/trade/label'
 
 export default {
@@ -31,15 +29,12 @@ export default {
     }
   },
   created () {
-    loadProjects().then(res => {
-      const projects = res.data && res.data.length > 0 ? res.data.map(e => { return { value: e.projectId + '', label: e.projectName } }) : []
-      this.queryForms.push({ title: '项目', key: 'projectId', type: 'select', options: projects })
-      this.queryForms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions })
+    this.queryForms.push({ title: '项目', key: 'projectId', type: 'project' })
+    this.queryForms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions })
 
-      this.editForms.push({ title: '项目', key: 'projectId', type: 'select', options: projects })
-      this.editForms.push({ title: '标签名称', key: 'labelName', required: true })
-      this.editForms.push({ title: '语言', type: 'select', key: 'language', required: true, options: this.$LanguageOptions })
-    })
+    this.editForms.push({ title: '项目', key: 'projectId', type: 'project', required: true })
+    this.editForms.push({ title: '标签名称', key: 'labelName', required: true })
+    this.editForms.push({ title: '语言', type: 'select', key: 'language', required: true, options: this.$LanguageOptions })
   },
   methods: {
     loadData () {

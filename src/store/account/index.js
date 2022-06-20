@@ -1,7 +1,7 @@
 
 import mutations from './mutations'
 
-import { SET_ACCOUNT } from './constants'
+import { SET_ACCOUNT, SET_TENANTS } from './constants'
 
 const state = {
   multiTenant: false,
@@ -13,12 +13,16 @@ const state = {
   nickName: '',
   userType: '',
   email: '',
-  phonenumber: ''
+  phonenumber: '',
+  tenants: []
 }
 
 const actions = {
   saveAccount ({ commit }, account) {
     commit(SET_ACCOUNT, account)
+  },
+  saveTenants ({ commit }, tenants) {
+    commit(SET_TENANTS, tenants)
   }
 }
 

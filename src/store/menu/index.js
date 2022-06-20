@@ -79,6 +79,7 @@ const assembleMenus = (data) => {
 const assembleTopMenus = (data) => {
   const menu = {
     id: data.menuId,
+    icon: data.icon,
     name: data.menuName
   }
   return menu

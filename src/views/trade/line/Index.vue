@@ -1,12 +1,10 @@
 <template>
   <div>
     <ViewPage ref="view-page" :url="url" :buttons="buttons" :query-forms="queryForms" :columns="columns" :actions="actions" />
-    <lineEdit v-model="showEdit" :data="editData" @success="loadData" :project-options="projectOptions" :type-options="typeOptions" />
+    <lineEdit v-model="showEdit" :data="editData" @success="loadData" :type-options="typeOptions" />
   </div>
 </template>
 <script>
-
-import { loadProjects } from '@/api/trade/project'
 
 import { lineView, lineRemove } from '@/api/trade/line'
 
@@ -33,17 +31,12 @@ export default {
       buttons: [{ type: 'primary', fun: () => { this.editData = {}; this.showEdit = true }, icon: 'md-add', name: '新增线路' }],
       actions,
       columns,
-      typeOptions: [{ value: 0, label: '普通线路' }, { value: 1, label: '绿道' }],
-      projectOptions: []
+      typeOptions: [{ value: 0, label: '普通线路' }, { value: 1, label: '绿道' }]
     }
   },
   created () {
-    loadProjects().then(res => {
-      const projects = res.data && res.data.length > 0 ? res.data.map(e => { return { value: e.projectId, label: e.projectName } }) : []
-      this.projectOptions = projects
-      this.queryForms.push({ title: '项目', key: 'projectId', type: 'select', options: projects })
-      this.queryForms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions })
-    })
+    this.queryForms.push({ title: '项目', key: 'projectId', type: 'project' })
+    this.queryForms.push({ title: '语言', key: 'language', type: 'select', options: this.$LanguageOptions })
   },
   methods: {
     loadData () {
