@@ -20,6 +20,7 @@ export default {
       { button: 'remove', click: (params) => this.remove(params) }]
     const columns = [
       { title: '点位名称', key: 'targetName' },
+      { title: '项目名称', key: 'projectName' },
       { title: '简称', key: 'nickName' },
       { title: '点位分类', key: 'classifysName' },
       { title: '点位标签', key: 'labelName' },

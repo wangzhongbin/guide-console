@@ -1,12 +1,17 @@
 <template>
-  <div>
-    <Header />
+  <div class="home-box">
+    <Menu />
+    <div style="flex:1;">
+      <Header />
+      <Main />
+    </div>
+    <!-- <Header />
     <div style="display: flex;">
       <Menu />
       <div style="flex:1;">
         <Main />
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

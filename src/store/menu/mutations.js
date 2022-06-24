@@ -10,7 +10,10 @@ export default {
     }
     state.currentView = { id: view.meta.id, name: view.name, path: view.path, title: view.meta.title, icon: view.meta.icon, parentTitle: view.meta.parentTitle, parentIcon: view.meta.parentIcon }
     state.currentMenu = view.meta.id
-    if (view.meta.id === -1) {
+    if (!state.openMenus.some(m => m === view.meta.parentId)) {
+      state.openMenus.push(view.meta.parentId)
+    }
+    if (view.meta.id === -1 && state.currentTopMenu === 0) {
       state.currentTopMenu = state.topMenus[0].id
     } else {
       let pid = view.meta.parentId
@@ -46,9 +49,13 @@ export default {
   },
   [EMPTY_MENUS] (state) {
     state.routes = []
+    state.topMenus = []
+    state.allMenus = []
     state.menus = []
+    state.openMenus = []
     state.currentView = {}
     state.tagViews = []
     state.currentMenu = 0
+    state.currentTopMenu = 0
   }
 }

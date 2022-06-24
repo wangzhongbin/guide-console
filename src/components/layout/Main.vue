@@ -60,7 +60,7 @@ export default {
   overflow-x: hidden;
 }
 .tag-box {
-  background-color: #fff;
+  // background-color: #fff;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12);
   padding: 6px 16px;
   display: flex;

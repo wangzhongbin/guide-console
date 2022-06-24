@@ -10,6 +10,7 @@ const state = {
   topMenus: [],
   allMenus: [],
   menus: [],
+  openMenus: [],
   currentView: {},
   tagViews: [],
   currentMenu: 0,

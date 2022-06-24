@@ -1,17 +1,13 @@
 <template>
   <div class="header inline-box">
-    <div class="logo-box inline-box">
-      <!-- <img :src="logo" class="box logo-image" /> -->
-      <Icon type="md-map" class="item-box" size="20" />
-      <div class="item-box">后台管理系统</div>
-    </div>
-    <div class="icon-button">
-      <Icon type="ios-home" size="20" />
-    </div>
+    <router-link class="menu-item" to="/home/index">
+      <div class="icon-button">
+        <Icon type="ios-home" size="20" />
+      </div>
+    </router-link>
     <div class="header-menu">
       <div class="menu-box inline-box" :class="currentTopMenu === item.id ? 'menu-active' : ''" v-for="item in topMenus" :key="item.id" @click="clickTopMenu(item.id)">
         <Icon class="item-box" :type="item.icon" />
-        <!-- <Icon class="item-box" type="ios-paper" /> -->
         <div class="item-box">{{item.name}}</div>
       </div>
     </div>
@@ -137,12 +133,6 @@ export default {
       if (name === 'password') {
         this.showEdit = true
       }
-    },
-    handleWait (name) {
-      if (name === 'lease-sign') this.$router.push({ name: 'LeaseSignIndex' })
-      if (name === 'lease-task') this.$router.push({ name: 'LeaseTaskIndex' })
-      if (name === 'borrow-sign') this.$router.push({ name: 'BorrowSignIndex' })
-      if (name === 'borrow-task') this.$router.push({ name: 'BorrowTaskIndex' })
     }
   }
 }
@@ -151,20 +141,9 @@ export default {
 <style scoped lang="scss">
 .header {
   border-bottom: 1px solid #ebedf0;
-  background: #fff;
+  // background: #fff;
   z-index: 999;
   align-items: center;
-  .logo-box {
-    width: 220px;
-    height: 60px;
-    font-size: 16px;
-    color: #120d09;
-    padding: 8px;
-    .logo-image {
-      width: 20px;
-      height: 20px;
-    }
-  }
   .icon-button {
     padding: 18px 20px;
     color: #495060;
