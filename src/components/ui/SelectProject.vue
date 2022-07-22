@@ -37,7 +37,7 @@ export default {
       })
     },
     change (value) {
-      this.$emit('change', value.join(','))
+      this.$emit('change', value)
     }
   }
 }

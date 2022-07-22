@@ -1,7 +1,7 @@
 <template>
   <div>
     <ViewPage ref="view-page" :url="url" :buttons="buttons" :query-forms="queryForms" :columns="columns" :actions="actions" />
-    <EditModal width="500" :title="editData.id ? '修改分类' : '新增分类'" :forms="editForms" :edit-data="editData" @ok="ok" v-model="showEdit" />
+    <EditModal width="500" :title="editData.id ? '修改标签' : '新增标签'" :forms="editForms" :edit-data="editData" @ok="ok" v-model="showEdit" />
   </div>
 </template>
 <script>

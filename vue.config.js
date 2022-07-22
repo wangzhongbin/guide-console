@@ -47,7 +47,8 @@ module.exports = {
     // 如果有单独的后端开发服务器 API，并且希望在同域名下发送 API 请求
     proxy: {
       '/api': {
-        target: 'https://guide.iqqqqq.com/', // 对应自己的接口
+        target: 'http://101.132.129.79/', // 对应自己的接口
+        // target: 'https://guide.iqqqqq.com/', // 对应自己的接口
         changeOrigin: true,
         ws: true,
         pathRewrite: {
