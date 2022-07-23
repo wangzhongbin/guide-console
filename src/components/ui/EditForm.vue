@@ -60,7 +60,7 @@
             <SelectProject v-model="editData[item.key]" />
           </div>
           <div v-else-if="item.type === 'map'">
-            <MapView v-model="editData[item.key]" :is-line="item.isLine" :map-id="item.mapId" />
+            <MapView v-model="editData[item.key]" :is-line="item.isLine" :map-id="item.mapId" :project-id="editData.projectId" />
           </div>
           <div v-else>
             <Input v-model="editData[item.key]" :disabled="item.disabled" :placeholder="item.title | placeholderText(item.type)" :clearable="true" />

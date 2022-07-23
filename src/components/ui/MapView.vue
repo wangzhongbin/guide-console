@@ -18,6 +18,8 @@
 </template>
 <script>
 
+import { projectView } from '@/api/trade/project'
+
 export default {
   name: 'MapView',
   data () {
@@ -32,6 +34,10 @@ export default {
   props: {
     mapId: String,
     value: String,
+    projectId: {
+      type: Number,
+      default: () => (0)
+    },
     isLine: {
       type: Boolean,
       default: () => (false)
@@ -41,6 +47,7 @@ export default {
     positions (val) {
       this.map.clearMap()
       if (val && val.length > 0) {
+        console.log(val[0])
         this.map.setCenter(val[0])
         const markers = val.map(e => {
           const icon = new this.$AMap.Icon({ size: new this.$AMap.Size(40, 40), image: 'https://oss.iqqqqq.com/map_icon.png', title: '123' })
@@ -66,6 +73,20 @@ export default {
           this.map.add(polyline)
         }
       }
+    },
+    projectId (val) {
+      projectView({ projectId: val, language: 1 }).then(res => {
+        const { appletMinRank, appletMaxRank, mapUrl, centerPoint } = res.data
+        const roadTileLayer = new this.$AMap.TileLayer({
+          zooms: [appletMinRank, appletMaxRank],
+          dataZooms: [appletMinRank, appletMaxRank],
+          tileUrl: mapUrl + '[z]/[x]_[y].png'
+        })
+        console.log(appletMinRank, appletMaxRank, mapUrl, centerPoint)
+        this.map.addLayer(roadTileLayer)
+        const positions = JSON.parse(centerPoint)
+        this.map.setCenter(positions)
+      })
     }
   },
   computed: {

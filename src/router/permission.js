@@ -12,7 +12,7 @@ import { getToken, getMultiTenant } from '@/cookie'
 
 import { loadTenants } from '@/api/trade/tenant'
 
-const AMapKey = '14ff59bcf6861a3ba126adc6e6522ef5'
+const AMapKey = '4ffc3076f691997d55c31989ea58bed1'
 
 const whiteList = ['/login']
 

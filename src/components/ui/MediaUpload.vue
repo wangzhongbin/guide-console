@@ -2,7 +2,7 @@
   <div>
     <div v-if="multiple">
       <Button loading v-if="loading" class="box">正在上传中...</Button>
-      <Upload class="box" v-else :max-size="1024 * 2" :accept="accept" :format="format" :on-format-error="handleFormatError" :show-upload-list="false" :action="uploadUrl" :headers="uploadHeaders" :data="uploadData" :on-progress="uploadProgress" :on-success="uploadSuccess" :on-exceeded-size="handleMaxSize">
+      <Upload class="box" v-else :accept="accept" :format="format" :on-format-error="handleFormatError" :show-upload-list="false" :action="uploadUrl" :headers="uploadHeaders" :data="uploadData" :on-progress="uploadProgress" :on-success="uploadSuccess" :on-exceeded-size="handleMaxSize">
         <Button icon="md-cloud-upload">{{ type | uploadText(multiple)}}</Button>
       </Upload>
       <div class="box" v-if="values && values.length > 0">
@@ -16,7 +16,7 @@
     </div>
     <div v-else>
       <Button loading v-if="loading" class="box">正在上传中...</Button>
-      <Upload class="box" v-else :max-size="1024 * 2" :accept="accept" :format="format" :on-format-error="handleFormatError" :show-upload-list="false" :action="uploadUrl" :headers="uploadHeaders" :data="uploadData" :on-progress="uploadProgress" :on-success="uploadSuccess" :on-exceeded-size="handleMaxSize">
+      <Upload class="box" v-else :accept="accept" :format="format" :on-format-error="handleFormatError" :show-upload-list="false" :action="uploadUrl" :headers="uploadHeaders" :data="uploadData" :on-progress="uploadProgress" :on-success="uploadSuccess" :on-exceeded-size="handleMaxSize">
         <Button icon="md-cloud-upload">{{ type | uploadText}}</Button>
       </Upload>
       <div class="box inline-box" v-show="value">
