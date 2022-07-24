@@ -52,6 +52,8 @@ export default {
     this.forms.push({ title: '语音', key: 'audio', type: 'file', fileType: 2, span: 1 })
     this.forms.push({ title: '视频', key: 'video', type: 'file', fileType: 3, span: 1 })
     this.forms.push({ title: '图片', key: 'image', type: 'file', fileType: 1, span: 1, multiple: true })
+    this.forms.push({ title: '备注1', key: 'extField1', type: 'textarea', span: 1, maxlength: 30 })
+    this.forms.push({ title: '备注2', key: 'extField2', type: 'textarea', span: 1, maxlength: 30 })
     this.forms.push({ title: '点位坐标', key: 'targetLocation', type: 'map', mapId: 'pointMap', required: true })
   },
   methods: {

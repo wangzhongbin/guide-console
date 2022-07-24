@@ -23,7 +23,7 @@
             <SelectTree v-model="editData[item.key]" :load-data="item.loadData" :options="item.options" :placeholder="item.title | placeholderText(item.type)" />
           </div>
           <div v-else-if="item.type === 'textarea'">
-            <Input v-model="editData[item.key]" type="textarea" :autosize="{minRows: 2,maxRows: 5}" :placeholder="item.title | placeholderText(item.type)" />
+            <Input v-model="editData[item.key]" type="textarea" :autosize="{minRows: 2,maxRows: 5}" :placeholder="item.title | placeholderText(item.type)" :maxlength="item.maxlength" />
           </div>
           <div v-else-if="item.type === 'int'">
             <!-- <InputNumber :max="item.max || 10" :min="item.min || 0" v-model="editData[item.key]" :placeholder="item.title | placeholderText(item.type)" /> -->

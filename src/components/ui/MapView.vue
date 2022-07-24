@@ -47,7 +47,6 @@ export default {
     positions (val) {
       this.map.clearMap()
       if (val && val.length > 0) {
-        console.log(val[0])
         this.map.setCenter(val[0])
         const markers = val.map(e => {
           const icon = new this.$AMap.Icon({ size: new this.$AMap.Size(40, 40), image: 'https://oss.iqqqqq.com/map_icon.png', title: '123' })
@@ -82,7 +81,6 @@ export default {
           dataZooms: [appletMinRank, appletMaxRank],
           tileUrl: mapUrl + '[z]/[x]_[y].png'
         })
-        console.log(appletMinRank, appletMaxRank, mapUrl, centerPoint)
         this.map.addLayer(roadTileLayer)
         const positions = JSON.parse(centerPoint)
         this.map.setCenter(positions)
